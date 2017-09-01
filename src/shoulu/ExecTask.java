@@ -1,3 +1,4 @@
+/*
 package com.tmzs.crawl.text;
 
 import java.util.ArrayList;
@@ -135,9 +136,11 @@ public class ExecTask {
 		}
 	}
 	
-	/**
+	*/
+/**
 	 * 扫描时间表，判断当前时间是应该执行抓取任务
-	 */
+	 *//*
+
 	public void scanSchedule(){
 		String curTime = Utils.getCurTime("HH:mm");
 		System.out.println("curTime : " + curTime);
@@ -155,9 +158,11 @@ public class ExecTask {
 		}
 	}
 	
-	/**
+	*/
+/**
 	 * 扫信息源，依次抓取各个信息源
-	 */	
+	 *//*
+
 	public void scanSource(){
 		int start = PropertyUtil.getIntPropertyValue("start");
 		int pageSize = PropertyUtil.getIntPropertyValue("pageSize");
@@ -190,9 +195,11 @@ public class ExecTask {
 		
 	}
 	
-	/**
+	*/
+/**
 	 * 扫信息源，依次抓取各个信息源
-	 */	
+	 *//*
+
 	public void sendMail(){
 		List<Stat> statList = statMapper.findAll();
 		for(Stat stat : statList){
@@ -200,3 +207,4 @@ public class ExecTask {
 		}
 	}	
 }
+*/

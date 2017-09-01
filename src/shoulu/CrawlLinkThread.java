@@ -1,3 +1,4 @@
+/*
 package com.tmzs.crawl.text;
 
 import java.io.IOException;
@@ -70,11 +71,13 @@ public class CrawlLinkThread extends Thread{
 		}		
     }
 	
-	/**
+	*/
+/**
 	 * 抽取出链接，并写入链接队列
 	 * @param source
 	 * @throws InterruptedException 
-	 */
+	 *//*
+
 	public void execCrawlLink(Source source) throws InterruptedException{
 		try{
 			Date beginDate = new Date();
@@ -121,13 +124,15 @@ public class CrawlLinkThread extends Thread{
 		}
 	}		
 
-	/**
+	*/
+/**
 	 * 抽取一个网页指定区域的链接
 	 * @param url 原始url
 	 * @param standardUrl 规则化后的url
 	 * @param path 爬取的xpath路径
 	 * @returnsourceStorage 已满
-	 */
+	 *//*
+
 	@SuppressWarnings("finally")
 	public static Page extractLinks(String url, String path,String regexp){
 		url = CommonUtil.urlEncode(url);
@@ -215,7 +220,8 @@ public class CrawlLinkThread extends Thread{
 					}
 					
 					
-				/****	
+				*/
+/****
 					HtmlElement htmlElement = null;
 					htmlElement = htmlPage.getFirstByXPath(path);
 					if(htmlElement != null){
@@ -236,7 +242,8 @@ public class CrawlLinkThread extends Thread{
 					}else{
 						logger.debug("配置的抓取区域未抓到内容");
 					}
-				*****/
+				*****//*
+
 				
 				
 				}
@@ -255,11 +262,13 @@ public class CrawlLinkThread extends Thread{
 		}
     }    
 	
-	/**
+	*/
+/**
 	 * 判断一个字符串是否包含中文
 	 * @param chineseStr
 	 * @return
-	 */
+	 *//*
+
 	public static final boolean isChineseCharacter(String chineseStr) {
 		char[] charArray = chineseStr.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
@@ -272,11 +281,13 @@ public class CrawlLinkThread extends Thread{
 		return false;
 	}	
     
-	/**
+	*/
+/**
 	 * 记录每个源的网站爬取数量
 	 * @param sourceName
 	 * @param contentNum
-	 */
+	 *//*
+
 	void recordCrawlerLinkStat(String sourceName,int crawlLinkNum,int totalNum){
 		Stat stat = new Stat();
 		String curDate = Utils.getCurDate();
@@ -301,12 +312,14 @@ public class CrawlLinkThread extends Thread{
 		}		
 	}
 	
-	/**
+	*/
+/**
 	 * 将相对链接自动补充为完整链接
 	 * @param sitUrl
 	 * @param link
 	 * @return
-	 */
+	 *//*
+
 	public static String linkUrlAutoComplete(String sitUrl,String link){
 		String resultUrl = link;
 		if(!StringUtil.startsWithIgnoreCase(link, "http://") && !StringUtil.startsWithIgnoreCase(link, "https://") && !StringUtil.startsWithIgnoreCase(link, "javascript:")){
@@ -326,13 +339,15 @@ public class CrawlLinkThread extends Thread{
 		}
 		return resultUrl;
 	}
-	/**
+	*/
+/**
 	 * 如果有正则表达式先根据正则表达式判断链接的合法性
 	 * @param linkTitle
 	 * @param linkUrl
 	 * @param regexp
 	 * @return
-	 */
+	 *//*
+
 	public static boolean isLinkUrlValid(String linkTitle ,String linkUrl, String regexp) {
 		boolean isValid = false;
 		if (StringUtil.isNotBlank(linkUrl) && !StringUtils.startsWith(linkUrl, "javascript:")) {
@@ -351,11 +366,13 @@ public class CrawlLinkThread extends Thread{
 		return isValid;
 	}
 	
-	/**
+	*/
+/**
 	 * 根据配置的标题长度判断标题是否合法
 	 * @param title
 	 * @return
-	 */
+	 *//*
+
 	public static boolean isTitleValid(String title){
 		boolean isValid = false;
 		if(StringUtils.isNotBlank(title)){
@@ -370,4 +387,4 @@ public class CrawlLinkThread extends Thread{
 		}
 		return isValid;
 	}
-}
+}*/

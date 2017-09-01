@@ -68,14 +68,18 @@ public class shangchuan {
 
         for(qiniubean q:ai) {
             if (q.getChose().equals("kaifa")) {
-                username = "dev";
-                password = "innotree123!@#";
-                ip = "10.51.120.107";
+                username = "sunhongyu";
+                password = "yJdviIeSuicKn8xX";
+                ip = "10.51.120.107:3306";
             } else if (q.getChose().equals("xianshang")) {
                 username = "tech_spider";
                 password = "sPiDer$#@!23";
-                ip = "100.115.97.86";
-            } else {
+                ip = "100.115.97.86:3306";
+            } else if(q.getChose().equals("etl")){
+                username = "spider";
+                password = "spider";
+                ip = "etl1.innotree.org:3308";
+            }else {
                 throw new FormatEexception("you should chose kaifa or xianshang");
             }
 
@@ -84,7 +88,7 @@ public class shangchuan {
             fieldupdate = q.getFieldupdate();
 
             String driver1 = "com.mysql.jdbc.Driver";
-            String url1 = "jdbc:mysql://" + ip + ":3306/" + database + "?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+            String url1 = "jdbc:mysql://" + ip + "/" + database + "?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
             Class.forName(driver1).newInstance();
             java.sql.Connection con = null;
             try {

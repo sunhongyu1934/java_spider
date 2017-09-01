@@ -1,3 +1,4 @@
+/*
 package com.tmzs.crawl.util;
 
 import java.io.IOException;
@@ -51,3 +52,4 @@ public class PropertyUtil {
 		System.out.println(getIntPropertyValue("link_queue"));
 	}
 }
+*/
