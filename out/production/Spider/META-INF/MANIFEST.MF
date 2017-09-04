@@ -252,5 +252,5 @@ Class-Path: commons-dbcp-1.2.jar commons-pool-1.6.jar dom4j-1.6.1.jar
  -common-2.7.3.jar jersey-container-servlet-core-2.22.2.jar hadoop-map
  reduce-client-shuffle-2.7.3.jar hadoop-mapreduce-client-jobclient-2.7
  .3.jar
-Main-Class: qiniu.shangchuan
+Main-Class: qichachasou.soulogo
 

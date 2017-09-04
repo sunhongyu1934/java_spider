@@ -115,7 +115,7 @@ public class soulogo {
     }
 
     public static void data(Ca c) throws SQLException, InterruptedException {
-        String sql="select comp_name from tyc.comp_car_name";
+        String sql="select comp_name from tyc.comp_car_name where data_date is not null and data_date!=''";
         PreparedStatement ps=conn.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
