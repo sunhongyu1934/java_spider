@@ -293,6 +293,8 @@ public class XinxiXin {
                         t.beian(doc, tid, cname);
                     }else if(zhua[a].equals("企业业务")){
                         t.yewu(doc, tid, cname);
+                    }else if(zhua[a].equals("微信公众号")){
+                        t.gongzhonghao(doc, tid, cname);
                     }
                 }
 

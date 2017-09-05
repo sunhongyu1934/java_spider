@@ -53,6 +53,7 @@ public class Tyc_quan {
     private static PreparedStatement ps31;
     private static PreparedStatement ps32;
     private static PreparedStatement ps33;
+    private static PreparedStatement ps34;
     public Tyc_quan(Connection con,String[] value) throws SQLException {
         this.con=con;
         for(int x=0;x<value.length;x++){
@@ -155,6 +156,9 @@ public class Tyc_quan {
             }else if(value[x].equals("网站备案")){
                 String sql33="insert into tyc_website_filing(t_id,audit_time,website_nm,website_url,domain_name,filing_num,web_status,comp_property) values(?,?,?,?,?,?,?,?)";
                 this.ps33=con.prepareStatement(sql33);
+            }else if(value[x].equals("微信公众号")){
+                String sql34="insert into tyc_webcat(t_id,w_logo,w_ming,w_hao,w_erwei,w_desc) values(?,?,?,?,?,?)";
+                this.ps34=con.prepareStatement(sql34);
             }
         }
     }
@@ -1422,6 +1426,50 @@ public class Tyc_quan {
                 }
             }
         }
+    }
+
+
+    public static void gongzhonghao(Document doc,String tid,String cname) throws IOException, SQLException {
+        Document doc2=doc;
+        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        if(StringUtils.isEmpty(page)){
+            page="1";
+        }
+
+        for(int x=1;x<=Integer.parseInt(page);x++){
+            if(x>=2){
+                while (true) {
+                    Map<String, Object> map = jisuan(tid);
+                    doc2 = detailget("http://www.tianyancha.com/pagination/wechat.xhtml?ps=10&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
+                    if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                }
+            }
+
+            Elements bei=getElements(doc2,"div.wechat div.mb10.in-block");
+            if(x>=2){
+                bei=getElements(doc2,"div.mb10.in-block");
+            }
+            if(bei!=null){
+                for(Element e:bei){
+                    String logo=getHref(e,"div.in-block.vertical-top.wechatImg img","src",0);
+                    String ming=getString(e,"div.in-block.vertical-top.itemRight div.mb5",0);
+                    String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",0);
+                    String erweima=getHref(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) div.position-abs.erweimaBox img","src",0);
+                    String jieshao=getString(e,"span.overflow-width.in-block.vertical-top",0);
+
+                    ps34.setString(1,tid);
+                    ps34.setString(2,logo);
+                    ps34.setString(3,ming);
+                    ps34.setString(4,hao);
+                    ps34.setString(5,erweima);
+                    ps34.setString(6,jieshao);
+                    ps34.executeUpdate();
+                }
+            }
+        }
+
     }
 
 
