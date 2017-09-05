@@ -1,6 +1,7 @@
 package qichachasou;
 
 import Utils.JsoupUtils;
+import baidu.RedisAction;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,8 +18,8 @@ import java.util.concurrent.*;
  */
 public class soulogo {
     // 代理隧道验证信息
-    final static String ProxyUser = "H689K6HN8Z46666D";
-    final static String ProxyPass = "3E0DCB86C35C5504";
+    static String ProxyUser;
+    static String ProxyPass;
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -55,26 +56,29 @@ public class soulogo {
                 }
             }
         }
+        conn=con;
 
+    }
+    public static void main(String args[]){
+        ProxyUser=args[0];
+        ProxyPass=args[1];
         Authenticator.setDefault(new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(ProxyUser, ProxyPass.toCharArray());
             }
         });
         proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
-        conn=con;
 
-    }
-    public static void main(String args[]){
         ExecutorService pool= Executors.newCachedThreadPool();
         soulogo s=new soulogo();
         final Ca c=s.new Ca();
         final Url u=s.new Url();
+        final RedisAction r=new RedisAction("a024.hb2.innotree.org", 6379);
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    data(c);
+                    data(c,r);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -83,27 +87,25 @@ public class soulogo {
             }
         });
 
-        for(int x=1;x<=5;x++){
+        for(int x=1;x<=20;x++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        get(c,u);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
+                        get(c);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
 
-        for(int y=1;y<=15;y++){
+        /*for(int y=1;y<=10;y++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        ruku(u);
+                        ruku(u,c);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -111,20 +113,29 @@ public class soulogo {
                     }
                 }
             });
-        }
+        }*/
     }
 
-    public static void data(Ca c) throws SQLException, InterruptedException {
-        String sql="select comp_name from tyc.comp_car_name where data_date is not null and data_date!=''";
-        PreparedStatement ps=conn.prepareStatement(sql);
-        ResultSet rs=ps.executeQuery();
-        while (rs.next()){
-            String cname=rs.getString(rs.findColumn("comp_name"));
-            c.jin(cname);
+    public static void data(Ca c, RedisAction r) throws SQLException, InterruptedException {
+        int p=0;
+        while (true){
+            try{
+                if(p>=100){
+                    break;
+                }
+                String key=r.get("tyc_logo");
+                if(StringUtils.isNotEmpty(key)){
+                    c.jin(key);
+                }
+            }catch (Exception e){
+                p++;
+                System.out.println("fnag error");
+            }
         }
     }
 
     public static void get(Ca c,Url u) throws InterruptedException, UnsupportedEncodingException {
+        Thread.sleep(120000);
         while (true) {
             try {
                 String key = c.qu();
@@ -133,11 +144,25 @@ public class soulogo {
                 }
                 Document doc = qichaqing("http://www.qichacha.com/search?key=" + URLEncoder.encode(key, "utf-8"));
                 Elements ele = JsoupUtils.getElements(doc, "section#searchlist tbody tr");
+                boolean br=false;
+                String aa = null;
+                int pp=0;
                 if (ele != null) {
                     for (Element e : ele) {
+                        String quancheng=JsoupUtils.getString(e, "td:nth-child(2) a", 0).replace(" ","");
                         String url = JsoupUtils.getHref(e, "td:nth-child(2) a", "href", 0);
-                        u.jin("http://www.qichacha.com" + url);
+                        if(pp==0){
+                            aa=url;
+                        }
+                        if(key.equals(quancheng)&&StringUtils.isNotEmpty(quancheng)){
+                            u.jin("http://www.qichacha.com" + url);
+                            br=true;
+                        }
+                        pp++;
                     }
+                }
+                if(!br&&StringUtils.isNotEmpty(aa)){
+                    u.jin("http://www.qichacha.com" + aa);
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -145,14 +170,65 @@ public class soulogo {
         }
     }
 
-    public static void ruku(Url u) throws InterruptedException, SQLException {
+    public static void get(Ca c) throws InterruptedException, UnsupportedEncodingException, SQLException {
+        String sql="insert into linshi_tyc(c_name,c_logo,c_url) values(?,?,?)";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        while (true) {
+            try {
+                String key = c.qu();
+                if (StringUtils.isEmpty(key)) {
+                    break;
+                }
+                Document doc = qichaqing("http://www.qichacha.com/search?key=" + URLEncoder.encode(key, "utf-8"));
+                Elements ele = JsoupUtils.getElements(doc, "section#searchlist tbody tr");
+                String aa = null;
+                String bb=null;
+                String cc=null;
+                int pp=0;
+                if (ele != null) {
+                    for (Element e : ele) {
+                        String quancheng=JsoupUtils.getString(e, "td:nth-child(2) a", 0).replace(" ","");
+                        String logo=JsoupUtils.getHref(e,"td:nth-child(1) img","src",0);
+                        String url = JsoupUtils.getHref(e, "td:nth-child(2) a", "href", 0);
+                        if(pp==0){
+                            bb=quancheng;
+                            aa=logo;
+                            cc="http://www.qichacha.com" + url;
+                        }
+                        if(key.equals(quancheng)&&StringUtils.isNotEmpty(quancheng)){
+                            bb=quancheng;
+                            aa=logo;
+                            cc="http://www.qichacha.com" + url;
+                        }
+                        pp++;
+                    }
+                }
+                if(StringUtils.isNotEmpty(aa)&&StringUtils.isNotEmpty(bb)) {
+                    ps.setString(1, bb);
+                    ps.setString(2, aa);
+                    ps.setString(3,cc);
+                    ps.executeUpdate();
+                    jishu++;
+                    System.out.println("success_qichacha");
+                    System.out.println(jishu + "*********************************************************************");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void ruku(Url u,Ca c) throws InterruptedException, SQLException {
+        Thread.sleep(180000);
         String sql="insert into linshi_tyc(c_name,c_logo,c_web) values(?,?,?)";
         PreparedStatement ps=conn.prepareStatement(sql);
         while (true){
             try {
                 String url = u.qu();
-                if (StringUtils.isEmpty(url)) {
+                if (StringUtils.isEmpty(url)&&c.po.size()==0) {
                     break;
+                }else if(StringUtils.isEmpty(url)&&c.po.size()>0){
+                    continue;
                 }
 
                 Document doc = qichaqing(url);
@@ -196,7 +272,7 @@ public class soulogo {
     }
 
     class Ca{
-        BlockingQueue<String> po=new LinkedBlockingQueue<String>();
+        BlockingQueue<String> po=new LinkedBlockingQueue<String>(25);
         public void jin(String key) throws InterruptedException {
             po.put(key);
         }

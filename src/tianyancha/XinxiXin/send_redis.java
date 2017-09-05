@@ -28,7 +28,7 @@ public class send_redis {
         }
 
         RedisAction rs=new RedisAction("10.44.51.90", 6379);
-        duqu5(con,rs);
+        duqu6(con, rs);
     }
     public static void duqu(Connection con,RedisAction r) throws SQLException, InterruptedException {
         String sql="select ";
@@ -108,6 +108,19 @@ public class send_redis {
             r.set("tyc_buchong",ti+"*****"+cn);
             p++;
             System.out.println(p+"**********************************");
+        }
+    }
+
+    public static void duqu6(Connection con,RedisAction r) throws SQLException {
+        String sql="select distinct quan_cheng from spider.tyc_jichu_chuisou";
+        PreparedStatement ps=con.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        int p=0;
+        while (rs.next()){
+            String cname=rs.getString(rs.findColumn("quan_cheng"));
+            r.set("tyc_logo",cname);
+            p++;
+            System.out.println(p+"****************************************");
         }
     }
 }
