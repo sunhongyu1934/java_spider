@@ -73,6 +73,7 @@ public class XinxiXin {
         final Url u=x.new Url();
         final Key k=x.new Key();
         final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        //final TYCConsumer tyc=new TYCConsumer("tyc_linshi","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         ExecutorService pool= Executors.newCachedThreadPool();
         final Connection finalCon = con;
         /*final String po=args[4];
@@ -88,6 +89,7 @@ public class XinxiXin {
                 }
             }
         });*/
+
         Thread th=new Thread(new Runnable() {
             @Override
             public void run() {
