@@ -37,7 +37,7 @@ public class XinxiXin {
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
-    private static Proxy proxy;
+    public static Proxy proxy;
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         System.out.println("spider begin ******************************************************************************");
         // 代理隧道验证信息
@@ -521,7 +521,7 @@ public class XinxiXin {
         return cookie;
     }
 
-    class Key{
+    public class Key{
         BlockingQueue<String> bo=new LinkedBlockingQueue<String>(10);
         public void put(String key) throws InterruptedException {
             bo.put(key);
@@ -531,7 +531,7 @@ public class XinxiXin {
         }
     }
 
-    class Url{
+    public class Url{
         BlockingQueue<String[]> bo=new LinkedBlockingQueue<String[]>();
         public void put(String[] key) throws InterruptedException {
             bo.put(key);
