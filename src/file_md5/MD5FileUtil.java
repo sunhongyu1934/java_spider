@@ -156,10 +156,14 @@ public class MD5FileUtil {
 
         //File big = new File("C:\\Users\\Administrator\\Desktop\\bbb.txt");
         String md5s = getMD5String("北京五八信息技术有限公司");
+        String md52=getMD5String("北京八五信息技术有限公司");
         String md5=md5s.replace("a","11").replace("b","22").replace("c","33").replace("d","44").replace("e","55").replace("f","66");
+        String md522=md52.replace("a","11").replace("b","22").replace("c","33").replace("d","44").replace("e","55").replace("f","66");
 
         long end = System.currentTimeMillis();
         System.out.println("md5:" + md5);
+        System.out.println(md522);
+        System.out.println(md5.length());
         System.out.println("time:" + ((end - begin) / 1000) + "s");
 
     }
