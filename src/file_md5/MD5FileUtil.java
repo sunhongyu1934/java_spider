@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5FileUtil {
     protected static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6',
-            '7', '8', '9', '1', '2', '3', '4', '5', '6' };
+            '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
     protected static MessageDigest messagedigest = null;
     static {
         try {
@@ -155,7 +155,8 @@ public class MD5FileUtil {
         long begin = System.currentTimeMillis();
 
         //File big = new File("C:\\Users\\Administrator\\Desktop\\bbb.txt");
-        String md5 = getMD5String("哈哈哈哈");
+        String md5s = getMD5String("北京五八信息技术有限公司");
+        String md5=md5s.replace("a","11").replace("b","22").replace("c","33").replace("d","44").replace("e","55").replace("f","66");
 
         long end = System.currentTimeMillis();
         System.out.println("md5:" + md5);

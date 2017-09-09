@@ -240,14 +240,14 @@ public class gudong_buchong {
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
                         .get();
-                if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")) {
+                if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("forbidden3.png")) {
                     break;
                 }
             }catch (Exception e){
                 System.out.println("time out detail");
             }
         }
-        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())){
+        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())||doc.outerHtml().contains("获取验证码")||doc.outerHtml().contains("访问拒绝")||doc.outerHtml().contains("abuyun")||doc.outerHtml().contains("Unauthorized")||doc.outerHtml().contains("访问禁止")||doc.outerHtml().contains("forbidden3.png")){
             return null;
         }
         return doc;

@@ -4,13 +4,21 @@ import com.google.gson.Gson;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.jsoup.*;
+import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,16 +27,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.sql.*;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static Utils.JsoupUtils.getElements;
-import static Utils.JsoupUtils.getHref;
-import static Utils.JsoupUtils.getString;
+import static Utils.JsoupUtils.*;
 
 /**
  * Created by Administrator on 2017/7/3.
@@ -38,6 +43,24 @@ public class XinxiXin {
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static Proxy proxy;
+    private static HttpClientBuilder builder;
+    static{
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+
+        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("HL8LK84J5D81DB7D", "92BB5D9A91C09C59"));
+        HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
+        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
+                .setSocketTimeout(5000).build();
+
+        builder = HttpClients.custom();
+
+        builder.setRoutePlanner(routePlanner);
+
+        builder.setDefaultCredentialsProvider(credsProvider);
+        builder.setDefaultRequestConfig(requestConfig);
+    }
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         System.out.println("spider begin ******************************************************************************");
         // 代理隧道验证信息
@@ -72,8 +95,8 @@ public class XinxiXin {
         XinxiXin x=new XinxiXin();
         final Url u=x.new Url();
         final Key k=x.new Key();
-        final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
-        //final TYCConsumer tyc=new TYCConsumer("tyc_linshi","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        //final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        final TYCConsumer tyc=new TYCConsumer("tyc_linshi","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         ExecutorService pool= Executors.newCachedThreadPool();
         final Connection finalCon = con;
         /*final String po=args[4];
@@ -95,9 +118,7 @@ public class XinxiXin {
             public void run() {
                 try {
                     duqu(tyc,k);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -161,7 +182,7 @@ public class XinxiXin {
     }
 
     public static void duqu(Connection con,Key k,String po) throws SQLException, InterruptedException {
-        String sql="select c_name from spider.linshi_xiangmu where c_name!='' and c_name is not null limit "+po+",500 ";
+        String sql="select c_name from spider.linshi_ming";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
@@ -210,7 +231,7 @@ public class XinxiXin {
 
     public static void data(Url u,Connection con,String[] zhua,Key k) throws InterruptedException, IOException, SQLException {
         Tyc_quan t=new Tyc_quan(con,zhua);
-        Thread.sleep(60000);
+
         while (true){
             try {
                 String[] value = u.qu();
@@ -328,14 +349,14 @@ public class XinxiXin {
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
                         .get();
-                if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")) {
+                if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("forbidden3.png")) {
                     break;
                 }
             }catch (Exception e){
                 System.out.println("time out detail");
             }
         }
-        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())){
+        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())||doc.outerHtml().contains("获取验证码")||doc.outerHtml().contains("访问拒绝")||doc.outerHtml().contains("abuyun")||doc.outerHtml().contains("Unauthorized")||doc.outerHtml().contains("访问禁止")||doc.outerHtml().contains("forbidden3.png")){
             return null;
         }
         return doc;
@@ -534,7 +555,7 @@ public class XinxiXin {
     }
 
     public class Url{
-        BlockingQueue<String[]> bo=new LinkedBlockingQueue<String[]>();
+        BlockingQueue<String[]> bo=new LinkedBlockingQueue<String[]>(100);
         public void put(String[] key) throws InterruptedException {
             bo.put(key);
         }

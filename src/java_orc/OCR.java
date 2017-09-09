@@ -34,7 +34,7 @@ public class OCR {
         cmd.add(outputFile.getName());
         cmd.add(LANG_OPTION);
         //cmd.add("chi_sim");
-        cmd.add("num");
+        cmd.add("chi_sim");
 
         ProcessBuilder pb = new ProcessBuilder();
         pb.directory(imageFile.getParentFile());

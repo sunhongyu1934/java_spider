@@ -697,7 +697,7 @@ public class itjz_l {
 
     public static String[] jiexi() throws FileNotFoundException, DocumentException {
         SAXReader saxReader=new SAXReader();
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(new File("/home/hongyu.sun/java_spider/implement/itjzzl.xml")));
+        org.dom4j.Document dom =  saxReader.read(new FileInputStream(new File("/home/etl_user/etl/program/config/itjzzl.xml")));
         org.dom4j.Element root=dom.getRootElement();
         org.dom4j.Element table=root.element("table");
         String page=table.element("page").getText();

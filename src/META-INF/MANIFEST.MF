@@ -251,5 +251,5 @@ Class-Path: commons-dbcp-1.2.jar commons-pool-1.6.jar dom4j-1.6.1.jar
  .4.jar hadoop-mapreduce-client-common-2.7.3.jar jersey-container-serv
  let-core-2.22.2.jar hadoop-mapreduce-client-shuffle-2.7.3.jar hadoop-
  mapreduce-client-jobclient-2.7.3.jar
-Main-Class: baidu.test
+Main-Class: tianyancha.XinxiXin.XinxiXin
 

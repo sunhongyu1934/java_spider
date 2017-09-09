@@ -235,7 +235,7 @@ public class Project {
 
     public static Map<String,String> weblogin() throws InterruptedException {
        // "/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs"
-        System.setProperty(Count.phantomjs,"/home/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        System.setProperty(Count.phantomjs,"/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("phantomjs.page.settings.userAgent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
         //caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[]{"--proxy-type=http", "--proxy=proxy.abuyun.com:9020", "--proxy-auth=H0QCBTTB7675S1XD:26A1FF9238C9050D"});
@@ -252,7 +252,7 @@ public class Project {
                 writer.flush();
                 writer.close();
                 out.close();*/
-                driver.findElement(By.xpath("//*[@id=\"user_nav\"]/ul/li[1]/a")).click();
+                driver.findElement(By.xpath("//*[@id=\"index\"]/header/div/ul/li[1]/a")).click();
                 Thread.sleep(10000);
                 driver.findElement(By.className("quc-third-part-icon-sina")).click();
                 Thread.sleep(5000);
@@ -277,7 +277,6 @@ public class Project {
                         Thread.sleep(3000);
                         action.click(driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")));
                         driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")).click();
-                        System.out.println(driver.getPageSource());
                     } catch (Exception e) {
                         System.out.println("denglu success&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                         break;

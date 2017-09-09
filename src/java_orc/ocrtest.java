@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ocrtest {
 
     public static void main(String[] args) {
-        String path = "C:\\Users\\Administrator\\Desktop\\test\\ppp.tif";
+        String path = "C:\\Users\\Administrator\\Desktop\\aaa.tif";
         System.out.println("ORC Test Begin......");
         try {
             String valCode = new OCR().recognizeText(new File(path), "tif");

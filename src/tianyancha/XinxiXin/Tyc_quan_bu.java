@@ -1457,7 +1457,7 @@ public class Tyc_quan_bu {
                 for(Element e:bei){
                     String logo=getHref(e,"div.in-block.vertical-top.wechatImg img","src",0);
                     String ming=getString(e,"div.in-block.vertical-top.itemRight div.mb5",0);
-                    String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",0);
+                    String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",1);
                     String erweima=getHref(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) div.position-abs.erweimaBox img","src",0);
                     String jieshao=getString(e,"span.overflow-width.in-block.vertical-top",0);
 

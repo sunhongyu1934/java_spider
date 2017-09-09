@@ -47,7 +47,7 @@ public class send_kafka {
 
     public static void data() throws SQLException {
         TYCProducer ty=new TYCProducer("tyc_linshi","10.44.51.90:19092,10.44.152.49:19092,10.51.82.74:19092");
-        int a=0;
+        /*int a=0;
         int jishu=0;
         for(int x=1;x<=30;x++) {
             String sql = "select c_name from linshi_company limit "+x+",1000000";
@@ -60,7 +60,7 @@ public class send_kafka {
                 System.out.println(jishu+"*****************************************************");
             }
             a=a+1000000;
-        }
+        }*/
     }
 
 }

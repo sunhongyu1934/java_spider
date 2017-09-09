@@ -58,7 +58,7 @@ public class Tyc_quan {
         this.con=con;
         for(int x=0;x<value.length;x++){
             if(value[x].equals("基本信息")){
-                String sql1="insert into tyc_jichu_quan(quan_cheng,ceng_yongming,logo,p_hone,e_mail,a_ddress,w_eb,fa_ren,zhuce_ziben,zhuce_shijian,hezhun_riqi,jingying_zhuangtai,nashui_shibie,gongshang_hao,zuzhijigou_daima,tongyi_xinyong,qiye_leixing,hang_ye,yingye_nianxian,dengji_jiguan,zhuce_dizhi,jingying_fanwei,t_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sql1="insert into tyc_jichu_quan(quan_cheng,ceng_yongming,logo,p_hone,e_mail,a_ddress,w_eb,fa_ren,zhuce_ziben,zhuce_shijian,hezhun_riqi,jingying_zhuangtai,nashui_shibie,gongshang_hao,zuzhijigou_daima,tongyi_xinyong,qiye_leixing,hang_ye,yingye_nianxian,dengji_jiguan,zhuce_dizhi,jingying_fanwei,t_id,c_desc) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 this.ps1=con.prepareStatement(sql1);
             }else if(value[x].equals("主要成员")){
                 String sql2="insert into tyc_main(t_id,zhi_wu,p_name,p_tid) values(?,?,?,?)";
@@ -190,6 +190,7 @@ public class Tyc_quan {
         String zhucedizhi=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(注册地址) span",0);
         String jingyingfanwei=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(经营范围) span.js-full-container",0);
         String faren=getString(doc2,"div.in-block.vertical-top.pl15 div.new-c3.f18.overflow-width a",0);
+        String desc=getString(doc2,"div.c8.ml20.pt20.mt20.over-hide span.more-overflow2.float-left",0).replace("企业简介：","");
 
         ps1.setString(1,quancheng);
         ps1.setString(2,ceng);
@@ -214,6 +215,7 @@ public class Tyc_quan {
         ps1.setString(21,zhucedizhi);
         ps1.setString(22,jingyingfanwei);
         ps1.setString(23,tid);
+        ps1.setString(24,desc);
         ps1.executeUpdate();
         System.out.println("success_tyc-quan");
     }
@@ -1455,7 +1457,7 @@ public class Tyc_quan {
                 for(Element e:bei){
                     String logo=getHref(e,"div.in-block.vertical-top.wechatImg img","src",0);
                     String ming=getString(e,"div.in-block.vertical-top.itemRight div.mb5",0);
-                    String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",0);
+                    String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",1);
                     String erweima=getHref(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) div.position-abs.erweimaBox img","src",0);
                     String jieshao=getString(e,"span.overflow-width.in-block.vertical-top",0);
 
