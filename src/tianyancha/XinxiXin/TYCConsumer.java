@@ -54,7 +54,7 @@ public class TYCConsumer {
         consumer.shutdown();
     }
     public static void main( String[] args ) throws InterruptedException, UnsupportedEncodingException {
-        TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        TYCConsumer tyc=new TYCConsumer("tyc_linshi3","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         TYCProducer ty=new TYCProducer("tyc_zl","10.44.51.90:19092,10.44.152.49:19092,10.51.82.74:19092");
         int p=0;
         while (true){

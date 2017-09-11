@@ -1,3 +1,4 @@
+/*
 package spark.streaming;
 
 import org.apache.spark.SparkConf;
@@ -23,14 +24,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+*/
 /**
  * Created by Administrator on 2017/8/17.
- */
+ *//*
+
 public class log_fir {
     //private static Connection conn;
     private static JdbcUtils_DBCP db=new JdbcUtils_DBCP();
     static{
-        /*String driver1="com.mysql.jdbc.Driver";
+        */
+/*String driver1="com.mysql.jdbc.Driver";
         String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
@@ -58,7 +62,8 @@ public class log_fir {
                 }
             }
         }
-        conn=con;*/
+        conn=con;*//*
+
     }
     public static void main(String args[]) throws SQLException, InterruptedException {
         exec();
@@ -139,3 +144,4 @@ public class log_fir {
     }
 
 }
+*/
