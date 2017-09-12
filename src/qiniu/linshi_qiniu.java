@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.concurrent.*;
 
 /**
  * Created by Administrator on 2017/9/9.
@@ -59,18 +60,57 @@ public class linshi_qiniu {
 
     }
     public static void main(String args[]) throws QiniuException, SQLException {
-        shang();
+        linshi_qiniu l=new linshi_qiniu();
+        final Ca c=l.new Ca();
+        ExecutorService pool= Executors.newCachedThreadPool();
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    data(c);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        for(int x=1;x<=30;x++){
+            pool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        shang(c);
+                    } catch (QiniuException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
-    public static void shang() throws QiniuException, SQLException {
+    public static void data(Ca c) throws InterruptedException {
+        File file=new File("/home/etl_user/etl/logo_new");
+        File[] ff=file.listFiles();
+        for(File f :ff){
+            if(f.isFile()){
+                c.fang(f);
+            }
+        }
+    }
+
+    public static void shang(Ca c) throws QiniuException, SQLException, InterruptedException {
         UploadManager uploadManager = new UploadManager();
         String sql="insert into linshi_logo(c_id,c_logo) values(?,?)";
         PreparedStatement ps=conn.prepareStatement(sql);
-        File file=new File("/home/etl_user/etl/logo_new");
-        File[] ff=file.listFiles();
-        int j=0;
-        for(File f:ff) {
-            if(f.isFile()) {
+        while (true) {
+            try {
+                File f= c.qu();
+                if (f == null) {
+                    break;
+                }
                 String newUrl = null;
                 Response res = uploadManager.put(f.getPath(), null, auth.uploadToken(BUCKET_NAME));
                 String json = res.bodyString();
@@ -78,12 +118,25 @@ public class linshi_qiniu {
                 qijson q = gson.fromJson(json, qijson.class);
                 newUrl = "https://" + BUCKET_HOST_NAME + "/" + q.key;
 
-                ps.setString(1,f.getName().replace(".png",""));
-                ps.setString(2,newUrl);
+                ps.setString(1, f.getName().replace(".png", ""));
+                ps.setString(2, newUrl);
                 ps.executeUpdate();
-                j++;
-                System.out.println(j+"*****************************************************");
+                System.out.println(f.delete());
+                System.out.println(c.po.size() + "*****************************************************");
+            }catch (Exception e){
+                System.out.println("error");
             }
+        }
+
+    }
+
+    class Ca{
+        BlockingQueue<File> po=new LinkedBlockingDeque<File>(50);
+        public void fang(File key) throws InterruptedException {
+            po.put(key);
+        }
+        public File qu() throws InterruptedException {
+            return po.poll(60, TimeUnit.SECONDS);
         }
     }
 

@@ -43,7 +43,7 @@ public class test5 {
 */
 
 
-        HttpClientBuilder builder = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory()).setProxy(proxy);
+        HttpClientBuilder builder = HttpClients.custom()./*.setSSLSocketFactory(createSSLConnSocketFactory()).*/setProxy(proxy);
 
         /*builder.setRoutePlanner(routePlanner);
 
@@ -61,7 +61,7 @@ public class test5 {
     }
 
 
-    private static SSLConnectionSocketFactory createSSLConnSocketFactory() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    /*private static SSLConnectionSocketFactory createSSLConnSocketFactory() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         SSLConnectionSocketFactory sslsf = null;
         try {
             SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
@@ -93,6 +93,6 @@ public class test5 {
             e.printStackTrace();
         }
         return sslsf;
-    }
+    }*/
 
 }

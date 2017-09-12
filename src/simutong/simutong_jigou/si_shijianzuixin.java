@@ -1,11 +1,13 @@
 package simutong.simutong_jigou;
 
+import Utils.JsoupUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import simutong.simutong_jijin.qingQiu;
 
 import java.io.IOException;
 import java.net.Authenticator;
@@ -15,6 +17,9 @@ import java.net.Proxy;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +45,7 @@ public class si_shijianzuixin {
         proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
     }
 
-    public static void main(String args[]) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, InterruptedException {
+    public static void main(String args[]) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, InterruptedException, ParseException {
 
 
         String driver1="com.mysql.jdbc.Driver";
@@ -96,7 +101,7 @@ public class si_shijianzuixin {
         return doc.cookies();
     }
 
-    public static void get(Map<String,String> map, java.sql.Connection con) throws IOException, SQLException, InterruptedException {
+    public static void get(Map<String,String> map, java.sql.Connection con) throws IOException, SQLException, InterruptedException, ParseException {
         String sql="insert into si_touzi_zuixin(touzi_jigou,jigou_sid,beitou_gongsi,beitou_sid,hang_ye,diqu,jie_duan,touzi_time,touzi_jine_m,touzi_jine_usdm,gu_quan,lun_ci,gu_zhi) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
@@ -155,13 +160,19 @@ public class si_shijianzuixin {
                 }
             }
 
-
             Elements touzijigou = doc.select("div.leftTableDivID.float_left.search_width20 table.table.table-hover tbody tr");
 
+            Elements detailele=JsoupUtils.getElements(doc,"div.leftTableDivID.float_right.search_width20 table.table.table-hover tbody tr");
+            for(Element e:detailele){
+                String deurl=JsoupUtils.getHref(e,"td a","href",0);
+                det("http://pe.pedata.cn/"+deurl,map,proxy,con);
+            }
+
+
             int p = 1;
+            boolean bo = false;
             for (Element e : touzijigou) {
                 PreparedStatement ps = con.prepareStatement(sql);
-
 
                 Elements ele = e.select("td").get(0).select("a");
                 StringBuffer str1 = new StringBuffer();
@@ -181,11 +192,14 @@ public class si_shijianzuixin {
                 ps.setString(4, beitouid);
 
 
-                data(ps, doc, p);
+                bo=data(ps, doc, p);
                 p++;
             }
 
             System.out.println(x+"***************************************************");
+            if(bo){
+                break;
+            }
             Thread.sleep(5000);
         }
 
@@ -193,9 +207,13 @@ public class si_shijianzuixin {
     }
 
 
-    public static void data(PreparedStatement ps,Document doc,int q) throws SQLException {
+    public static boolean data(PreparedStatement ps,Document doc,int q) throws SQLException, ParseException {
         int p=1;
         Elements eles=doc.select("div.search_width80 table.table.table-hover tbody tr");
+        boolean bo=false;
+        Date date=new Date();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        Long time=simpleDateFormat.parse(simpleDateFormat.format(date)).getTime();
         for(Element e:eles){
             String hangye=e.select("td").get(4).text();
             String diqu=e.select("td").get(5).text();
@@ -208,6 +226,9 @@ public class si_shijianzuixin {
             String guzhi=e.select("td").get(12).text();
             String pe=e.select("td").get(13).text();
 
+            if(simpleDateFormat.parse(touzitime).getTime()<time){
+                bo=true;
+            }
 
             if(p==q){
                 ps.setString(5,hangye);
@@ -225,6 +246,45 @@ public class si_shijianzuixin {
             }
 
             p++;
+        }
+        return bo;
+    }
+
+    public static void det(String url, Map<String,String> map, Proxy proxy, java.sql.Connection con) throws IOException, InterruptedException, SQLException {
+        String sql="insert into si_touzizuixin_detail(s_id,s_ming,s_jijin,s_touziren,touzi_jine,gu_quan,s_touzileixing,s_tuichu,s_tuichufang,s_zhanghui,s_zhangbei) values(?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps=con.prepareStatement(sql);
+        Document doc= qingQiu.jichuget(url,map,proxy);
+        Elements ele=JsoupUtils.getElements(doc,"form.form-horizontal table.table.table-hover tbody tr");
+        if(ele!=null) {
+            int x = 0;
+            for (Element e : ele) {
+                String jigouming = JsoupUtils.getString(e, "td:nth-child(1)", 0);
+                String jigousid = JsoupUtils.getHref(e, "td:nth-child(1) a", "href", 0).replace("getDetailOrg.action?param.org_id=", "");
+                String jijin = JsoupUtils.getString(e, "td:nth-child(2)", 0);
+                String touziren = JsoupUtils.getString(e, "td:nth-child(3)", 0);
+                String touzijine = JsoupUtils.getString(e, "td:nth-child(4)", 0);
+                String guquan = JsoupUtils.getString(e, "td:nth-child(5)", 0);
+                String touzileixing = JsoupUtils.getString(e, "td:nth-child(6)", 0);
+                String tuichushijian = JsoupUtils.getString(e, "td:nth-child(7)", 0);
+                String tuichufangshi = JsoupUtils.getString(e, "td:nth-child(8)", 0);
+                String zhangmian = JsoupUtils.getString(e, "td:nth-child(9)", 0);
+                String zhangbei = JsoupUtils.getString(e, "td:nth-child(10)", 0);
+
+                ps.setString(1, jigousid);
+                ps.setString(2, jigouming);
+                ps.setString(3, jijin);
+                ps.setString(4, touziren);
+                ps.setString(5, touzijine);
+                ps.setString(6, guquan);
+                ps.setString(7, touzileixing);
+                ps.setString(8, tuichushijian);
+                ps.setString(9, tuichufangshi);
+                ps.setString(10, zhangmian);
+                ps.setString(11, zhangbei);
+                ps.executeUpdate();
+                x++;
+                System.out.println(x + "*******************************************************");
+            }
         }
     }
 
