@@ -1,0 +1,51 @@
+<component name="libraryTable">
+  <library name="dbcp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../jar/bson-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/gson-2.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/javabase64-1.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/javax.mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/jsoup-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/log4j-1.2.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/mongodb-driver-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/mongodb-driver-core-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/mybatis-3.2.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/mybatis-generator-core-1.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../jar/opencv-2411.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../jar/dbcp" />
+      <root url="file://$PROJECT_DIR$/../../jar/dom4j" />
+      <root url="file://$PROJECT_DIR$/../../jar/httpclient-4.5所需jar包" />
+      <root url="file://$PROJECT_DIR$/../../jar/java_servlet" />
+      <root url="file://$PROJECT_DIR$/../../jar/jdbc jars" />
+      <root url="file://$PROJECT_DIR$/../../jar/JSONObject所必须的6个包" />
+      <root url="file://$PROJECT_DIR$/../../jar/kafka" />
+      <root url="file://$PROJECT_DIR$/../../jar/ocr" />
+      <root url="file://$PROJECT_DIR$/../../jar/poi" />
+      <root url="file://$PROJECT_DIR$/../../jar/qiniu" />
+      <root url="file://$PROJECT_DIR$/../../jar/redis" />
+      <root url="file://$PROJECT_DIR$/../../jar/selenium" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../jar/opencv-2411.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../jar/httpclient-4.5所需jar包" />
+      <root url="file://$PROJECT_DIR$/../../jar/kafka" />
+      <root url="file://$PROJECT_DIR$/../../jar/spark" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/dbcp" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/dom4j" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/httpclient-4.5所需jar包" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/java_servlet" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/jdbc jars" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/JSONObject所必须的6个包" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/kafka" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/ocr" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/poi" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/qiniu" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/redis" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/selenium" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/httpclient-4.5所需jar包" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/kafka" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../jar/spark" recursive="false" type="SOURCES" />
+  </library>
+</component>

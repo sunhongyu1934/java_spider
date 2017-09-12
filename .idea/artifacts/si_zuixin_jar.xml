@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="si_zuixin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/si_zuixin_jar</output-path>
+    <root id="root">
+      <element id="archive" name="si_zuixin.jar">
+        <element id="module-output" name="Spider" />
+      </element>
+      <element id="library" level="project" name="dbcp" />
+    </root>
+  </artifact>
+</component>

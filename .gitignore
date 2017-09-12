@@ -1,6 +1,2 @@
 *.class
-.idea/
-logs/
-implement/logs/
-jar/logs/
 *.jar
