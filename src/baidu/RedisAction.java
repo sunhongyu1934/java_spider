@@ -17,4 +17,12 @@ public class RedisAction {
     public void set(String key,String valye){
         jedis.sadd(key,valye);
     }
+
+    public void setstr(String key,String value){
+        jedis.set(key,value);
+    }
+
+    public void selectda(int a){
+        jedis.select(a);
+    }
 }

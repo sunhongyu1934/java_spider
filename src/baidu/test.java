@@ -19,6 +19,8 @@ import tianyancha.XinxiXin.tongji;
 
 import java.io.IOException;
 import java.net.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,12 @@ public class test {
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static void main(String args[]) throws IOException, DocumentException, InterruptedException {
+
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(new Date().getTime()/1000);
+            System.out.println(simpleDateFormat.format(new Date((new Date().getTime()/1000-2592000)*1000)));
+
+
         Authenticator.setDefault(new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(ProxyUser, ProxyPass.toCharArray());

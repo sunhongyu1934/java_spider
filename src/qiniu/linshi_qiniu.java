@@ -5,13 +5,13 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -70,6 +70,8 @@ public class linshi_qiniu {
                     data(c);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -91,19 +93,36 @@ public class linshi_qiniu {
         }
     }
 
-    public static void data(Ca c) throws InterruptedException {
-        File file=new File("/home/etl_user/etl/logo_new");
+    public static void data(Ca c) throws InterruptedException, SQLException {
+        String sql="select c_id from linshi_logo2";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        List<String> list=new ArrayList<String>();
+        while (rs.next()){
+            list.add(rs.getString(rs.findColumn("c_id")));
+        }
+        File file = new File("/data1/result_CV2/");
         File[] ff=file.listFiles();
         for(File f :ff){
-            if(f.isFile()){
-                c.fang(f);
+            if (f.isFile()) {
+                boolean bo=false;
+                for(String s:list){
+                    if(f.getName().replace(".png","").equals(s)){
+                        bo=true;
+                    }
+                }
+                if(!bo){
+                    c.fang(f);
+                }
             }
+
+
         }
     }
 
     public static void shang(Ca c) throws QiniuException, SQLException, InterruptedException {
         UploadManager uploadManager = new UploadManager();
-        String sql="insert into linshi_logo(c_id,c_logo) values(?,?)";
+        String sql="insert into linshi_logo2(c_id,c_logo) values(?,?)";
         PreparedStatement ps=conn.prepareStatement(sql);
         while (true) {
             try {
@@ -121,7 +140,6 @@ public class linshi_qiniu {
                 ps.setString(1, f.getName().replace(".png", ""));
                 ps.setString(2, newUrl);
                 ps.executeUpdate();
-                System.out.println(f.delete());
                 System.out.println(c.po.size() + "*****************************************************");
             }catch (Exception e){
                 System.out.println("error");

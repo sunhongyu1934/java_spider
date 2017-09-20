@@ -19,8 +19,8 @@ import static simutong.simutong_jigou.simutong_jigou.touzi;
  */
 public class Shijian {
     // 代理隧道验证信息
-    final static String ProxyUser = "HZ172298268G1C2D";
-    final static String ProxyPass = "1A22286DC665A425";
+    final static String ProxyUser = "H4KKF9EHDF26260D";
+    final static String ProxyPass = "2A64AB23C97FCA79";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -62,7 +62,7 @@ public class Shijian {
 
 
     public static void data(Connection con,Proxy proxy) throws SQLException, IOException, InterruptedException, ParseException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        String sql="select DISTINCT s_id from si_jiben where s_id not in (select s_id from si_touzi)";
+        String sql="select DISTINCT s_id from si_jiben where s_id not in (select s_id from si_touzi) and id>20029";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
 

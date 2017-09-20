@@ -61,8 +61,8 @@ import java.util.concurrent.*;
 public class Project {
     private Map<String,String> map=new HashMap<String, String>();
     // 代理隧道验证信息
-    final static String ProxyUser = "H0QCBTTB7675S1XD";
-    final static String ProxyPass = "26A1FF9238C9050D";
+    final static String ProxyUser = "H37O6V2M6C29YK9D";
+    final static String ProxyPass = "2BE6C0719BB6A39B";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -436,7 +436,7 @@ public class Project {
     public static void login() throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         Map<String,String> map=new HashMap<String, String>();
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H4TL2M827AIJ963D", "81C9D64628A60CF9"));
+        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H37O6V2M6C29YK9D", "2BE6C0719BB6A39B"));
         HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
         DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
         RequestConfig requestConfig = RequestConfig.custom()

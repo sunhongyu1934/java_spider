@@ -27,8 +27,8 @@ import static chuangyebang.cyb_tzsj.storedata;
  */
 public class cyb_tzsjzl {
     // 代理隧道验证信息
-    final static String ProxyUser = "H6I878E110016EVD";
-    final static String ProxyPass = "E7D36F817D52CF35";
+    final static String ProxyUser = "H6STQJ2G9011329D";
+    final static String ProxyPass = "E946B835EC9D2ED7";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";

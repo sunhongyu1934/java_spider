@@ -27,8 +27,10 @@ public class send_redis {
             }
         }
 
-        RedisAction rs=new RedisAction("10.44.51.90", 6379);
-        duqu6(con, rs);
+        RedisAction rs=new RedisAction("10.44.152.49", 6379);
+        rs.selectda(10);
+        duqu8(con, rs);
+        duqu9(con, rs);
     }
     public static void duqu(Connection con,RedisAction r) throws SQLException, InterruptedException {
         String sql="select ";
@@ -121,6 +123,62 @@ public class send_redis {
             r.set("tyc_logo",cname);
             p++;
             System.out.println(p+"****************************************");
+        }
+    }
+
+    public static void duqu7(Connection con,RedisAction r) throws SQLException {
+        int sum=0;
+        int p = 0;
+        for(int a=1;a<=18;a++) {
+            String sql = "select distinct only_id from dimension_sum.com_dictionaries where register_or=0 limit "+sum+",500000";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String cname = rs.getString(rs.findColumn("only_id"));
+                r.set("zhuce", cname);
+                p++;
+                System.out.println(p + "****************************************");
+            }
+            sum=sum+500000;
+        }
+    }
+
+    public static void duqu8(Connection con,RedisAction r) throws SQLException {
+        int sum=0;
+        int p = 0;
+        for(int a=1;a<=20;a++) {
+            String sql = "select distinct t_id,quan_cheng from tyc.tyc_jichu_quan limit "+sum+",500000";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String cname = rs.getString(rs.findColumn("quan_cheng"));
+                String tid=rs.getString(rs.findColumn("t_id"));
+                r.setstr(tid, cname);
+                p++;
+                System.out.println(p + "****************************************");
+            }
+            sum=sum+500000;
+        }
+    }
+
+    public static void duqu9(Connection con,RedisAction r) throws SQLException {
+        int sum=0;
+        int p = 0;
+        for(int a=1;a<=10;a++) {
+            String sql = "select distinct t_id,quan_cheng from tyc.tyc_jichu_quan1 limit "+sum+",500000";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String cname = rs.getString(rs.findColumn("quan_cheng"));
+                String tid=rs.getString(rs.findColumn("t_id"));
+                r.setstr(tid, cname);
+                p++;
+                System.out.println(p + "****************************************");
+            }
+            sum=sum+500000;
         }
     }
 }

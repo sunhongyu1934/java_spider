@@ -30,9 +30,9 @@ public class login {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://100.115.97.86:3306/dc_cscyl?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="tech_spider";
-        String password="sPiDer$#@!23";
+        String url1="jdbc:mysql://etl2.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="spider";
+        String password="spider";
         try {
             Class.forName(driver1).newInstance();
         } catch (InstantiationException e) {
@@ -61,7 +61,7 @@ public class login {
         conn=con;
 
     }
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, InterruptedException {
         login l=new login();
         final Uu u=l.new Uu();
         ExecutorService pool= Executors.newCachedThreadPool();
@@ -77,7 +77,8 @@ public class login {
                 }
             }
         });
-        for(int x=1;x<=20;x++){
+
+        for(int x=1;x<=1;x++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
@@ -91,20 +92,25 @@ public class login {
                 }
             });
         }
+
     }
 
     public static void data(Uu u) throws SQLException, InterruptedException {
-        String sql="select ncid,logourl from comp_baseinfo_innotree where logourl!='' and logourl is not null";
-        PreparedStatement ps=conn.prepareStatement(sql);
-        ResultSet rs=ps.executeQuery();
-        while (rs.next()){
-            try {
-                String id = rs.getString(rs.findColumn("ncid"));
-                String logo = rs.getString(rs.findColumn("logourl"));
-                u.fang(new String[]{id, logo});
-            }catch (Exception e){
-                System.out.println("fang error");
+        int a=175371;
+        for(int x=1;x<=115;x++) {
+            String sql = "select ncid,logourl from ll limit "+a+",1000";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                try {
+                    String id = rs.getString(rs.findColumn("ncid"));
+                    String logo = rs.getString(rs.findColumn("logourl"));
+                    u.fang(new String[]{id, logo});
+                } catch (Exception e) {
+                    System.out.println("fang error");
+                }
             }
+            a=a+1000;
         }
     }
 
@@ -128,7 +134,7 @@ public class login {
         while (true) {
             try {
                 String[] value = u.qu();
-                if (value == null && value.length < 2) {
+                if (value == null || value.length < 2) {
                     break;
                 }
                 HttpGet get = new HttpGet(value[1]);
@@ -139,7 +145,7 @@ public class login {
                         if (code == 200) {
                             HttpEntity entity = response.getEntity();
                             InputStream in = entity.getContent();
-                            FileOutputStream fos = new FileOutputStream("/home/etl_user/etl/logo/" + value[0] + ".png");
+                            FileOutputStream fos = new FileOutputStream("D:\\图片临时\\imgine2\\" + value[0] + ".png");
                             byte[] buf = new byte[1024];
                             int len = 0;
                             while ((len = in.read(buf)) != -1) {
@@ -161,7 +167,6 @@ public class login {
                         System.out.println("detail error");
                     }
                 }
-                System.out.println(u.po.size()+"----------------------------------------------------------------");
             }catch (Exception e){
                 System.out.println("error");
             }
@@ -174,7 +179,7 @@ public class login {
             po.put(key);
         }
         public String[] qu() throws InterruptedException {
-            return po.poll(10, TimeUnit.SECONDS);
+            return po.poll(100000, TimeUnit.SECONDS);
         }
     }
 }

@@ -91,7 +91,7 @@ public class ittzjg_zl {
         Map<String,String> map=new HashMap<String, String>();
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
         HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
         DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
         RequestConfig requestConfig = RequestConfig.custom()
@@ -192,7 +192,7 @@ public class ittzjg_zl {
                     //String ip=get();
                     CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-                    credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+                    credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
                     HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
                     DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
                     RequestConfig requestConfig = RequestConfig.custom()
@@ -258,7 +258,7 @@ public class ittzjg_zl {
                 //String ip=get();
                 CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-                credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+                credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
                 HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
                 DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
                 RequestConfig requestConfig = RequestConfig.custom()

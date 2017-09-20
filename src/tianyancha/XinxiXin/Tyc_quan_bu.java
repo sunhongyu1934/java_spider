@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import static Utils.JsoupUtils.*;
-import static tianyancha.XinxiXin.gudong_buchong.detailget;
-import static tianyancha.XinxiXin.gudong_buchong.jisuan;
+import static tianyancha.XinxiXin.XinxiXin.detailget;
+import static tianyancha.XinxiXin.XinxiXin.jisuan;
 
 /**
  * Created by Administrator on 2017/7/3.
@@ -54,21 +54,20 @@ public class Tyc_quan_bu {
     private static PreparedStatement ps32;
     private static PreparedStatement ps33;
     private static PreparedStatement ps34;
-    //private static RedisAction rr=new RedisAction("10.44.51.90", 6379);
-    public Tyc_quan_bu(Connection con, String[] value) throws SQLException {
+    public Tyc_quan_bu(Connection con,String[] value) throws SQLException {
         this.con=con;
         for(int x=0;x<value.length;x++){
             if(value[x].equals("基本信息")){
-                String sql1="insert into tyc_jichu_quan1(quan_cheng,ceng_yongming,logo,p_hone,e_mail,a_ddress,w_eb,fa_ren,zhuce_ziben,zhuce_shijian,hezhun_riqi,jingying_zhuangtai,nashui_shibie,gongshang_hao,zuzhijigou_daima,tongyi_xinyong,qiye_leixing,hang_ye,yingye_nianxian,dengji_jiguan,zhuce_dizhi,jingying_fanwei,t_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sql1="insert into tyc_jichu_quan(quan_cheng,ceng_yongming,logo,p_hone,e_mail,a_ddress,w_eb,fa_ren,zhuce_ziben,zhuce_shijian,hezhun_riqi,jingying_zhuangtai,nashui_shibie,gongshang_hao,zuzhijigou_daima,tongyi_xinyong,qiye_leixing,hang_ye,yingye_nianxian,dengji_jiguan,zhuce_dizhi,jingying_fanwei,t_id,c_desc) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 this.ps1=con.prepareStatement(sql1);
             }else if(value[x].equals("主要成员")){
-                String sql2="insert into tyc_main1(t_id,zhi_wu,p_name,p_tid) values(?,?,?,?)";
+                String sql2="insert into tyc_main(t_id,zhi_wu,p_name,p_tid) values(?,?,?,?)";
                 this.ps2=con.prepareStatement(sql2);
             }else if(value[x].equals("股东信息")){
-                String sql6="insert into tyc_gudongxin1(t_id,p_name,p_tid,chuzi_bili,renjiao_chuzi) values(?,?,?,?,?)";
+                String sql6="insert into tyc_gudongxin(t_id,p_name,p_tid,chuzi_bili,renjiao_chuzi) values(?,?,?,?,?)";
                 this.ps6=con.prepareStatement(sql6);
             }else if(value[x].equals("对外投资")){
-                String sql3="insert into tyc_out_investment1(t_id,invest_name,invest_tid,representative,rep_tid,register_amount,register_date,investment_amount,investment_rate,com_status) values(?,?,?,?,?,?,?,?,?,?)";
+                String sql3="insert into tyc_out_investment(t_id,invest_name,invest_tid,representative,rep_tid,register_amount,register_date,investment_amount,investment_rate,com_status) values(?,?,?,?,?,?,?,?,?,?)";
                 this.ps3=con.prepareStatement(sql3);
             }else if(value[x].equals("变更记录")){
                 String sql4="insert into tyc_change_record(t_id,change_time,change_item,before_change,after_change) values(?,?,?,?,?)";
@@ -191,6 +190,7 @@ public class Tyc_quan_bu {
         String zhucedizhi=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(注册地址) span",0);
         String jingyingfanwei=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(经营范围) span.js-full-container",0);
         String faren=getString(doc2,"div.in-block.vertical-top.pl15 div.new-c3.f18.overflow-width a",0);
+        String desc=getString(doc2,"div.c8.ml20.pt20.mt20.over-hide span.more-overflow2.float-left",0).replace("企业简介：","");
 
         ps1.setString(1,quancheng);
         ps1.setString(2,ceng);
@@ -215,6 +215,7 @@ public class Tyc_quan_bu {
         ps1.setString(21,zhucedizhi);
         ps1.setString(22,jingyingfanwei);
         ps1.setString(23,tid);
+        ps1.setString(24,desc);
         ps1.executeUpdate();
         System.out.println("success_tyc-quan");
     }
@@ -278,8 +279,6 @@ public class Tyc_quan_bu {
                         ps3.setString(9, touzizhanbi);
                         ps3.setString(10, zhuangtai);
                         ps3.executeUpdate();
-
-                        //rr.set("tyc_linshi6", gongsitid + "*****" + gongsiming);
                     }
                 }
             }
@@ -543,9 +542,9 @@ public class Tyc_quan_bu {
             }
             if(touzi!=null){
                 for(Element e:touzi){
-                    String time=getString(e,"td",0);
-                    String lunci=getString(e,"td",1);
-                    String jine=getString(e,"td",2);
+                    String time = getString(e, "td", 0);
+                    String lunci = getString(e, "td", 1);
+                    String jine = getString(e, "td", 2);
                     Elements tele = getElements(e, "td:nth-child(4) a");
                     String touzifang="";
                     String touzifangtid="";
@@ -571,24 +570,24 @@ public class Tyc_quan_bu {
                     if(str2!=null&&StringUtils.isNotEmpty(str2.toString())){
                         touzifangtid = str2.substring(0, str2.length() - 1);
                     }
-                    String chanlogo=getHref(e,"td img","src",0);
+                    String chanlogo = getHref(e, "td img", "src", 0);
+                    String chanming = getString(e, "td", 4);
                     String chantid=getHref(e,"td:nth-child(5) a","href",0).replace("/company/","");
-                    String chanming=getString(e,"td",4);
-                    String diqu=getString(e,"td",5);
-                    String hangye=getString(e,"td",6);
-                    String yewu=getString(e,"td",7);
+                    String diqu = getString(e, "td", 5);
+                    String hangye = getString(e, "td", 6);
+                    String yewu = getString(e, "td", 7);
 
-                    ps10.setString(1,tid);
-                    ps10.setString(2,time);
-                    ps10.setString(3,lunci);
-                    ps10.setString(4,jine);
-                    ps10.setString(5,touzifang);
-                    ps10.setString(6,touzifangtid);
-                    ps10.setString(7,chanming);
-                    ps10.setString(8,chanlogo);
-                    ps10.setString(9,diqu);
-                    ps10.setString(10,hangye);
-                    ps10.setString(11,yewu);
+                    ps10.setString(1, tid);
+                    ps10.setString(2, time);
+                    ps10.setString(3, lunci);
+                    ps10.setString(4, jine);
+                    ps10.setString(5, touzifang);
+                    ps10.setString(6, touzifangtid);
+                    ps10.setString(7, chanming);
+                    ps10.setString(8, chanlogo);
+                    ps10.setString(9, diqu);
+                    ps10.setString(10, hangye);
+                    ps10.setString(11, yewu);
                     ps10.setString(12,chantid);
                     ps10.executeUpdate();
                 }
@@ -1431,6 +1430,7 @@ public class Tyc_quan_bu {
         }
     }
 
+
     public static void gongzhonghao(Document doc,String tid,String cname) throws IOException, SQLException {
         Document doc2=doc;
         String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
@@ -1441,8 +1441,8 @@ public class Tyc_quan_bu {
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
                 while (true) {
-                    Map<String, Object> map = XinxiXin.jisuan(tid);
-                    doc2 = XinxiXin.detailget("http://www.tianyancha.com/pagination/wechat.xhtml?ps=10&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
+                    Map<String, Object> map = jisuan(tid);
+                    doc2 = detailget("http://www.tianyancha.com/pagination/wechat.xhtml?ps=10&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
                         break;
                     }
@@ -1473,6 +1473,8 @@ public class Tyc_quan_bu {
         }
 
     }
+
+
 
 
 

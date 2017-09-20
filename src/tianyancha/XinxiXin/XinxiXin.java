@@ -43,24 +43,6 @@ public class XinxiXin {
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static Proxy proxy;
-    private static HttpClientBuilder builder;
-    static{
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("HL8LK84J5D81DB7D", "92BB5D9A91C09C59"));
-        HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
-                .setSocketTimeout(5000).build();
-
-        builder = HttpClients.custom();
-
-        builder.setRoutePlanner(routePlanner);
-
-        builder.setDefaultCredentialsProvider(credsProvider);
-        builder.setDefaultRequestConfig(requestConfig);
-    }
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         System.out.println("spider begin ******************************************************************************");
         // 代理隧道验证信息
@@ -76,9 +58,9 @@ public class XinxiXin {
         XinxiXin.proxy =proxy;
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="spider";
-        String password="spider";
+        String url1="jdbc:mysql://10.252.0.52:3306/tianyancha?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="etl_tmp";
+        String password="UsF4z5HE771KQpra";
         Class.forName(driver1).newInstance();
         java.sql.Connection con=null;
         try {

@@ -21,15 +21,15 @@ import static Utils.JsoupUtils.*;
  */
 public class souming {
     // 代理隧道验证信息
-    final static String ProxyUser = "HP098K11Z863G14D";
-    final static String ProxyPass = "2EBC19D19C17D8ED";
+    final static String ProxyUser = "H2CGL101C4D537QD";
+    final static String ProxyPass = "1E60DF24843C82B0";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://etl2.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -101,12 +101,12 @@ public class souming {
     }
 
     public static void data(Connection con,Keys k) throws SQLException, InterruptedException {
-        String sql="select  max(id) as `id`,exit_enterprise from dw_online.si_tuichu where exit_enterprise!='' and exit_enterprise is not null and exit_enterprise!='--' and exit_enterprise not in (select zhong_jian from si_company)  GROUP BY exit_enterprise";
+        String sql="select  jian from spider_dim.si_comp_name";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
-            String gid=rs.getString(rs.findColumn("id"));
-            String ming=rs.getString(rs.findColumn("exit_enterprise"));
+            String gid="0";
+            String ming=rs.getString(rs.findColumn("jian"));
             k.fang(new String[]{gid,ming});
         }
     }

@@ -47,8 +47,8 @@ import java.util.*;
  */
 public class itjz_l {
     // 代理隧道验证信息
-    final static String ProxyUser = "H112205236B5G2PD";
-    final static String ProxyPass = "E9484DB291BFC579";
+    final static String ProxyUser = "H6STQJ2G9011329D";
+    final static String ProxyPass = "E946B835EC9D2ED7";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -128,7 +128,7 @@ public class itjz_l {
                     //String ip=get();
                     CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-                    credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+                    credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
                     HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
                     DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
                     RequestConfig requestConfig = RequestConfig.custom()
@@ -222,7 +222,7 @@ public class itjz_l {
         //String ip=get();
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
         HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
         DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
         RequestConfig requestConfig = RequestConfig.custom()
@@ -274,7 +274,7 @@ public class itjz_l {
         Map<String,String> map=new HashMap<String, String>();
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6I878E110016EVD", "E7D36F817D52CF35"));
+        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
         HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
         DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
         RequestConfig requestConfig = RequestConfig.custom()

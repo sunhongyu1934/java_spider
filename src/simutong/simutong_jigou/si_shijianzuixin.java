@@ -28,8 +28,8 @@ import java.util.Map;
  */
 public class si_shijianzuixin {
     // 代理隧道验证信息
-    final static String ProxyUser = "HZ172298268G1C2D";
-    final static String ProxyPass = "1A22286DC665A425";
+    final static String ProxyUser = "H6STQJ2G9011329D";
+    final static String ProxyPass = "E946B835EC9D2ED7";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -49,7 +49,7 @@ public class si_shijianzuixin {
 
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://etl2.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -254,7 +254,12 @@ public class si_shijianzuixin {
         String sql="insert into si_touzizuixin_detail(s_id,s_ming,s_jijin,s_touziren,touzi_jine,gu_quan,s_touzileixing,s_tuichu,s_tuichufang,s_zhanghui,s_zhangbei) values(?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
         Document doc= qingQiu.jichuget(url,map,proxy);
-        Elements ele=JsoupUtils.getElements(doc,"form.form-horizontal table.table.table-hover tbody tr");
+        if(doc.outerHtml().contains("负债合计")){
+            System.out.println(doc);
+            System.exit(0);
+        }
+
+        Elements ele=JsoupUtils.getElements(doc,"form.form-horizontal table.table.table-hover tbody: tr");
         if(ele!=null) {
             int x = 0;
             for (Element e : ele) {

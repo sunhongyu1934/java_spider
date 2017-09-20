@@ -29,8 +29,8 @@ import static simutong.simutong_jijin.qingQiu.jichuget;
  */
 public class Jijin {
     // 代理隧道验证信息
-    final static String ProxyUser = "H47A980OB388590D";
-    final static String ProxyPass = "4E67CD7BD260D551";
+    final static String ProxyUser = "H6STQJ2G9011329D";
+    final static String ProxyPass = "E946B835EC9D2ED7";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -72,7 +72,7 @@ public class Jijin {
 
     public static void data(Connection con,Proxy proxy) throws SQLException, IOException, InterruptedException, ParseException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Random r=new Random();
-        String sql="select DISTINCT detail_url,s_id from dw_online.si_jijin where id>19282";
+        String sql="select DISTINCT detail_url,s_id from dw_online.si_jijin where s_id not in (select DISTINCT g_id from si_jijin_detail)";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         long begin=System.currentTimeMillis();
@@ -149,8 +149,6 @@ public class Jijin {
     public static boolean getJichu(Proxy proxy,Connection con,String s_id,String g_id,Map<String,String> map) throws IOException, InterruptedException, SQLException {
         Document doc=jichuget("http://pe.pedata.cn/getDetailFund.action?param.fund_id="+s_id,map,proxy);
         if(doc!=null) {
-            write("/data2/simutong/jichu", doc.outerHtml(), s_id);
-
             String zhongquan = getString(doc, "div.detail_top div.float_left span.detail_title24", 0);
             String zhongjian = getString(doc, "div.detail_right div.detail_onebox div.control-group:contains(中文简称) div.controls", 0);
             String yingjian = getString(doc, "div.detail_right div.detail_onebox div.control-group:contains(英文简称) div.controls", 0);
@@ -246,7 +244,6 @@ public class Jijin {
 
     public static void getlp(Proxy proxy,String s_id,Connection con,Map<String,String> map) throws IOException, InterruptedException, SQLException {
         Document doc=jichuget("http://pe.pedata.cn/getLp3rdFund.action?param.fund_id="+s_id, map,proxy);
-        write("/data2/simutong/lp",doc.outerHtml(),s_id);
 
         String sql="insert into si_jiji_lp(s_id,lp_ming,guoyou_flag,shu_xing,lei_xing,chengnuo_jine,lun_ci,chuzi_time,detail_url) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
@@ -281,7 +278,6 @@ public class Jijin {
     public static void gettouzi(Proxy proxy,String s_id,Connection con,Map<String,String> map) throws IOException, InterruptedException, SQLException {
         Random r=new Random();
         Document doc=jichuget("http://pe.pedata.cn/getInvest3rdFund.action?param.fund_id="+s_id, map,proxy);
-        write("/data2/simutong/touzi",doc.outerHtml(),s_id);
 
         String sql="insert into si_jijin_touzi(s_id,ji_jin,qi_ye,hang_ye,di_qu,touzi_ren,touzi_time,lun_ci,jin_e,qiye_sid) values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
@@ -310,9 +306,6 @@ public class Jijin {
                 ps.setString(10,qiyesid);
                 ps.executeUpdate();
 
-                String mingh=get(map,proxy,qiyesid,con);
-                System.out.println("mingzi ok");
-                write("/data2/simutong/gongsi/",mingh,qiyesid );
                 int th = r.nextInt(3001) + 3000;
                 Thread.sleep(th);
             }
@@ -324,7 +317,6 @@ public class Jijin {
     public static void gettuichu(Proxy proxy,String s_id,Connection con,Map<String,String> map) throws IOException, InterruptedException, SQLException {
         Random r=new Random();
         Document doc=jichuget("http://pe.pedata.cn/getExit3rdFund.action?param.fund_id="+s_id, map,proxy);
-        write("/data2/simutong/tuichu",doc.outerHtml(),s_id);
 
         String sql="insert into si_jijin_tuichu(s_id,qi_ye,qiye_sid,tuichu_time,tuichu_fangshi,tuichu_huibao,huibao_beishu,leiji_jine,shouci_time,detail_url) values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
@@ -353,9 +345,6 @@ public class Jijin {
                 ps.setString(10,siqng);
                 ps.executeUpdate();
 
-                String mingh=get(map, proxy, qiyesid, con);
-                System.out.println("mingzi ok");
-                write("/data2/simutong/gongsi/",mingh,qiyesid );
                 int th = r.nextInt(3001) + 3000;
                 Thread.sleep(th);
             }
@@ -364,18 +353,6 @@ public class Jijin {
     }
 
 
-    public static void write(String path,String key,String sid) throws IOException {
-        try {
-            FileOutputStream ff = new FileOutputStream(path + "/" + sid);
-            OutputStreamWriter out = new OutputStreamWriter(ff, "UTF-8");
-            out.write(key);
-            out.flush();
-            ff.close();
-            out.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
 
 }
