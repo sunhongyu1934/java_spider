@@ -222,7 +222,6 @@ public class shangchuan {
     }
 
     public static String getUpToken(){
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
         return auth.uploadToken(BUCKET_NAME);
     }
 

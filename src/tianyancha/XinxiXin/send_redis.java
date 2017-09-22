@@ -28,7 +28,7 @@ public class send_redis {
         }
 
         RedisAction rs=new RedisAction("10.44.152.49", 6379);
-        rs.selectda(10);
+        rs.selectda(11);
         duqu8(con, rs);
         duqu9(con, rs);
     }
@@ -148,14 +148,13 @@ public class send_redis {
         int sum=0;
         int p = 0;
         for(int a=1;a<=20;a++) {
-            String sql = "select distinct t_id,quan_cheng from tyc.tyc_jichu_quan limit "+sum+",500000";
+            String sql = "select distinct quan_cheng from tyc.tyc_jichu_quan limit "+sum+",500000";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 String cname = rs.getString(rs.findColumn("quan_cheng"));
-                String tid=rs.getString(rs.findColumn("t_id"));
-                r.setstr(tid, cname);
+                r.set("com_name", cname);
                 p++;
                 System.out.println(p + "****************************************");
             }
@@ -167,14 +166,13 @@ public class send_redis {
         int sum=0;
         int p = 0;
         for(int a=1;a<=10;a++) {
-            String sql = "select distinct t_id,quan_cheng from tyc.tyc_jichu_quan1 limit "+sum+",500000";
+            String sql = "select distinct quan_cheng from tyc.tyc_jichu_quan1 limit "+sum+",500000";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 String cname = rs.getString(rs.findColumn("quan_cheng"));
-                String tid=rs.getString(rs.findColumn("t_id"));
-                r.setstr(tid, cname);
+                r.set("com_name", cname);
                 p++;
                 System.out.println(p + "****************************************");
             }

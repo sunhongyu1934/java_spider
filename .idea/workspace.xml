@@ -2,27 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="35fabc6c-41b3-4eac-824e-e042befe8234" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/qiniu/pro_shangchuan.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Spider/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/out/production/Spider/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/baidu/RedisAction.java" afterPath="$PROJECT_DIR$/src/baidu/RedisAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/baidu/test.java" afterPath="$PROJECT_DIR$/src/baidu/test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chuangyebang/cyb_tzsjzl.java" afterPath="$PROJECT_DIR$/src/chuangyebang/cyb_tzsjzl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/haosou/Project.java" afterPath="$PROJECT_DIR$/src/haosou/Project.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java" afterPath="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_zl.java" afterPath="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_zl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/itjuzi/zl/itjz_l.java" afterPath="$PROJECT_DIR$/src/itjuzi/zl/itjz_l.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java_image/login.java" afterPath="$PROJECT_DIR$/src/java_image/login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qiniu/linshi_qiniu.java" afterPath="$PROJECT_DIR$/src/qiniu/linshi_qiniu.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qiniu/shangchuan.java" afterPath="$PROJECT_DIR$/src/qiniu/shangchuan.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simutong/simutong_jigou/Shijian.java" afterPath="$PROJECT_DIR$/src/simutong/simutong_jigou/Shijian.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simutong/simutong_jigou/si_shijianzuixin.java" afterPath="$PROJECT_DIR$/src/simutong/simutong_jigou/si_shijianzuixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simutong/simutong_jijin/Jijin.java" afterPath="$PROJECT_DIR$/src/simutong/simutong_jijin/Jijin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simutong/simutong_wangye/souming.java" afterPath="$PROJECT_DIR$/src/simutong/simutong_wangye/souming.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java" afterPath="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java" afterPath="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java" afterPath="$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tianyancha/XinxiXin/send_redis.java" afterPath="$PROJECT_DIR$/src/tianyancha/XinxiXin/send_redis.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/artifacts/si_zuixin_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/send_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/artifacts/send_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/linshi_qiniu_jar.xml" />
     </list>
     <ignored path="Spider.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,21 +45,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="send_redis.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/send_redis.java">
+      <file leaf-file-name="XinxiXin.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="40" column="68" lean-forward="true" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
+            <state relative-caret-position="3636">
+              <caret line="365" column="54" lean-forward="false" selection-start-line="365" selection-start-column="54" selection-end-line="365" selection-end-column="54" />
               <folding>
-                <marker date="1505902489949" expanded="true" signature="1877:2063" ph="select DISTI... tyc_out_investment" />
-                <marker date="1505902489949" expanded="true" signature="1955:2014" ph="select DISTI... wuji_duiwai" />
-                <marker date="1505902489949" expanded="true" signature="2882:2947" ph="select disti... tyc_investment_event" />
-                <marker date="1505902489949" expanded="true" signature="3781:3845" ph="select jian_... linshi" />
-                <marker date="1505902489949" expanded="true" signature="4361:4384" ph="select t_id linshi" />
-                <marker date="1505902489949" expanded="true" signature="4870:4926" ph="select disti... tyc_jichu_chuisou" />
-                <marker date="1505902489949" expanded="true" signature="5464:5564" ph="select disti... com_dictionaries" />
-                <marker date="1505902489949" expanded="true" signature="6160:6236" ph="select disti... tyc_jichu_quan" />
-                <marker date="1505902489949" expanded="true" signature="6898:6975" ph="select disti... tyc_jichu_quan1" />
+                <marker date="1505960421896" expanded="true" signature="5955:5992" ph="select c_nam... linshi_ming" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pro_shangchuan.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qiniu/pro_shangchuan.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1294">
+              <caret line="138" column="42" lean-forward="false" selection-start-line="138" selection-start-column="42" selection-end-line="138" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2295#2634#0" expanded="true" />
+                <element signature="e#2633#2634#0" expanded="true" />
+                <element signature="e#2695#2976#0" expanded="true" />
+                <element signature="e#2975#2976#0" expanded="true" />
+                <element signature="e#3119#3135#0" expanded="true" />
+                <element signature="e#6507#6517#0" expanded="true" />
+                <marker date="1506067087523" expanded="true" signature="3499:3597" ph="select tail_... missingValue" />
+                <marker date="1506067087523" expanded="true" signature="4336:4417" ph="insert into project_logo_qiniu... " />
               </folding>
             </state>
           </provider>
@@ -87,6 +90,18 @@
     <findStrings>
       <find>负债合计</find>
       <find>hexin</find>
+      <find>https://www.tianyancha.com/company/23402373</find>
+      <find>search_right_item</find>
+      <find>60606666-1234</find>
+      <find>北京市海淀区清河中街68号华润五彩城购物中心二期13层</find>
+      <find>91110108551385082Q</find>
+      <find>new-border-bottom</find>
+      <find>185000 万元</find>
+      <find>雷军</find>
+      <find>2013年11月，北京小米科技有限责任公司更名为小米科技有限责任公</find>
+      <find>company_base_info_detail</find>
+      <find>he</find>
+      <find>gongz</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,7 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/haosou/Test20.java" />
         <option value="$PROJECT_DIR$/src/itjuzi/zl/itjzzl.xml" />
         <option value="$PROJECT_DIR$/src/suanfa/Len.java" />
         <option value="$PROJECT_DIR$/src/simutong/simutong_wangye/soujigou.java" />
@@ -117,8 +131,6 @@
         <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/TYCProducer.java" />
         <option value="$PROJECT_DIR$/src/java_orc/OCR.java" />
         <option value="$PROJECT_DIR$/src/java_orc/ocrtest.java" />
-        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java" />
-        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/gudong_buchong.java" />
         <option value="$PROJECT_DIR$/src/file_md5/MD5FileUtil.java" />
         <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/send_kafka.java" />
         <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/TYCConsumer.java" />
@@ -134,23 +146,26 @@
         <option value="$PROJECT_DIR$/src/App/aaa.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/java_image/login.java" />
-        <option value="$PROJECT_DIR$/src/qiniu/shangchuan.java" />
         <option value="$PROJECT_DIR$/src/qiniu/linshi_qiniu.java" />
-        <option value="$PROJECT_DIR$/src/baidu/test.java" />
         <option value="$PROJECT_DIR$/src/simutong/simutong_jijin/Jijin.java" />
         <option value="$PROJECT_DIR$/src/chuangyebang/cyb_tzsjzl.java" />
         <option value="$PROJECT_DIR$/src/itjuzi/zl/itjz_l.java" />
         <option value="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_zl.java" />
-        <option value="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java" />
         <option value="$PROJECT_DIR$/src/haosou/Project.java" />
         <option value="$PROJECT_DIR$/src/simutong/simutong_jigou/Shijian.java" />
         <option value="$PROJECT_DIR$/src/simutong/simutong_jigou/si_shijianzuixin.java" />
-        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java" />
         <option value="$PROJECT_DIR$/src/App/wandoujia.java" />
-        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java" />
         <option value="$PROJECT_DIR$/src/simutong/simutong_wangye/souming.java" />
         <option value="$PROJECT_DIR$/src/baidu/RedisAction.java" />
+        <option value="$PROJECT_DIR$/src/baidu/test.java" />
+        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java" />
+        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/gudong_buchong.java" />
+        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java" />
+        <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java" />
+        <option value="$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java" />
         <option value="$PROJECT_DIR$/src/tianyancha/XinxiXin/send_redis.java" />
+        <option value="$PROJECT_DIR$/src/qiniu/shangchuan.java" />
+        <option value="$PROJECT_DIR$/src/qiniu/pro_shangchuan.java" />
       </list>
     </option>
   </component>
@@ -185,6 +200,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -201,6 +219,18 @@
               <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
               <item name="java_spider" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="App" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="qiniu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="tianyancha" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -210,18 +240,11 @@
               <item name="tianyancha" type="462c0819:PsiDirectoryNode" />
               <item name="XinxiXin" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -280,7 +303,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.souming">
+  <component name="RunManager" selected="Application.ittzjg_sm">
     <configuration name="Bujiben" type="Application" factoryName="Application" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -321,33 +344,6 @@
       <module name="Spider" />
       <envs />
       <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration name="HiveManage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="hadoop.hive.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="hadoop.hive.HiveManage" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Spider" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
@@ -1042,6 +1038,25 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </configuration>
+    <configuration name="ittzjg_sm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="itjuzi.tzjg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="itjuzi.tzjg.ittzjg_sm" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Spider" />
+      <envs />
+    </configuration>
     <configuration name="jichu" type="Application" factoryName="Application" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1414,18 +1429,18 @@
       <item index="25" class="java.lang.String" itemvalue="Application.cyb_tzsjzl" />
       <item index="26" class="java.lang.String" itemvalue="Application.test (1)" />
       <item index="27" class="java.lang.String" itemvalue="Application.linshi_qiniu" />
-      <item index="28" class="java.lang.String" itemvalue="Application.HiveManage" />
-      <item index="29" class="java.lang.String" itemvalue="Application.aaa" />
-      <item index="30" class="java.lang.String" itemvalue="Application.login" />
-      <item index="31" class="java.lang.String" itemvalue="Application.souming" />
+      <item index="28" class="java.lang.String" itemvalue="Application.aaa" />
+      <item index="29" class="java.lang.String" itemvalue="Application.login" />
+      <item index="30" class="java.lang.String" itemvalue="Application.souming" />
+      <item index="31" class="java.lang.String" itemvalue="Application.ittzjg_sm" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.souming" />
-        <item index="1" class="java.lang.String" itemvalue="Application.login" />
-        <item index="2" class="java.lang.String" itemvalue="Application.linshi_qiniu" />
-        <item index="3" class="java.lang.String" itemvalue="Application.aaa" />
-        <item index="4" class="java.lang.String" itemvalue="Application.HiveManage" />
+        <item index="0" class="java.lang.String" itemvalue="Application.ittzjg_sm" />
+        <item index="1" class="java.lang.String" itemvalue="Application.souming" />
+        <item index="2" class="java.lang.String" itemvalue="Application.login" />
+        <item index="3" class="java.lang.String" itemvalue="Application.linshi_qiniu" />
+        <item index="4" class="java.lang.String" itemvalue="Application.aaa" />
       </list>
     </recent_temporary>
   </component>
@@ -1625,11 +1640,19 @@
       <workItem from="1505821557907" duration="596000" />
       <workItem from="1505871618299" duration="651000" />
       <workItem from="1505879805727" duration="9415000" />
+      <workItem from="1505911104083" duration="4243000" />
+      <workItem from="1505958387269" duration="3722000" />
+      <workItem from="1505979292308" duration="2392000" />
+      <workItem from="1505983467343" duration="435000" />
+      <workItem from="1505988474971" duration="38000" />
+      <workItem from="1505988721363" duration="8000" />
+      <workItem from="1506060469503" duration="78000" />
+      <workItem from="1506064011992" duration="4219000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2946972000" />
+    <option name="totallyTimeSpent" value="2962107000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -1664,7 +1687,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36437908" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3256579" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29276314" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1718,20 +1741,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/suanfa/Len.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="22" column="41" lean-forward="false" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java_orc/ImageIOHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java_orc/OCR.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1867,24 +1876,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qiniu/shangchuan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="807">
-          <caret line="225" column="45" lean-forward="false" selection-start-line="225" selection-start-column="45" selection-end-line="225" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qiniu/linshi_qiniu.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-138">
           <caret line="98" column="39" lean-forward="false" selection-start-line="98" selection-start-column="39" selection-end-line="98" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/baidu/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-211">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1909,13 +1904,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="93" column="125" lean-forward="false" selection-start-line="93" selection-start-column="125" selection-end-line="93" selection-end-column="125" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/haosou/Project.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3325">
@@ -1937,109 +1925,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-22142">
-          <caret line="488" column="8" lean-forward="false" selection-start-line="488" selection-start-column="8" selection-end-line="488" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1505879869202" expanded="true" signature="2231:2587" ph="insert into tyc_jichu_quan... " />
-            <marker date="1505879869202" expanded="true" signature="2719:2781" ph="insert into tyc_main... " />
-            <marker date="1505879869202" expanded="true" signature="2913:3000" ph="insert into tyc_gudongxin... " />
-            <marker date="1505879869202" expanded="true" signature="3132:3317" ph="insert into tyc_out_investment... " />
-            <marker date="1505879869202" expanded="true" signature="3449:3553" ph="insert into tyc_change_record... " />
-            <marker date="1505879869202" expanded="true" signature="3685:3797" ph="insert into tyc_branch_info... " />
-            <marker date="1505879869202" expanded="true" signature="3929:4087" ph="insert into tyc_financing_history... " />
-            <marker date="1505879869202" expanded="true" signature="4219:4308" ph="insert into tyc_core_team... " />
-            <marker date="1505879869202" expanded="true" signature="4440:4533" ph="insert into tyc_enterprise_business... " />
-            <marker date="1505879869202" expanded="true" signature="4666:4870" ph="insert into tyc_investment_event... " />
-            <marker date="1505879869202" expanded="true" signature="5005:5170" ph="insert into tyc_competing_information... " />
-            <marker date="1505879869202" expanded="true" signature="5305:5409" ph="insert into tyc_legal_proceedings... " />
-            <marker date="1505879869202" expanded="true" signature="5544:5646" ph="insert into tyc_court_notice... " />
-            <marker date="1505879869202" expanded="true" signature="5781:5873" ph="insert into tyc_person_subjected... " />
-            <marker date="1505879869202" expanded="true" signature="6007:6118" ph="insert into tyc_dishonest_person... " />
-            <marker date="1505879869202" expanded="true" signature="6253:6384" ph="insert into tyc_abnormal_operation... " />
-            <marker date="1505879869202" expanded="true" signature="6519:6617" ph="insert into tyc_administrative_sanction... " />
-            <marker date="1505879869202" expanded="true" signature="6752:6844" ph="insert into tyc_serious_violation... " />
-            <marker date="1505879869202" expanded="true" signature="6979:7089" ph="insert into tyc_stock_ownership... " />
-            <marker date="1505879869202" expanded="true" signature="7224:7349" ph="insert into tyc_chattel_mortgage... " />
-            <marker date="1505879869202" expanded="true" signature="7484:7598" ph="insert into tyc_tax_notice... " />
-            <marker date="1505879869202" expanded="true" signature="7732:7832" ph="insert into tyc_company_bidding... " />
-            <marker date="1505879869202" expanded="true" signature="7967:8073" ph="insert into tyc_bond_information... " />
-            <marker date="1505879869202" expanded="true" signature="8208:8322" ph="insert into tyc_purchase_information... " />
-            <marker date="1505879869202" expanded="true" signature="8455:8584" ph="insert into tyc_recruit_information... " />
-            <marker date="1505879869202" expanded="true" signature="8719:8821" ph="insert into tyc_tax_rating... " />
-            <marker date="1505879869202" expanded="true" signature="8956:9047" ph="insert into tyc_spot_check... " />
-            <marker date="1505879869202" expanded="true" signature="9182:9289" ph="insert into tyc_product_information... " />
-            <marker date="1505879869202" expanded="true" signature="9424:9560" ph="insert into tyc_qualification_certificate... " />
-            <marker date="1505879869202" expanded="true" signature="9695:9838" ph="insert into tyc_trademark_information... " />
-            <marker date="1505879869202" expanded="true" signature="9971:10074" ph="insert into tyc_patent_information... " />
-            <marker date="1505879869202" expanded="true" signature="10208:10345" ph="insert into tyc_copyright_information... " />
-            <marker date="1505879869202" expanded="true" signature="10480:10622" ph="insert into tyc_website_filing... " />
-            <marker date="1505879869202" expanded="true" signature="10758:10841" ph="insert into tyc_webcat... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/gudong_buchong.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="106" column="17" lean-forward="true" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6611">
-          <caret line="441" column="5" lean-forward="true" selection-start-line="441" selection-start-column="5" selection-end-line="441" selection-end-column="5" />
-          <folding>
-            <marker date="1504859801108" expanded="true" signature="2225:2581" ph="insert into tyc_jichu_quan... " />
-            <marker date="1504859801108" expanded="true" signature="2713:2775" ph="insert into tyc_main... " />
-            <marker date="1504859801108" expanded="true" signature="2907:2994" ph="insert into tyc_gudongxin... " />
-            <marker date="1504859801108" expanded="true" signature="3126:3311" ph="insert into tyc_out_investment... " />
-            <marker date="1504859801108" expanded="true" signature="3443:3547" ph="insert into tyc_change_record... " />
-            <marker date="1504859801108" expanded="true" signature="3679:3791" ph="insert into tyc_branch_info... " />
-            <marker date="1504859801108" expanded="true" signature="3923:4081" ph="insert into tyc_financing_history... " />
-            <marker date="1504859801108" expanded="true" signature="4213:4302" ph="insert into tyc_core_team... " />
-            <marker date="1504859801108" expanded="true" signature="4434:4527" ph="insert into tyc_enterprise_business... " />
-            <marker date="1504859801108" expanded="true" signature="4660:4864" ph="insert into tyc_investment_event... " />
-            <marker date="1504859801108" expanded="true" signature="4999:5164" ph="insert into tyc_competing_information... " />
-            <marker date="1504859801108" expanded="true" signature="5299:5403" ph="insert into tyc_legal_proceedings... " />
-            <marker date="1504859801108" expanded="true" signature="5538:5640" ph="insert into tyc_court_notice... " />
-            <marker date="1504859801108" expanded="true" signature="5775:5867" ph="insert into tyc_person_subjected... " />
-            <marker date="1504859801108" expanded="true" signature="6001:6112" ph="insert into tyc_dishonest_person... " />
-            <marker date="1504859801108" expanded="true" signature="6247:6378" ph="insert into tyc_abnormal_operation... " />
-            <marker date="1504859801108" expanded="true" signature="6513:6611" ph="insert into tyc_administrative_sanction... " />
-            <marker date="1504859801108" expanded="true" signature="6746:6838" ph="insert into tyc_serious_violation... " />
-            <marker date="1504859801108" expanded="true" signature="6973:7083" ph="insert into tyc_stock_ownership... " />
-            <marker date="1504859801108" expanded="true" signature="7218:7343" ph="insert into tyc_chattel_mortgage... " />
-            <marker date="1504859801108" expanded="true" signature="7478:7592" ph="insert into tyc_tax_notice... " />
-            <marker date="1504859801108" expanded="true" signature="7726:7826" ph="insert into tyc_company_bidding... " />
-            <marker date="1504859801108" expanded="true" signature="7961:8067" ph="insert into tyc_bond_information... " />
-            <marker date="1504859801108" expanded="true" signature="8202:8316" ph="insert into tyc_purchase_information... " />
-            <marker date="1504859801108" expanded="true" signature="8449:8578" ph="insert into tyc_recruit_information... " />
-            <marker date="1504859801108" expanded="true" signature="8713:8815" ph="insert into tyc_tax_rating... " />
-            <marker date="1504859801108" expanded="true" signature="8950:9041" ph="insert into tyc_spot_check... " />
-            <marker date="1504859801108" expanded="true" signature="9176:9283" ph="insert into tyc_product_information... " />
-            <marker date="1504859801108" expanded="true" signature="9418:9554" ph="insert into tyc_qualification_certificate... " />
-            <marker date="1504859801108" expanded="true" signature="9689:9832" ph="insert into tyc_trademark_information... " />
-            <marker date="1504859801108" expanded="true" signature="9965:10068" ph="insert into tyc_patent_information... " />
-            <marker date="1504859801108" expanded="true" signature="10202:10339" ph="insert into tyc_copyright_information... " />
-            <marker date="1504859801108" expanded="true" signature="10474:10616" ph="insert into tyc_website_filing... " />
-            <marker date="1504859801108" expanded="true" signature="10752:10835" ph="insert into tyc_webcat... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/simutong/simutong_jigou/si_shijianzuixin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="807">
           <caret line="261" column="100" lean-forward="false" selection-start-line="261" selection-start-column="100" selection-end-line="261" selection-end-column="100" />
-          <folding>
-            <marker date="1505809622257" expanded="true" signature="4080:4273" ph="insert into si_touzi_zuixin... " />
-            <marker date="1505809622257" expanded="true" signature="11177:11350" ph="insert into si_touzizuixin_detail... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2055,26 +1944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-46">
           <caret line="84" column="26" lean-forward="false" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
-          <folding>
-            <marker date="1505738723618" expanded="true" signature="2800:2917" ph="select DISTI... si_jijin" />
-            <marker date="1505738723618" expanded="true" signature="2875:2916" ph="select DISTI... si_jijin_detail" />
-            <marker date="1505738723618" expanded="true" signature="8507:8740" ph="insert into si_jijin_detail... " />
-            <marker date="1505738723618" expanded="true" signature="9577:9700" ph="insert into si_jijin_lianxi... " />
-            <marker date="1505738723618" expanded="true" signature="11148:11239" ph="insert into si_jijin_muji... " />
-            <marker date="1505738723618" expanded="true" signature="12544:12679" ph="insert into si_jiji_lp... " />
-            <marker date="1505738723618" expanded="true" signature="14107:14237" ph="insert into si_jijin_touzi... " />
-            <marker date="1505738723618" expanded="true" signature="15876:16041" ph="insert into si_jijin_tuichu... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App/wandoujia.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="41" column="49" lean-forward="true" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
-          <folding>
-            <marker date="1505894857706" expanded="true" signature="5550:5712" ph="insert into wandoujia... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2082,24 +1951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="105" column="39" lean-forward="true" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
-          <folding>
-            <marker date="1505897482055" expanded="true" signature="3545:3586" ph="select jian si_comp_name" />
-            <marker date="1505897482055" expanded="true" signature="6741:6927" ph="insert into si_company... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="65" column="13" lean-forward="true" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
-          <folding>
-            <element signature="e#23748#23756#0" expanded="true" />
-            <element signature="e#24810#24818#0" expanded="true" />
-            <element signature="e#26707#26715#0" expanded="true" />
-            <element signature="e#27026#27036#0" expanded="true" />
-            <marker date="1505895011088" expanded="true" signature="5967:6004" ph="select c_nam... linshi_ming" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2107,44 +1958,195 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/baidu/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="63" column="93" lean-forward="false" selection-start-line="63" selection-start-column="93" selection-end-line="63" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan_bu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="75" column="143" lean-forward="true" selection-start-line="75" selection-start-column="143" selection-end-line="75" selection-end-column="143" />
           <folding>
-            <element signature="e#196#197#0" expanded="true" />
-            <element signature="e#241#242#0" expanded="true" />
+            <marker date="1505913502302" expanded="true" signature="2231:2587" ph="insert into tyc_jichu_quan... " />
+            <marker date="1505913502302" expanded="true" signature="2719:2781" ph="insert into tyc_main... " />
+            <marker date="1505913502302" expanded="true" signature="2913:3000" ph="insert into tyc_gudongxin... " />
+            <marker date="1505913502302" expanded="true" signature="3132:3317" ph="insert into tyc_out_investment... " />
+            <marker date="1505913502302" expanded="true" signature="3449:3553" ph="insert into tyc_change_record... " />
+            <marker date="1505913502302" expanded="true" signature="3685:3797" ph="insert into tyc_branch_info... " />
+            <marker date="1505913502302" expanded="true" signature="3929:4087" ph="insert into tyc_financing_history... " />
+            <marker date="1505913502302" expanded="true" signature="4219:4308" ph="insert into tyc_core_team... " />
+            <marker date="1505913502302" expanded="true" signature="4440:4533" ph="insert into tyc_enterprise_business... " />
+            <marker date="1505913502302" expanded="true" signature="4666:4870" ph="insert into tyc_investment_event... " />
+            <marker date="1505913502302" expanded="true" signature="5005:5170" ph="insert into tyc_competing_information... " />
+            <marker date="1505913502302" expanded="true" signature="5305:5409" ph="insert into tyc_legal_proceedings... " />
+            <marker date="1505913502302" expanded="true" signature="5544:5646" ph="insert into tyc_court_notice... " />
+            <marker date="1505913502302" expanded="true" signature="5781:5873" ph="insert into tyc_person_subjected... " />
+            <marker date="1505913502302" expanded="true" signature="6007:6118" ph="insert into tyc_dishonest_person... " />
+            <marker date="1505913502302" expanded="true" signature="6253:6384" ph="insert into tyc_abnormal_operation... " />
+            <marker date="1505913502302" expanded="true" signature="6519:6617" ph="insert into tyc_administrative_sanction... " />
+            <marker date="1505913502302" expanded="true" signature="6752:6844" ph="insert into tyc_serious_violation... " />
+            <marker date="1505913502302" expanded="true" signature="6979:7089" ph="insert into tyc_stock_ownership... " />
+            <marker date="1505913502302" expanded="true" signature="7224:7349" ph="insert into tyc_chattel_mortgage... " />
+            <marker date="1505913502302" expanded="true" signature="7484:7598" ph="insert into tyc_tax_notice... " />
+            <marker date="1505913502302" expanded="true" signature="7732:7832" ph="insert into tyc_company_bidding... " />
+            <marker date="1505913502302" expanded="true" signature="7967:8073" ph="insert into tyc_bond_information... " />
+            <marker date="1505913502302" expanded="true" signature="8208:8322" ph="insert into tyc_purchase_information... " />
+            <marker date="1505913502302" expanded="true" signature="8455:8584" ph="insert into tyc_recruit_information... " />
+            <marker date="1505913502302" expanded="true" signature="8719:8821" ph="insert into tyc_tax_rating... " />
+            <marker date="1505913502302" expanded="true" signature="8956:9047" ph="insert into tyc_spot_check... " />
+            <marker date="1505913502302" expanded="true" signature="9182:9289" ph="insert into tyc_product_information... " />
+            <marker date="1505913502302" expanded="true" signature="9424:9560" ph="insert into tyc_qualification_certificate... " />
+            <marker date="1505913502302" expanded="true" signature="9695:9838" ph="insert into tyc_trademark_information... " />
+            <marker date="1505913502302" expanded="true" signature="9971:10074" ph="insert into tyc_patent_information... " />
+            <marker date="1505913502302" expanded="true" signature="10208:10345" ph="insert into tyc_copyright_information... " />
+            <marker date="1505913502302" expanded="true" signature="10480:10622" ph="insert into tyc_website_filing... " />
+            <marker date="1505913502302" expanded="true" signature="10758:10841" ph="insert into tyc_webcat... " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/gudong_buchong.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="68" column="21" lean-forward="false" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/itjuzi/tzjg/ittzjg_sm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="232" column="96" lean-forward="false" selection-start-line="232" selection-start-column="96" selection-end-line="232" selection-end-column="96" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/baidu/RedisAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="25" column="24" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <element signature="e#198#199#0" expanded="true" />
-            <element signature="e#240#241#0" expanded="true" />
-            <element signature="e#387#388#0" expanded="true" />
-            <element signature="e#424#425#0" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#575#576#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="207">
+          <caret line="9" column="11" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/send_redis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="40" column="68" lean-forward="true" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
+        <state relative-caret-position="0">
+          <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
           <folding>
-            <marker date="1505902489949" expanded="true" signature="1877:2063" ph="select DISTI... tyc_out_investment" />
-            <marker date="1505902489949" expanded="true" signature="1955:2014" ph="select DISTI... wuji_duiwai" />
-            <marker date="1505902489949" expanded="true" signature="2882:2947" ph="select disti... tyc_investment_event" />
-            <marker date="1505902489949" expanded="true" signature="3781:3845" ph="select jian_... linshi" />
-            <marker date="1505902489949" expanded="true" signature="4361:4384" ph="select t_id linshi" />
-            <marker date="1505902489949" expanded="true" signature="4870:4926" ph="select disti... tyc_jichu_chuisou" />
-            <marker date="1505902489949" expanded="true" signature="5464:5564" ph="select disti... com_dictionaries" />
-            <marker date="1505902489949" expanded="true" signature="6160:6236" ph="select disti... tyc_jichu_quan" />
-            <marker date="1505902489949" expanded="true" signature="6898:6975" ph="select disti... tyc_jichu_quan1" />
+            <marker date="1505983578388" expanded="true" signature="1877:2063" ph="select DISTI... tyc_out_investment" />
+            <marker date="1505983578388" expanded="true" signature="1955:2014" ph="select DISTI... wuji_duiwai" />
+            <marker date="1505983578388" expanded="true" signature="2882:2947" ph="select disti... tyc_investment_event" />
+            <marker date="1505983578388" expanded="true" signature="3781:3845" ph="select jian_... linshi" />
+            <marker date="1505983578388" expanded="true" signature="4361:4384" ph="select t_id linshi" />
+            <marker date="1505983578388" expanded="true" signature="4870:4926" ph="select disti... tyc_jichu_chuisou" />
+            <marker date="1505983578388" expanded="true" signature="5464:5564" ph="select disti... com_dictionaries" />
+            <marker date="1505983578388" expanded="true" signature="6160:6231" ph="select disti... tyc_jichu_quan" />
+            <marker date="1505983578388" expanded="true" signature="6833:6905" ph="select disti... tyc_jichu_quan1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../jar/JSONObject所必须的6个包/commons-lang-2.5.jar!/org/apache/commons/lang/StringUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/Tyc_quan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="169" column="37" lean-forward="false" selection-start-line="169" selection-start-column="37" selection-end-line="169" selection-end-column="37" />
+          <folding>
+            <marker date="1505958846989" expanded="true" signature="2225:2592" ph="insert into tyc_jichu_quan... " />
+            <marker date="1505958846989" expanded="true" signature="2724:2786" ph="insert into tyc_main... " />
+            <marker date="1505958846989" expanded="true" signature="2918:3005" ph="insert into tyc_gudongxin... " />
+            <marker date="1505958846989" expanded="true" signature="3137:3322" ph="insert into tyc_out_investment... " />
+            <marker date="1505958846989" expanded="true" signature="3454:3558" ph="insert into tyc_change_record... " />
+            <marker date="1505958846989" expanded="true" signature="3690:3802" ph="insert into tyc_branch_info... " />
+            <marker date="1505958846989" expanded="true" signature="3934:4092" ph="insert into tyc_financing_history... " />
+            <marker date="1505958846989" expanded="true" signature="4224:4313" ph="insert into tyc_core_team... " />
+            <marker date="1505958846989" expanded="true" signature="4445:4538" ph="insert into tyc_enterprise_business... " />
+            <marker date="1505958846989" expanded="true" signature="4671:4875" ph="insert into tyc_investment_event... " />
+            <marker date="1505958846989" expanded="true" signature="5010:5175" ph="insert into tyc_competing_information... " />
+            <marker date="1505958846989" expanded="true" signature="5310:5414" ph="insert into tyc_legal_proceedings... " />
+            <marker date="1505958846989" expanded="true" signature="5549:5651" ph="insert into tyc_court_notice... " />
+            <marker date="1505958846989" expanded="true" signature="5786:5878" ph="insert into tyc_person_subjected... " />
+            <marker date="1505958846989" expanded="true" signature="6012:6123" ph="insert into tyc_dishonest_person... " />
+            <marker date="1505958846989" expanded="true" signature="6258:6389" ph="insert into tyc_abnormal_operation... " />
+            <marker date="1505958846989" expanded="true" signature="6524:6622" ph="insert into tyc_administrative_sanction... " />
+            <marker date="1505958846989" expanded="true" signature="6757:6849" ph="insert into tyc_serious_violation... " />
+            <marker date="1505958846989" expanded="true" signature="6984:7094" ph="insert into tyc_stock_ownership... " />
+            <marker date="1505958846989" expanded="true" signature="7229:7354" ph="insert into tyc_chattel_mortgage... " />
+            <marker date="1505958846989" expanded="true" signature="7489:7603" ph="insert into tyc_tax_notice... " />
+            <marker date="1505958846989" expanded="true" signature="7737:7837" ph="insert into tyc_company_bidding... " />
+            <marker date="1505958846989" expanded="true" signature="7972:8078" ph="insert into tyc_bond_information... " />
+            <marker date="1505958846989" expanded="true" signature="8213:8327" ph="insert into tyc_purchase_information... " />
+            <marker date="1505958846989" expanded="true" signature="8460:8589" ph="insert into tyc_recruit_information... " />
+            <marker date="1505958846989" expanded="true" signature="8724:8826" ph="insert into tyc_tax_rating... " />
+            <marker date="1505958846989" expanded="true" signature="8961:9052" ph="insert into tyc_spot_check... " />
+            <marker date="1505958846989" expanded="true" signature="9187:9294" ph="insert into tyc_product_information... " />
+            <marker date="1505958846989" expanded="true" signature="9429:9565" ph="insert into tyc_qualification_certificate... " />
+            <marker date="1505958846989" expanded="true" signature="9700:9843" ph="insert into tyc_trademark_information... " />
+            <marker date="1505958846989" expanded="true" signature="9976:10079" ph="insert into tyc_patent_information... " />
+            <marker date="1505958846989" expanded="true" signature="10213:10350" ph="insert into tyc_copyright_information... " />
+            <marker date="1505958846989" expanded="true" signature="10485:10627" ph="insert into tyc_website_filing... " />
+            <marker date="1505958846989" expanded="true" signature="10763:10846" ph="insert into tyc_webcat... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App/wandoujia.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="33" column="22" lean-forward="false" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+          <folding>
+            <marker date="1505894857706" expanded="true" signature="5550:5712" ph="insert into wandoujia... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qiniu/shangchuan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2300">
+          <caret line="198" column="28" lean-forward="true" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="28" />
+          <folding>
+            <marker date="1506064648245" expanded="true" signature="4237:4469" ph="select missi... missingValue" />
+            <marker date="1506064648245" expanded="true" signature="4509:4585" ph="update missi... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qiniu/pro_shangchuan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1294">
+          <caret line="138" column="42" lean-forward="false" selection-start-line="138" selection-start-column="42" selection-end-line="138" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2295#2634#0" expanded="true" />
+            <element signature="e#2633#2634#0" expanded="true" />
+            <element signature="e#2695#2976#0" expanded="true" />
+            <element signature="e#2975#2976#0" expanded="true" />
+            <element signature="e#3119#3135#0" expanded="true" />
+            <element signature="e#6507#6517#0" expanded="true" />
+            <marker date="1506067087523" expanded="true" signature="3499:3597" ph="select tail_... missingValue" />
+            <marker date="1506067087523" expanded="true" signature="4336:4417" ph="insert into project_logo_qiniu... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tianyancha/XinxiXin/XinxiXin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3636">
+          <caret line="365" column="54" lean-forward="false" selection-start-line="365" selection-start-column="54" selection-end-line="365" selection-end-column="54" />
+          <folding>
+            <marker date="1505960421896" expanded="true" signature="5955:5992" ph="select c_nam... linshi_ming" />
           </folding>
         </state>
       </provider>
@@ -2155,7 +2157,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>send:jar</last-edited>
+          <last-edited>linshi_qiniu:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

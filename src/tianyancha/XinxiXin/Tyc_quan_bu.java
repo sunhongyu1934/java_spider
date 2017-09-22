@@ -165,32 +165,33 @@ public class Tyc_quan_bu {
 
     public static void jichu(Document doc,String tid,String cname) throws SQLException {
         Document doc2=doc;
-        String quancheng=getString(doc2,"div.company_header_width.ie9Style span.f18.in-block.vertival-middle",0);
+        String quancheng = getString(doc2, "div.company_header_width.ie9Style span.f18.in-block.vertival-middle", 0);
         if(StringUtils.isEmpty(quancheng)){
             System.out.println(doc2);
         }
-        String ceng=getString(doc2,"div.historyName45Bottom.position-abs.new-border.pl8.pr8.pt4.pb4",0);
-        String phone=getString(doc2,"div.f14.new-c3.mt10 div.in-block.vertical-top:contains(电话) span",1);
-        String email=getString(doc2,"div.f14.new-c3.mt10 div.in-block.vertical-top:contains(邮箱) span",1);
-        String web=getString(doc2,"div.f14.new-c3 div.in-block.vertical-top:contains(网址) a",0);
-        String address=getString(doc2,"div.f14.new-c3 div.in-block.vertical-top:contains(地址) span",1);
-        String logo=getHref(doc2,"div.b-c-white.new-border.over-hide.mr10.ie9Style img","src",0);
-        String zhuceziben=getString(doc2,"div.new-border-bottom:contains(注册资本) div.pb10",0);
-        String zhuceshijian=getString(doc2,"div.new-border-bottom:contains(注册时间) div.pb10",0);
-        String statu=getString(doc2,"div.pt10:contains(企业状态) div.baseinfo-module-content-value.statusType1",0);
-        String gongshang=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(工商注册号) span",0);
-        String zuzhijigou=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(组织机构代码) span",0);
-        String tongyixinyong=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(统一信用代码) span",0);
-        String qiyeleixing=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(企业类型) span",0);
-        String nashuiren=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(纳税人识别号) span",0);
-        String hangye=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(行业) span",0);
-        String yingyeqixian=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(营业期限) span",0);
-        String hezhunriqi=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(核准日期) span",0);
-        String dengjijiguan=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(登记机关) span",0);
-        String zhucedizhi=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(注册地址) span",0);
-        String jingyingfanwei=getString(doc2,"div.row.b-c-white.base2017 table tbody td.basic-td:contains(经营范围) span.js-full-container",0);
-        String faren=getString(doc2,"div.in-block.vertical-top.pl15 div.new-c3.f18.overflow-width a",0);
-        String desc=getString(doc2,"div.c8.ml20.pt20.mt20.over-hide span.more-overflow2.float-left",0).replace("企业简介：","");
+        String ceng = getString(doc2, "div.historyName45Bottom.position-abs.new-border.pl8.pr8.pt4.pb4", 0);
+        String phone = getString(doc2, "div.f14.sec-c2.mt10 div.in-block.vertical-top:contains(电话) span", 1);
+        String email = getString(doc2, "div.f14.sec-c2.mt10 div.in-block.vertical-top:contains(邮箱) span", 1);
+        String web = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(网址) a", 0);
+        String address = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(地址) span", 1);
+        String logo = getHref(doc2, "div.b-c-white.new-border.over-hide.mr10.ie9Style img", "src", 0);
+        String zhuceziben = getString(doc2, "div.new-border-bottom:contains(注册资本) div.pb10 div.baseinfo-module-content-value", 0);
+        String zhuceshijian = getString(doc2, "div.new-border-bottom:contains(注册时间) div.pb10 div.baseinfo-module-content-value", 1);
+        String statu = getString(doc2, "div.pt10:contains(企业状态) div.baseinfo-module-content-value.statusType1", 0);
+        String gongshang = getString(doc2, "div.base0910 table tbody td", 1);
+        String zuzhijigou = getString(doc2, "div.base0910 table tbody td", 3);
+        String tongyixinyong = getString(doc2, "div.base0910 table tbody td", 6);
+        String qiyeleixing = getString(doc2, "div.base0910 table tbody td", 8);
+        String nashuiren = getString(doc2, "div.base0910 table tbody td", 10);
+        String hangye = getString(doc2, "div.base0910 table tbody td", 12);
+        String yingyeqixian = getString(doc2, "div.base0910 table tbody td", 14);
+        String hezhunriqi = getString(doc2, "div.base0910 table tbody td", 16);
+        String dengjijiguan = getString(doc2, "div.base0910 table tbody td", 18);
+        String zhucedizhi = getString(doc2, "div.base0910 table tbody td", 20);
+        String yingming=getString(doc2, "div.base0910 table tbody td", 22);
+        String jingyingfanwei = getString(doc2, "div.base0910 table tbody td", 24);
+        String faren = getString(doc2, "div.in-block.vertical-top.pl15 div.f18.overflow-width a", 0);
+        String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
 
         ps1.setString(1,quancheng);
         ps1.setString(2,ceng);

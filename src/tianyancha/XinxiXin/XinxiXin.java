@@ -58,9 +58,9 @@ public class XinxiXin {
         XinxiXin.proxy =proxy;
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://10.252.0.52:3306/tianyancha?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="etl_tmp";
-        String password="UsF4z5HE771KQpra";
+        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="spider";
+        String password="spider";
         Class.forName(driver1).newInstance();
         java.sql.Connection con=null;
         try {
@@ -77,8 +77,8 @@ public class XinxiXin {
         XinxiXin x=new XinxiXin();
         final Url u=x.new Url();
         final Key k=x.new Key();
-        //final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
-        final TYCConsumer tyc=new TYCConsumer("tyc_linshi3","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        //final TYCConsumer tyc=new TYCConsumer("tyc_linshi3","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         ExecutorService pool= Executors.newCachedThreadPool();
         final Connection finalCon = con;
         /*final String po=args[4];
@@ -182,15 +182,15 @@ public class XinxiXin {
                     break;
                 }
                 doc = detailget("http://www.tianyancha.com/search?key=" + URLEncoder.encode(key, "utf-8") + "&checkFrom=searchBox");
-                Elements eles = getElements(doc, "div.search_result_single.search-2017.pb20.pt20.pl30.pr30");
+                Elements eles = getElements(doc, "div.search_result_single.search-2017.pb25.pt25.pl30.pr30 div.search_right_item");
                 int p=0;
                 boolean ff=false;
                 String aa=null;
                 String uu=null;
                 if (eles != null) {
                     for (Element e : eles) {
-                        String url = getHref(e, "div.col-xs-10.search_repadding2.f18 a", "href", 0).replace(" ", "").trim();
-                        String cname = getString(e, "div.col-xs-10.search_repadding2.f18 a", 0).replace(" ", "").trim();
+                        String url = getHref(e, "a", "href", 0).replace(" ", "").trim();
+                        String cname = getString(e, "a", 0).replace(" ", "").trim();
                         p++;
                         if(p==1){
                             aa=cname;
