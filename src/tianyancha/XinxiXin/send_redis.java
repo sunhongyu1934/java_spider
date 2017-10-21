@@ -11,7 +11,7 @@ import java.sql.*;
 public class send_redis {
     public static void main(String args[]) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, InterruptedException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -27,10 +27,8 @@ public class send_redis {
             }
         }
 
-        RedisAction rs=new RedisAction("10.44.152.49", 6379);
-        rs.selectda(11);
-        duqu8(con, rs);
-        duqu9(con, rs);
+        RedisAction rs=new RedisAction("10.44.51.90", 6379);
+        duqu10(con, rs);
     }
     public static void duqu(Connection con,RedisAction r) throws SQLException, InterruptedException {
         String sql="select ";
@@ -147,14 +145,15 @@ public class send_redis {
     public static void duqu8(Connection con,RedisAction r) throws SQLException {
         int sum=0;
         int p = 0;
-        for(int a=1;a<=20;a++) {
-            String sql = "select distinct quan_cheng from tyc.tyc_jichu_quan limit "+sum+",500000";
+        for(int a=1;a<=15;a++) {
+            String sql = "select distinct t_id,quan_cheng from tianyancha.tyc_jichu_quan limit "+sum+",500000";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 String cname = rs.getString(rs.findColumn("quan_cheng"));
-                r.set("com_name", cname);
+                String t_id=rs.getString(rs.findColumn("t_id"));
+                r.setstr(t_id, cname);
                 p++;
                 System.out.println(p + "****************************************");
             }
@@ -177,6 +176,39 @@ public class send_redis {
                 System.out.println(p + "****************************************");
             }
             sum=sum+500000;
+        }
+    }
+
+
+    public static void duqu10(Connection con,RedisAction r) throws SQLException {
+        int sum=0;
+        int p = 0;
+        for(int a=1;a<=10;a++) {
+            String sql = "select distinct comp_full_name from linshi";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String cname = rs.getString(rs.findColumn("comp_full_name"));
+                r.set("buchong", cname);
+                p++;
+                System.out.println(p + "****************************************");
+            }
+            sum=sum+500000;
+            break;
+        }
+    }
+
+    public static void da(Connection con,RedisAction rd) throws SQLException {
+        String sql="select comp_id from company_base_info";
+        PreparedStatement ps=con.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        int a=0;
+        while (rs.next()){
+            String cid=rs.getString(rs.findColumn("comp_id"));
+            rd.set("xianshang",cid);
+            a++;
+            System.out.println(a+"***************************************");
         }
     }
 }

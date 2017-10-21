@@ -1,15 +1,17 @@
 package baidu;
 
+import Utils.JsoupUtils;
 import com.google.gson.Gson;
+import com.qiniu.util.Auth;
+import haosou.haosouBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.*;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.util.EntityUtils;
 import org.dom4j.DocumentException;
@@ -38,39 +40,42 @@ import static tianyancha.XinxiXin.XinxiXin.suan;
  */
 public class test {
     // 代理隧道验证信息
-    final static String ProxyUser = "HL8LK84J5D81DB7D";
-    final static String ProxyPass = "92BB5D9A91C09C59";
+    final static String ProxyUser = "HXD5C309K96U458D";
+    final static String ProxyPass = "8A8D1DF2B4B57A64";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
+    private static Proxy proxy;
     public static void main(String args[]) throws IOException, DocumentException, InterruptedException {
-        Document doc2 = Jsoup.connect("https://www.tianyancha.com/company/9519792")
-                                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
-                                    .ignoreContentType(true)
-                                    .ignoreHttpErrors(true)
-                                    .timeout(5000)
-                                    .get();
+        CredentialsProvider credentialsProvider=new BasicCredentialsProvider();
 
-        System.out.println(doc2.outerHtml());
+        //credentialsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020));
 
-        Elements bei=getElements(doc2,"div.wechat div.mb10.in-block");
-
-        if(bei!=null){
-            for(Element e:bei){
-                String logo=getHref(e,"div.in-block.vertical-top.wechatImg img","src",0);
-                String ming=getString(e,"div.in-block.vertical-top.itemRight div.mb5",0);
-                String hao=getString(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) span.in-block.vertical-top",1);
-                String erweima=getHref(e,"div.in-block.vertical-top.itemRight div.mb5:nth-child(2) div.position-abs.erweimaBox img","src",0);
-                String jieshao=getString(e,"span.overflow-width.in-block.vertical-top",0);
-
-                System.out.println(logo);
-                System.out.println(ming);
-                System.out.println(hao);
-                System.out.println(erweima);
-                System.out.println(jieshao);
+        /*Authenticator.setDefault(new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(ProxyUser, ProxyPass.toCharArray());
             }
+        });
+
+        proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));*/
+
+        Document doc=Jsoup.connect("http://www.shujubang.com/Htmls/CompanyInfo/Company_0_1.html")
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .timeout(5000)
+                .get();
+
+        System.out.println(doc);
+        Elements ele= JsoupUtils.getElements(doc,"div.mainbox div.mainbox_left div.menu a");
+        for(Element e:ele){
+            System.out.println(JsoupUtils.getHref(e,"a","href",0)+"     "+JsoupUtils.getString(e,"a",0));
         }
+
+
+
+
         /*ExecutorService pool= Executors.newCachedThreadPool();
         System.out.println("kaishi******************************************************************************");
         for(int x=1;x<=20;x++){
@@ -88,6 +93,12 @@ public class test {
                 }
             });
         }*/
+    }
+
+    public static String getip() throws IOException {
+        Document doc=Jsoup.connect("http://api.ip.data5u.com/dynamic/get.html?order=00b1c1dbec239455d92d87b98145951c&sep=3")
+                .get();
+        return doc.outerHtml();
     }
 
     public static void detailget() throws IOException, InterruptedException {

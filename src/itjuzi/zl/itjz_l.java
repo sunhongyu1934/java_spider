@@ -244,16 +244,20 @@ public class itjz_l {
         builder.setDefaultRequestConfig(requestConfig);
 
         CloseableHttpClient httpclient = builder.build();
+        int ji=0;
         while (true) {
             try {
                 CloseableHttpResponse response = httpclient.execute(get);
                 HttpEntity resEntity = response.getEntity();
                 tag = EntityUtils.toString(resEntity);
-                if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")) {
+                ji++;
+                if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")&&!tag.contains("找不到您访问的页面")&&!tag.contains("No required SSL certificate")) {
+                    break;
+                }
+                if(ji>=20){
                     break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 System.out.println("time out detail reget");
             }
         }
@@ -370,7 +374,7 @@ public class itjz_l {
     public static void parse(Document doc,String cid,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6,PreparedStatement ps7,PreparedStatement ps8) throws IOException, SQLException {
         Map<String,String> map=new HashMap<String,String>();
         String name=getString(doc, "div.picinfo div.line-title span.title h1.seo-important-title", 0);
-        String urlguan=getHref(doc, "div.link-line a.weblink", "href", 0);
+        String urlguan=getHref(doc, "div.link-line a.weblink", "href", 1);
         String kouhao=getString(doc,"div.info-line h2.seo-slogan",0);
         String hangye=getString(doc,"div.info-line span.scope.c-gray-aset a",0);
         String zihangye=getString(doc,"div.info-line span.scope.c-gray-aset a",1);
@@ -399,7 +403,7 @@ public class itjz_l {
             }
             productlogos=str.toString();
         }
-        String yewu=getString(doc,"div.block div.des",0);
+        String yewu=getString(doc,"div.block",2);
         String fullname=getString(doc,"div.block div.des-more h2.seo-second-title",0).replace("公司全称：","");
         String chenglitime=getString(doc,"div.block div.des-more h2.seo-second-title",1).replace("成立时间：","");
         String guimo=getString(doc,"div.block div.des-more h2.seo-second-title",2).replace(" 公司规模：","");

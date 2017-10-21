@@ -392,7 +392,7 @@ public class Tyc_quan {
                 for(Element e:gele){
                     String guming=getString(e,"a.in-block.vertival-middle.overflow-width",0);
                     String gtid=getHref(e,"a.in-block.vertival-middle.overflow-width","href",0).replace("/human/","").replace("/company/","");
-                    String bili=getString(e,"span.c-money-y",0);
+                    String bili=getString(e,"td",1);
                     String renjiao=getString(e,"td",2).replace("\n","").replace(" ","");
 
                     ps6.setString(1,tid);

@@ -1,5 +1,6 @@
 package tianyancha.XinxiXin;
 
+import baidu.RedisAction;
 import com.google.gson.Gson;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -58,9 +59,9 @@ public class XinxiXin {
         XinxiXin.proxy =proxy;
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="spider";
-        String password="spider";
+        String url1="jdbc:mysql://10.252.0.52:3306/tianyancha?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="etl_tmp";
+        String password="UsF4z5HE771KQpra";
         Class.forName(driver1).newInstance();
         java.sql.Connection con=null;
         try {
@@ -77,8 +78,10 @@ public class XinxiXin {
         XinxiXin x=new XinxiXin();
         final Url u=x.new Url();
         final Key k=x.new Key();
-        final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        //final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         //final TYCConsumer tyc=new TYCConsumer("tyc_linshi3","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        //final TYCConsumer tyc=new TYCConsumer("tyc_shangxianxin","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
+        final RedisAction r=new RedisAction("10.44.51.90",6379);
         ExecutorService pool= Executors.newCachedThreadPool();
         final Connection finalCon = con;
         /*final String po=args[4];
@@ -99,7 +102,7 @@ public class XinxiXin {
             @Override
             public void run() {
                 try {
-                    duqu(tyc,k);
+                    duqu(r,k);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -163,8 +166,25 @@ public class XinxiXin {
         }
     }
 
-    public static void duqu(Connection con,Key k,String po) throws SQLException, InterruptedException {
-        String sql="select c_name from spider.linshi_ming";
+    public static void duqu(RedisAction rs, Key k) throws UnsupportedEncodingException, InterruptedException {
+        Thread.sleep(3000);
+        int a=1;
+        while (true){
+            try {
+                if(a>=20){
+                    break;
+                }
+                String cname = rs.get("buchong");
+                k.put(cname);
+            }catch (Exception e){
+                a++;
+                System.out.println("kong");
+            }
+        }
+    }
+
+    public static void duqu(Connection con,Key k) throws SQLException, InterruptedException {
+        String sql="select c_name from linshi_com";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
@@ -305,6 +325,7 @@ public class XinxiXin {
 
                 System.out.println(u.bo.size() + "********************************************************************************");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("error");
             }
         }
@@ -532,7 +553,7 @@ public class XinxiXin {
             bo.put(key);
         }
         public String qu() throws InterruptedException {
-            return bo.poll(60, TimeUnit.SECONDS);
+            return bo.poll(120, TimeUnit.SECONDS);
         }
     }
 

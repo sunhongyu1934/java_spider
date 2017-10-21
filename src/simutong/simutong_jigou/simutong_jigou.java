@@ -21,8 +21,8 @@ import static simutong.simutong_jigou.Qingqiu.*;
  */
 public class simutong_jigou {
     // 代理隧道验证信息
-    final static String ProxyUser = "HZ172298268G1C2D";
-    final static String ProxyPass = "1A22286DC665A425";
+    final static String ProxyUser = "H4KKF9EHDF26260D";
+    final static String ProxyPass = "2A64AB23C97FCA79";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -61,17 +61,13 @@ public class simutong_jigou {
         final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
 
 
-        //data(con,proxy);
-        String[] zhanghu=new String[]{"simutong3@gaiyachuangxin.cn","111111","xiaohang.qu@lingweispace.cn","111111"};
-        String[] pc=new String[]{"50-7B-9D-FB-57-4B,2C-6E-85-9C-6A-F3,2C-6E-85-9C-6A-F7","50-7B-9D-FB-57-4B,2C-6E-85-9C-6A-F3,2C-6E-85-9C-6A-F7"};
-        Map<String,String> map=denglu(proxy,zhanghu[2],zhanghu[3],pc[1]);
-        sousuo(con,"上海荷花股权投资基金有限公司","0",map,proxy);
+        data(con,proxy);
     }
 
 
     public static void data(Connection con,Proxy proxy) throws SQLException, IOException, InterruptedException, ParseException {
         Random r=new Random();
-        String sql="select sInstitution from spider.si_inst_bulu where id>796";
+        String sql="select sInstitution from spider.si_inst_bulu";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         long begin=System.currentTimeMillis();
@@ -147,20 +143,35 @@ public class simutong_jigou {
             for(Element e:souele){
                 try {
                     String sid = getHref(e, "li.all_search_main_title a", "href", 0).replace("getDetailOrg.action?param.org_id=", "");
-                    jichu(con, sid, pid, map, proxy);
-                    Thread.sleep(r.nextInt(5001) + 5000);
-                    guanli(con, sid, pid, map, proxy);
-                    Thread.sleep(r.nextInt(5001) + 5000);
-                    tuichu(con, sid, pid, map, proxy);
-                    Thread.sleep(r.nextInt(5001) + 5000);
-                    jijin(con, sid, pid, map, proxy);
-                    Thread.sleep(r.nextInt(5001) + 5000);
+                    if(sid!=null&&sid.replaceAll("\\s","").length()>0) {
+                        del(con,sid);
+                        jichu(con, sid, pid, map, proxy);
+                        Thread.sleep(r.nextInt(5001) + 5000);
+                        guanli(con, sid, pid, map, proxy);
+                        Thread.sleep(r.nextInt(5001) + 5000);
+                        tuichu(con, sid, pid, map, proxy);
+                        Thread.sleep(r.nextInt(5001) + 5000);
+                        touzi(con, sid, pid, map, proxy);
+                        Thread.sleep(r.nextInt(5001) + 5000);
+                        jijin(con, sid, pid, map, proxy);
+                        Thread.sleep(r.nextInt(5001) + 5000);
+                    }
+                    break;
                 }catch (Exception e1){
                     e1.printStackTrace();
                 }
             }
         }
 
+    }
+
+    public static void del(Connection con,String sid) throws SQLException {
+        String[] tables=new String[]{"si_celue","si_guanli","si_jiben","si_jijin","si_lianxi","si_touzi","si_tuichu"};
+        for(int x=0;x<tables.length;x++) {
+            String sql = "delete from "+tables[x]+" where s_id="+sid;
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.executeUpdate();
+        }
     }
 
 

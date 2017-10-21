@@ -9,6 +9,9 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +26,13 @@ public class linshi_qiniu {
     public static final String BUCKET_NAME = "innotreelogo"; // 你的secret_key
     private static final String BUCKET_HOST_NAME = "innotreelogo.qiniu.innotree.cn";
     public static final Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-    public static final BucketManager bucketManager = new BucketManager(auth);
     private static Connection conn;
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="spider";
-        String password="spider";
+        String url1="jdbc:mysql://47.95.31.183:3306/innotree_data_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="test";
+        String password="123456";
         try {
             Class.forName(driver1).newInstance();
         } catch (InstantiationException e) {
@@ -59,15 +61,18 @@ public class linshi_qiniu {
         conn=con;
 
     }
-    public static void main(String args[]) throws QiniuException, SQLException {
+    public static void main(String args[]) throws QiniuException, SQLException, InterruptedException {
         linshi_qiniu l=new linshi_qiniu();
         final Ca c=l.new Ca();
+        /*final String path1=args[0];
+        final String path2=args[1];
+        String xa=args[2];
         ExecutorService pool= Executors.newCachedThreadPool();
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    data(c);
+                    data(c,path1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {
@@ -75,12 +80,12 @@ public class linshi_qiniu {
                 }
             }
         });
-        for(int x=1;x<=30;x++){
+        for(int x=1;x<=Integer.parseInt(xa);x++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        shang(c);
+                        shang(c,path2);
                     } catch (QiniuException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -90,40 +95,41 @@ public class linshi_qiniu {
                     }
                 }
             });
-        }
+        }*/
+        c.fang(new File("C:\\Users\\13434\\Desktop\\1.png"));
+        shang(c,"");
     }
 
-    public static void data(Ca c) throws InterruptedException, SQLException {
-        String sql="select c_id from linshi_logo2";
+    public static void data(Ca c,String path) throws InterruptedException, SQLException {
+/*        String sql="select c_id from linshi_logo2";
         PreparedStatement ps=conn.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         List<String> list=new ArrayList<String>();
         while (rs.next()){
             list.add(rs.getString(rs.findColumn("c_id")));
-        }
-        File file = new File("/data1/result_CV2/");
-        File[] ff=file.listFiles();
-        for(File f :ff){
-            if (f.isFile()) {
-                boolean bo=false;
-                for(String s:list){
-                    if(f.getName().replace(".png","").equals(s)){
-                        bo=true;
-                    }
-                }
-                if(!bo){
+        }*/
+        while (true) {
+            File file = new File(path);
+            File[] ff = file.listFiles();
+            for (File f : ff) {
+                if (f.isFile()&&f.exists()) {
                     c.fang(f);
                 }
             }
-
-
+            while (true) {
+                Thread.sleep(10000);
+                if(c.po.size()==0){
+                    break;
+                }
+            }
         }
     }
 
-    public static void shang(Ca c) throws QiniuException, SQLException, InterruptedException {
-        UploadManager uploadManager = new UploadManager();
-        String sql="insert into linshi_logo2(c_id,c_logo) values(?,?)";
+    public static void shang(Ca c,String path) throws QiniuException, SQLException, InterruptedException {
+        String sql="insert into logo_qiniu(only_id,qiniu_url) values(?,?)";
         PreparedStatement ps=conn.prepareStatement(sql);
+        UploadManager uploadManager = new UploadManager();
+        int a=0;
         while (true) {
             try {
                 File f= c.qu();
@@ -131,21 +137,39 @@ public class linshi_qiniu {
                     break;
                 }
                 String newUrl = null;
+                System.out.println("begin");
                 Response res = uploadManager.put(f.getPath(), null, auth.uploadToken(BUCKET_NAME));
                 String json = res.bodyString();
+                System.out.println(json);
                 Gson gson = new Gson();
                 qijson q = gson.fromJson(json, qijson.class);
                 newUrl = "https://" + BUCKET_HOST_NAME + "/" + q.key;
+                System.out.println(newUrl);
 
                 ps.setString(1, f.getName().replace(".png", ""));
                 ps.setString(2, newUrl);
-                ps.executeUpdate();
-                System.out.println(c.po.size() + "*****************************************************");
+                //ps.executeUpdate();
+                //renameto(f,path+f.getName());
+                a++;
+                System.out.println(a + "*****************************************************");
             }catch (Exception e){
                 System.out.println("error");
             }
         }
 
+    }
+
+    public static void renameto(File file,String newpath) throws IOException {
+        FileInputStream ins = new FileInputStream(file);
+        FileOutputStream out = new FileOutputStream(newpath);
+        byte[] b = new byte[1024];
+        int n=0;
+        while((n=ins.read(b))!=-1){
+            out.write(b, 0, n);
+        }
+        file.delete();
+        ins.close();
+        out.close();
     }
 
     class Ca{
@@ -154,7 +178,7 @@ public class linshi_qiniu {
             po.put(key);
         }
         public File qu() throws InterruptedException {
-            return po.poll(60, TimeUnit.SECONDS);
+            return po.take();
         }
     }
 

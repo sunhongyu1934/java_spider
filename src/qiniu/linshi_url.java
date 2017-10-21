@@ -3,17 +3,12 @@ package qiniu;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import net.sf.json.JSONObject;
 
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 
-public class pro_shangchuan {
+public class linshi_url {
     public static final String ACCESS_KEY = "Wbw_tA3cCzYqakUdU5Xqf-NBbnk80nWMbH4yGr0B"; // 你的access_key
     public static final String SECRET_KEY = "n9ahK41uBFqdKoM-n8EcnwCPJVBOFvKhlnml9qu9"; // 你的secret_key
     public static final String BUCKET_NAME = "innotreelogo"; // 你的secret_key
@@ -25,9 +20,9 @@ public class pro_shangchuan {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/dimension_sum?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="spider";
-        String password="spider";
+        String url1="jdbc:mysql://47.95.31.183:3306/innotree_data_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String username="test";
+        String password="123456";
         try {
             Class.forName(driver1).newInstance();
         } catch (InstantiationException e) {
@@ -56,15 +51,20 @@ public class pro_shangchuan {
         conn=con;
 
     }
+
     public static void main(String args[]) throws Exception {
-        pro_shangchuan p=new pro_shangchuan();
-        final Guan g=p.new Guan();
+        //System.out.println(shangchuan("https://cdn.itjuzi.com/images/8f0410b9890b40a0328278baad7a958e.png?imageView2/0/w/100/q/100",""));
         ExecutorService pool= Executors.newCachedThreadPool();
+        linshi_url l=new linshi_url();
+        final Ca c=l.new Ca();
+        final String k="";
+        final String o="";
+        String x="20";
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    data(g);
+                    data(c,k,o);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -73,94 +73,67 @@ public class pro_shangchuan {
             }
         });
 
-
-        for(int a=1;a<=50;a++){
+        for(int a=1;a<=Integer.parseInt(x);a++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        chuli(g);
+                        chuli2(c);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
-
     }
 
-
-    public static void data(Guan g) throws SQLException, InterruptedException {
-        Map<String,String> map=new HashMap<String, String>();
-        map.put("comp_logo_sum","logo_url");
-
-        for(Map.Entry<String,String> entry:map.entrySet()){
-            for(int x=0;x<=9;x++){
-                String tablename=entry.getKey()+x;
-                String field=entry.getValue();
-                int a=0;
-                while (true) {
-                    boolean bo=false;
-                    String sql = "select source_y,only_id," + field + " from " + tablename + " where " + field + "!='' and " + field + " is not null limit "+a+",500000";
-                    PreparedStatement ps = conn.prepareStatement(sql);
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        bo=true;
-                        try {
-                            String logo = rs.getString(rs.findColumn(field));
-                            String id = rs.getString(rs.findColumn("only_id"));
-                            String source = rs.getString(rs.findColumn("source_y"));
-
-                            g.fang(new String[]{id, logo, tablename.split("_", 3)[1], source});
-                        } catch (Exception e) {
-                            System.out.println("fang error");
-                        }
-                    }
-                    if(!bo){
-                        break;
-                    }
-                    a=a+500000;
-                }
-            }
-        }
-    }
-
-    public static void chuli(Guan g) throws Exception {
-        String sql="insert into company_logo_qiniu(only_id,qi_logo,source_y,source_b) values(?,?,?,?)";
+    public static void data(Ca c,String k,String o) throws SQLException, InterruptedException {
+        String sql="select id,comp_logo_tmp from comp_linshi where comp_logo_tmp!='' and comp_logo_tmp is not null and comp_logo_tmp not like '%qiniu%'";
         PreparedStatement ps=conn.prepareStatement(sql);
-
-        int a=0;
-        while (true){
-            try {
-                String[] value = g.qu();
-                if (value == null || value.length < 2) {
-                    break;
-                }
-                String newurl = shangchuan(value[1], "");
-                String tailid = value[0];
-
-                if(newurl!=null&&newurl.length()>0) {
-                    ps.setString(1, tailid);
-                    ps.setString(2, newurl);
-                    ps.setString(3,value[2]);
-                    ps.setString(4,value[3]);
-                    ps.executeUpdate();
-                    a++;
-                    System.out.println(a + "************************************************");
-                }
-            }catch (Exception e){
-                System.out.println("error");
-            }
+        ResultSet rs=ps.executeQuery();
+        while (rs.next()){
+            String onid=rs.getString(rs.findColumn("id"));
+            String logo=rs.getString(rs.findColumn("comp_logo_tmp"));
+            c.fang(new String[]{onid,logo});
         }
     }
 
+    public static void chuli(Ca c) throws Exception {
+        String sql="insert into logo_qiniu(only_id,qiniu_url) values(?,?)";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        int p=0;
+        while (true){
+            String[] value=c.qu();
+            if(value==null||value.length<2){
+                break;
+            }
+            String url=shangchuan(value[1],"");
+            ps.setString(1,value[0]);
+            ps.setString(2,url);
+            ps.executeUpdate();
+            p++;
+            System.out.println(p+"********************************************");
+        }
+    }
 
+    public static void chuli2(Ca c) throws Exception {
+        String sql="update comp_linshi set comp_logo_tmp=? where id=?";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        int p=0;
+        while (true){
+            String[] value=c.qu();
+            if(value==null||value.length<2){
+                break;
+            }
 
-
-
-
-
-
+            String url=shangchuan(value[1],"");
+            ps.setString(1,url);
+            ps.setString(2,value[0]);
+            ps.executeUpdate();
+            p++;
+            System.out.println(p+"********************************************");
+        }
+    }
 
     public static String shangchuan(String url,String uui) throws Exception {
 //        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
@@ -190,13 +163,13 @@ public class pro_shangchuan {
         return newUrl;
     }
 
-    class Guan{
-        BlockingQueue<String[]> po=new LinkedBlockingQueue<String[]>(10000);
+    class Ca{
+        BlockingQueue<String[]> po=new LinkedBlockingQueue<String[]>();
         public void fang(String[] key) throws InterruptedException {
             po.put(key);
         }
         public String[] qu() throws InterruptedException {
-            return po.poll(100, TimeUnit.SECONDS);
+            return po.poll(60, TimeUnit.SECONDS);
         }
     }
 }

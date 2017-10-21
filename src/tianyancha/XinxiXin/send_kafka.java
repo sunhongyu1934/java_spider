@@ -10,7 +10,7 @@ public class send_kafka {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://etl1.innotree.org:3308/clean_data?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         try {
@@ -46,20 +46,16 @@ public class send_kafka {
     }
 
     public static void data() throws SQLException {
-        TYCProducer ty=new TYCProducer("tyc_linshi3","10.44.51.90:19092,10.44.152.49:19092,10.51.82.74:19092");
-        int a=0;
+        TYCProducer ty=new TYCProducer("tyc_shangxianxin","10.44.51.90:19092,10.44.152.49:19092,10.51.82.74:19092");
         int jishu=0;
-        for(int x=1;x<=30;x++) {
-            String sql = "select c_name from linshi_company limit "+a+",1000000";
-            PreparedStatement ps=conn.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while (rs.next()){
-                String name=rs.getString(rs.findColumn("c_name"));
-                ty.send(name);
-                jishu++;
-                System.out.println(jishu+"*****************************************************");
-            }
-            a=a+1000000;
+        String sql = "select c_name from linshi";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        while (rs.next()){
+            String name=rs.getString(rs.findColumn("c_name"));
+            ty.send(name);
+            jishu++;
+            System.out.println(jishu+"*****************************************************");
         }
     }
 
