@@ -1,5 +1,6 @@
 package tianyancha.Guoxin;
 
+import Utils.RedisClu;
 import baidu.RedisAction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,15 +8,16 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 
 public class getip {
-    private static RedisAction rd;
+    private static RedisClu rd;
     static{
-        rd=new RedisAction("10.44.51.90",6379);
+        rd=new RedisClu();
     }
     public static void main(String args[]) throws IOException, InterruptedException {
         String url=args[0];
-        getip(url);
+        String ge=args[1];
+        getip(url,ge);
     }
-    public static void getip(String url) throws IOException, InterruptedException {
+    public static void getip(String url,String ge) throws IOException, InterruptedException {
         while (true) {
             try {
                 Document doc = Jsoup.connect(url)
@@ -28,7 +30,7 @@ public class getip {
                         continue;
                     }
                     System.out.println(s.trim());
-                    if(rd.getslength("ip")<=5) {
+                    if(rd.getslength("ip")<=Integer.parseInt(ge)) {
                         rd.set("ip", s.trim());
                     }
                 }

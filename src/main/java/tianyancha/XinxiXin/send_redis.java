@@ -1,5 +1,6 @@
 package tianyancha.XinxiXin;
 
+import Utils.RedisClu;
 import baidu.RedisAction;
 import org.apache.commons.lang.StringUtils;
 
@@ -11,7 +12,7 @@ import java.sql.*;
 public class send_redis {
     public static void main(String args[]) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, InterruptedException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -27,8 +28,12 @@ public class send_redis {
             }
         }
 
-        RedisAction rs=new RedisAction("10.44.51.90", 6379);
-        duqu10(con, rs);
+        String sql=args[0];
+        String field=args[1];
+        String key=args[2];
+        String li=args[3];
+        RedisClu rs=new RedisClu();
+        duqu10(con, rs,sql,field,key,li);
     }
     public static void duqu(Connection con,RedisAction r) throws SQLException, InterruptedException {
         String sql="select ";
@@ -180,22 +185,24 @@ public class send_redis {
     }
 
 
-    public static void duqu10(Connection con,RedisAction r) throws SQLException {
+    public static void duqu10(Connection con,RedisClu r,String sql,String field,String key,String li) throws SQLException {
         int sum=0;
         int p = 0;
         for(int a=1;a<=10;a++) {
-            String sql = "select DISTINCT t_id from comp_name_car";
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql+" limit "+sum+","+li);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                String cname = rs.getString(rs.findColumn("t_id"));
-                r.set("tyc", "https://www.tianyancha.com/company/"+cname+"###"+"aaa");
-                p++;
-                System.out.println(p + "****************************************");
+                try {
+                    String cname = rs.getString(rs.findColumn(field));
+                    r.set(key, cname);
+                    p++;
+                    System.out.println(p + "****************************************");
+                }catch (Exception e){
+                    System.out.println("error");
+                }
             }
-            sum=sum+500000;
-            break;
+            sum=sum+Integer.parseInt(li);
         }
     }
 

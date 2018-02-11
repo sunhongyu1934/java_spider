@@ -1,19 +1,17 @@
 package tianyancha.XinxiXin;
 
+import Utils.JsoupUtils;
+import Utils.RedisClu;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import redis.RedisAction;
 
 import java.io.IOException;
 import java.net.*;
-import java.sql.SQLException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.sql.*;
+import java.util.concurrent.*;
 
 import static Utils.JsoupUtils.*;
 
@@ -21,53 +19,75 @@ import static Utils.JsoupUtils.*;
  * Created by Administrator on 2017/7/3.
  */
 public class Tyc_serach {
-
-    // 代理服务器
-    final static String ProxyHost = "proxy.abuyun.com";
-    final static Integer ProxyPort = 9020;
-    public static void main(String args[]) throws InterruptedException, IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
-       /* String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://10.44.60.141:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+    private static Connection conn;
+    private static Ca c;
+    private static int a=0;
+    static{
+        String driver1="com.mysql.jdbc.Driver";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
-        Class.forName(driver1).newInstance();
+        try {
+            Class.forName(driver1).newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         java.sql.Connection con=null;
         try {
             con = DriverManager.getConnection(url1, username, password);
         }catch (Exception e){
             while(true){
-                con = DriverManager.getConnection(url1, username, password);
+                try {
+                    con = DriverManager.getConnection(url1, username, password);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
                 if(con!=null){
                     break;
                 }
             }
-        }*/
+        }
 
-        // 代理隧道验证信息
-        final  String ProxyUser = args[0];
-        final  String ProxyPass = args[1];
+        conn=con;
 
-        Authenticator.setDefault(new Authenticator() {
-            public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(ProxyUser, ProxyPass.toCharArray());
+    }
+
+    public static void main(String args[]) throws InterruptedException, IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+        Tyc_serach t=new Tyc_serach();
+        Co co=t.new Co();
+        Ca cc=new Ca();
+        c=cc;
+        String x=args[0];
+        String biao=args[1];
+        ExecutorService pool=Executors.newCachedThreadPool();
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    data(co,biao);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
-        final TYCConsumer ty=new TYCConsumer("bs_tyc_search","spider","10.44.155.195:2181,10.44.143.200:2181,10.45.146.248:2181");
-        final TYCProducer ty2=new TYCProducer("tyc_company","10.44.158.42:9092,10.44.137.192:9092,10.44.143.200:9092,10.44.155.195:9092");
 
-        Tyc_serach t=new Tyc_serach();
-        final Keys k=t.new Keys();
-
-        int x= Integer.parseInt(args[2]);
-        ExecutorService pool= Executors.newCachedThreadPool();
-        for(int p=1;p<=x;p++ ){
+        for(int p=1;p<=Integer.parseInt(x);p++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        serachget(proxy,ty2,k);
-                    } catch (Exception e) {
+                        serach(co,biao);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 }
@@ -78,112 +98,147 @@ public class Tyc_serach {
             @Override
             public void run() {
                 try {
-                    qukey(k,ty);
+                    getip();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+
     }
 
-    public static synchronized void qukey(Keys k,TYCConsumer ty) throws InterruptedException {
-        while (true){
-            try {
-                String key = ty.getmessage();
-                k.put(key);
-            }catch (Exception e){
-                System.out.println("qu error");
-            }
-        }
-    }
-
-
-    public static void serachget(Proxy proxy,TYCProducer ty2,Keys k) throws IOException, InterruptedException, SQLException {
-        int j=0;
-
-        RedisAction redisAction = new RedisAction("a026.hb2.innotree.org", 6379);
-        while (true) {
-            try {
-                String key=k.qu();
-                for (int x = 1; x <= 5; x++) {
-                    Document doc = null;
-                    int flag = 0;
-                    while (true) {
-                        try {
-                            doc = Jsoup.connect("http://www.tianyancha.com/search/p" + x + "?key=" + URLEncoder.encode(key, "utf-8"))
-                                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-                                    .timeout(10000)
-                                    .ignoreContentType(true)
-                                    .ignoreHttpErrors(true)
-                                    .proxy(proxy)
-                                    .get();
-                            if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace(" <head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())) {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            System.out.println("time out");
-                        }
-                        flag++;
-                        if (flag >= 50) {
-                            break;
-                        }
-                    }
-                    if (doc.outerHtml().contains("没有找到相关结果")) {
-                        break;
-                    }
-                    Elements eles = getElements(doc, "div.search_result_single.search-2017.pb20.pt20.pl30.pr30");
-
-                    if (eles != null) {
-                        for (Element e : eles) {
-                            String tid = getHref(e, "div.col-xs-10.search_repadding2.f18 a", "href", 0).replace("http://www.tianyancha.com/company/", "");
-                            String ming = getString(e, "div.col-xs-10.search_repadding2.f18 a", 0);
-                            if (!redisAction.getAllInfoCompanyId(tid) && !redisAction.getQYGXCompanyId(tid)) {
-                                redisAction.setQYGXCompanyId(tid, ming);
-                                redisAction.setAllInfoCompanyId(tid, ming);
-                                ty2.send(tid + "-all");
-                                ty2.send(tid + "-gsgx");
-                                System.out.println(tid);
-                            } else if (!redisAction.getAllInfoCompanyId(tid) && redisAction.getQYGXCompanyId(tid)) {
-                                redisAction.setAllInfoCompanyId(tid, ming);
-                                ty2.send(tid + "-all");
-                                System.out.println(tid);
-                            } else if (redisAction.getAllInfoCompanyId(tid) && !redisAction.getQYGXCompanyId(tid)) {
-                                redisAction.setQYGXCompanyId(tid, ming);
-                                ty2.send(tid + "-gsgx");
-                                System.out.println(tid);
-                            }
-                        }
-                        j++;
-                        System.out.println("serach is "+j);
-                        System.out.println("------------------------------------------------------------------------");
-                    }
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("serach error");
-            }
-        }
-    }
-
-    /*public static void data(Connection con,Keys k) throws SQLException, InterruptedException {
-        String sql="select `Name` from qichacha_search where Province!='BJ' and Province!='SH' and Province!='GD' limit 500000";
-        PreparedStatement ps=con.prepareStatement(sql);
+    public static void data(Co co,String biao) throws SQLException, InterruptedException {
+        String sql="select comp_id,comp_full_name from "+biao+" where zhuce_flag=1";
+        PreparedStatement ps=conn.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
-            String key=rs.getString(rs.findColumn("Name"));
-            k.put(key);
+            try {
+                String cid = rs.getString(rs.findColumn("comp_id"));
+                String cname = rs.getString(rs.findColumn("comp_full_name"));
+
+                co.fang(new String[]{cid, cname});
+            }catch (Exception e){
+                System.out.println("fang error");
+            }
         }
-    }*/
+    }
 
+    public static void serach(Co co,String gbiao) throws InterruptedException, IOException, SQLException {
+        String sql="update "+gbiao+" set tyc_url=?,tyc_key=?,tyc_value=?,tyc_sousuo=? where comp_id=?";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        while (true){
+            String[] value=co.qu();
+            if(value==null||value.length<2){
+                break;
+            }
+            Document doc=detailget("https://www.tianyancha.com/search?key="+URLEncoder.encode(value[1],"utf-8")+"&checkFrom=searchBox");
+            Elements ele= JsoupUtils.getElements(doc,"div.search_result_single.search-2017.pb25.pt25.pl30.pr30 div.search_right_item");
+            boolean bo=true;
+            for(Element e:ele){
+                String url = getHref(e, "a", "href", 0).replace(" ", "").trim();
+                String cname = getString(e, "a", 0).replace(" ", "").trim();
+                String key=JsoupUtils.getString(e,"div[class=add] span.sec-c3",0);
+                String vv=JsoupUtils.getString(e,"div[class=add] span.overflow-width.over-hide.vertical-bottom.in-block",0);
 
-    class Keys{
-        BlockingQueue<String> bo=new LinkedBlockingQueue<String>();
-        public void put(String key) throws InterruptedException {
-            bo.put(key);
+                if((value[1].equals(cname))||key!=null&&key.equals("历史名称")&&value[1].equals(vv)) {
+                    bo=false;
+                    ps.setString(1, url);
+                    ps.setString(2, key);
+                    ps.setString(3, vv);
+                    ps.setString(4, cname);
+                    ps.setString(5, value[0]);
+                    ps.executeUpdate();
+                    a++;
+                    System.out.println(a + "***********************************************************");
+                }
+            }
+            if(bo){
+                for(Element e:ele){
+                    String url = getHref(e, "a", "href", 0).replace(" ", "").trim();
+                    String cname = getString(e, "a", 0).replace(" ", "").trim();
+                    String key=JsoupUtils.getString(e,"div[class=add] span.sec-c3",0);
+                    String vv=JsoupUtils.getString(e,"div[class=add] span.overflow-width.over-hide.vertical-bottom.in-block",0);
+
+                    ps.setString(1, url);
+                    ps.setString(2, key);
+                    ps.setString(3, vv);
+                    ps.setString(4, cname);
+                    ps.setString(5, value[0]);
+                    ps.executeUpdate();
+                    a++;
+                    System.out.println(a + "***********************************************************");
+                    break;
+                }
+            }
+
         }
+    }
 
+    public static Document detailget(String url) throws IOException, InterruptedException {
+        System.out.println(url);
+        Document doc=null;
+        while (true) {
+            try {
+                String ip=c.qu();
+                doc = Jsoup.connect(url)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                        .timeout(5000)
+                        .header("Host", "www.tianyancha.com")
+                        .header("X-Requested-With", "XMLHttpRequest")
+                        .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
+                        .ignoreHttpErrors(true)
+                        .ignoreContentType(true)
+                        .get();
+                if (!doc.outerHtml().contains("获取验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")) {
+                    if (!c.po.contains(ip)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(ip);
+                        }
+                    }
+                    break;
+                }
+            }catch (Exception e){
+                Thread.sleep(500);
+                System.out.println("time out detail");
+            }
+        }
+        return doc;
+    }
+
+    public static void getip() throws IOException, InterruptedException {
+        RedisClu rd=new RedisClu();
+        while (true) {
+            try {
+                String ip=rd.get("ip");
+                c.fang(ip);
+                System.out.println(c.po.size()+"    ip***********************************************");
+                Thread.sleep(1000);
+            }catch (Exception e){
+                Thread.sleep(1000);
+                System.out.println("ip wait");
+            }
+        }
+    }
+
+    class Co{
+        BlockingQueue<String[]> po=new LinkedBlockingQueue<>();
+        public void fang(String[] key) throws InterruptedException {
+            po.put(key);
+        }
+        public String[] qu() throws InterruptedException {
+            return po.poll(60, TimeUnit.SECONDS);
+        }
+    }
+
+    public static class Ca{
+        BlockingQueue<String> po=new LinkedBlockingQueue<>();
+        public void fang(String key) throws InterruptedException {
+            po.put(key);
+        }
         public String qu() throws InterruptedException {
-            return bo.take();
+            return po.take();
         }
     }
 }

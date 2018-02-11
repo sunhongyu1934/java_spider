@@ -93,7 +93,7 @@ public class jichu {
             ResultSet rs=ps.executeQuery();
             while (rs.next()) {
                 String id=rs.getString(rs.findColumn("id"));
-                String name=rs.getString(rs.findColumn("name")).replaceAll("[^\u4e00-\u9fa5]","").trim().replace("吊销", "");
+                String name=rs.getString(rs.findColumn("name")).replaceAll("[^\\u4e00-\\u9fa5]","").trim().replace("吊销", "");
                 listname.add(name);
                 listid.add(id);
             }

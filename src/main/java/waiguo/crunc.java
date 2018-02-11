@@ -2,6 +2,7 @@ package waiguo;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
+import Utils.RedisClu;
 import baidu.RedisAction;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -10,10 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
+import java.net.*;
 import java.sql.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -26,7 +24,7 @@ public class crunc {
     private static int a=0;
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl2.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         try {
@@ -100,13 +98,7 @@ public class crunc {
         pool.submit(new Runnable() {
             @Override
             public void run() {
-                try {
-                    du(k);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                du2(k);
             }
         });
 
@@ -144,33 +136,62 @@ public class crunc {
     }
 
     public static void du(Ka k) throws SQLException, InterruptedException {
-        String sql0="select DISTINCT org_name from crunchbase_org where org_name not in (select org_name from crunchbase_funding)";
+        String sql0="select DISTINCT va from linshi where id>166";
         PreparedStatement ps0=conn.prepareStatement(sql0);
         ResultSet rs=ps0.executeQuery();
         while (rs.next()){
-            String kk=rs.getString(rs.findColumn("org_name"));
+            String kk=rs.getString(rs.findColumn("va"));
             k.fang(kk);
+        }
+    }
+
+    public static void du2(Ka k){
+        RedisClu rs=new RedisClu();
+        while (true){
+            try {
+                if(a>=20){
+                    break;
+                }
+                String cname = rs.get("waiguo");
+                k.fang(cname);
+            }catch (Exception e){
+                a++;
+                System.out.println("kong");
+            }
         }
     }
 
     public static void de(Ka k,Ba b) throws IOException, InterruptedException {
         while (true) {
             String value=k.qu();
-            Document doc = get("https://www.crunchbase.com/textsearch?q="+value);
-            Elements ele = JsoupUtils.getElements(doc, "identifier-formatter");
+            Document doc = get("https://www.crunchbase.com/textsearch?q="+URLEncoder.encode(value,"utf-8"));
+            Elements ele = JsoupUtils.getElements(doc, "div.grid-cell.layout-row.layout-align-start-center.col-2");
+            int a=0;
+            boolean bo=true;
+            String aa=null;
+            String bb=null;
             for (Element e : ele) {
-                String url = JsoupUtils.getHref(e, "span.component--field-formatter.field-type-identifier a.cb-link.layout-row.layout-align-start-center", "href", 0);
-                String na=JsoupUtils.getString(e, "span.component--field-formatter.field-type-identifier a.cb-link.layout-row.layout-align-start-center", 0);
-                if(Dup.nullor(url)&&value.equals(na)) {
-                    b.fang(url.replace("/organization/", ""));
+                String url = JsoupUtils.getHref(e, "field-formatter.cb-margin-medium-horizontal.flex identifier-formatter span.component--field-formatter.field-type-identifier a.cb-link.layout-row.layout-align-start-center", "href", 0);
+                String na=JsoupUtils.getString(e, "field-formatter.cb-margin-medium-horizontal.flex identifier-formatter span.component--field-formatter.field-type-identifier a.cb-link.layout-row.layout-align-start-center", 0);
+                if(Dup.nullor(url)&&value.equals(na)&&!url.contains("person")) {
+                    bo=false;
+                    b.fang(new String[]{url.replace("/organization/", ""),value});
                     break;
                 }
+                if(a==0&&!url.contains("person")){
+                    aa=url.replace("/organization/", "");
+                    bb=value;
+                }
+                a++;
+            }
+            if(bo&&aa!=null&&bb!=null){
+                b.fang(new String[]{aa,bb});
             }
         }
     }
 
     public static void serach(Cs c,Ba b) throws SQLException, IOException, InterruptedException {
-        String sql = "insert into crunchbase_org(org_name,logo_url,add_ress,Categories,Sub_Organization,Founded_Date,Founders,Operating_Status,Funding_Status,Last_Funding_Type,Employees,Stock_Symbol,Company_Type,Exits_Number,Website,LinkedIn,Facebook,Twitter,Contact_Email,intro) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into crunchbase_org(org_name,logo_url,add_ress,Categories,Sub_Organization,Founded_Date,Founders,Operating_Status,Funding_Status,Last_Funding_Type,Employees,Stock_Symbol,Company_Type,Exits_Number,Website,LinkedIn,Facebook,Twitter,Contact_Email,intro,ser_key,p_hone) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
 
         String sql2 = "insert into crunchbase_funding(org_name,Announced_Date,Transaction_Name,Investors_Number,Money_Raised,Lead_Investors,funding_number,total_amount) values(?,?,?,?,?,?,?,?)";
@@ -179,18 +200,23 @@ public class crunc {
 
         while (true) {
             try {
-                String va = b.qu();
-                Document doc = get("https://www.crunchbase.com/organization/" + va);
-                System.out.println(va);
+                String[] va = b.qu();
+                Document doc = get("https://www.crunchbase.com/organization/" + URLEncoder.encode(va[0],"utf-8"));
+                //System.out.println(va);
                 Elements ele = JsoupUtils.getElements(doc, "div.component--image-list-card div.imageListWrapper.layout-row.layout-wrap.cb-width-100 div.flex-100.layout-row.layout-align-start-center.imageListItem.flex-gt-sm-50");
                 String logo = JsoupUtils.getHref(doc, "meta[property=og:image]", "content", 0);
                 String quan = JsoupUtils.getString(doc, "div.mat-toolbar-layout h1.flex.cb-overflow-ellipsis", 0);
                 StringBuffer adds = new StringBuffer();
-                Elements addele = doc.select("span.component--field-formatter.field-type-identifier-multi").get(0).select("a");
-                for (Element e : addele) {
-                    adds.append(e.text() + ",");
+                String add =null;
+                try {
+                    Elements addele = doc.select("span.component--field-formatter.field-type-identifier-multi").get(0).select("a");
+                    for (Element e : addele) {
+                        adds.append(e.text() + ",");
+                    }
+                    add = ss(adds);
+                }catch (Exception ee){
+
                 }
-                String add = ss(adds);
                 Elements cateele = JsoupUtils.getElements(doc, "div.component--fields-card div.field-row:contains(Categories) span.component--field-formatter.field-type-identifier-multi a");
                 StringBuffer cates = new StringBuffer();
                 for (Element e : cateele) {
@@ -208,16 +234,17 @@ public class crunc {
                 String fos = ss(foss);
                 String os = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Operating Status) span.component--field-formatter.field-type-enum", 0);
                 String fs = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Operating Status) span.component--field-formatter.field-type-enum", 0);
-                String lt = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Last Funding Type) span.cb-text-color-medium.flex-100.flex-gt-sm-25", 0);
+                String lt = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Last Funding Type) cb-link.component--field-formatter.field-type-enum", 0);
                 String ne = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Number of Employees) a.cb-link.component--field-formatter.field-type-enum", 0);
                 String ss = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Stock Symbol) a.cb-link.component--field-formatter.field-type-link", 0);
                 String ct = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Company Type) span.component--field-formatter.field-type-enum", 0);
                 String noe = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Number of Exits) a.cb-link.component--field-formatter.field-type-integer", 0);
                 String web = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Website) a.cb-link.component--field-formatter.field-type-link", 0);
-                String fabo = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Facebook) a.cb-link.component--field-formatter.field-type-link", 0);
-                String lin = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(LinkedIn) a.cb-link.component--field-formatter.field-type-link", 0);
-                String tw = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Twitter) a.cb-link.component--field-formatter.field-type-link", 0);
-                String email = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Contact Email) span.component--field-formatter.field-type-email", 0);
+                String fabo = JsoupUtils.getHref(doc, "div.component--fields-card div.field-row:contains(Facebook) a.cb-link.component--field-formatter.field-type-link","href", 0);
+                String lin = JsoupUtils.getHref(doc, "div.component--fields-card div.field-row:contains(LinkedIn) a.cb-link.component--field-formatter.field-type-link","href", 0);
+                String tw = JsoupUtils.getHref(doc, "div.component--fields-card div.field-row:contains(Twitter) a.cb-link.component--field-formatter.field-type-link","href", 0);
+                String email = JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Contact Email) span.component--field-formatter.field-type-text_blob", 0);
+                String phone= JsoupUtils.getString(doc, "div.component--fields-card div.field-row:contains(Phone Number) span.component--field-formatter.field-type-text_blob", 0);
                 String desc = JsoupUtils.getString(doc, "div.component--description-card div.cb-display-inline", 0);
 
 
@@ -241,39 +268,45 @@ public class crunc {
                 ps.setString(18, tw);
                 ps.setString(19, email);
                 ps.setString(20, desc);
-                //ps.executeUpdate();
+                ps.setString(21,va[1]);
+                ps.setString(22,phone);
+                ps.executeUpdate();
 
-            /*for (Element e : ele) {
+            for (Element e : ele) {
                 String url = JsoupUtils.getHref(e, "div.flex.cb-padding-large-left a.cb-link", "href", 0);
                 if (url.contains("person")) {
                     c.fang(new String[]{"https://www.crunchbase.com" + url, quan});
                 }
-            }*/
+            }
 
                 String nr = JsoupUtils.getString(doc, "big-values-card div.component--big-values-card div.bigValueItemsWrapper.layout-row.layout-wrap div.flex-100.flex-gt-sm-50.bigValueItem.layout-column:contains(Number of Funding Rounds) a.cb-link.component--field-formatter.field-type-integer", 0);
                 String ta = JsoupUtils.getString(doc, "big-values-card div.component--big-values-card div.bigValueItemsWrapper.layout-row.layout-wrap div.flex-100.flex-gt-sm-50.bigValueItem.layout-column:contains(Total Funding Amount) a.cb-link.component--field-formatter.field-type-money", 0);
-                Elements finele = doc.select("list-card:contains(Announced Date) div.grid-body").get(0).select("div.grid-row.layout-row");
-                for (Element e : finele) {
-                    String de = JsoupUtils.getString(e, "span.component--field-formatter.field-type-date", 0);
-                    String tn = JsoupUtils.getString(e, "span.flex.cb-overflow-ellipsis.identifier-label", 0);
-                    String ni = JsoupUtils.getString(e, "a.cb-link.component--field-formatter.field-type-integer", 0);
-                    String mr = JsoupUtils.getString(e, "span.component--field-formatter.field-type-money", 0);
-                    Elements jgele = JsoupUtils.getElements(e, "span.component--field-formatter.field-type-identifier-multi a");
-                    StringBuffer str = new StringBuffer();
-                    for (Element ee : jgele) {
-                        str.append(ee.text() + ",");
-                    }
-                    String jg = ss(str);
+                try {
+                    Elements finele = doc.select("list-card:contains(Announced Date) div.grid-body").get(0).select("div.grid-row.layout-row");
+                    for (Element e : finele) {
+                        String de = JsoupUtils.getString(e, "span.component--field-formatter.field-type-date", 0);
+                        String tn = JsoupUtils.getString(e, "span.flex.cb-overflow-ellipsis.identifier-label", 0);
+                        String ni = JsoupUtils.getString(e, "a.cb-link.component--field-formatter.field-type-integer", 0);
+                        String mr = JsoupUtils.getString(e, "span.component--field-formatter.field-type-money", 0);
+                        Elements jgele = JsoupUtils.getElements(e, "span.component--field-formatter.field-type-identifier-multi a");
+                        StringBuffer str = new StringBuffer();
+                        for (Element ee : jgele) {
+                            str.append(ee.text() + ",");
+                        }
+                        String jg = ss(str);
 
-                    ps2.setString(1, quan);
-                    ps2.setString(2, de);
-                    ps2.setString(3, tn);
-                    ps2.setString(4, ni);
-                    ps2.setString(5, mr);
-                    ps2.setString(6, jg);
-                    ps2.setString(7, nr);
-                    ps2.setString(8, ta);
-                    ps2.executeUpdate();
+                        ps2.setString(1, quan);
+                        ps2.setString(2, de);
+                        ps2.setString(3, tn);
+                        ps2.setString(4, ni);
+                        ps2.setString(5, mr);
+                        ps2.setString(6, jg);
+                        ps2.setString(7, nr);
+                        ps2.setString(8, ta);
+                        ps2.executeUpdate();
+                    }
+                }catch (Exception er){
+
                 }
                 a++;
                 System.out.println(a + "**************************************************8");
@@ -366,11 +399,13 @@ public class crunc {
     }
 
     public static void getip() throws IOException, InterruptedException {
-        RedisAction rd=new RedisAction("10.44.51.90",6379);
+        RedisClu rd=new RedisClu();
         while (true) {
             try {
                 String ip=rd.get("ip");
-                c.fang(ip);
+                if(c.po.size()<=5) {
+                    c.fang(ip);
+                }
                 System.out.println(c.po.size()+"    ip***********************************************");
                 Thread.sleep(4000);
             }catch (Exception e){
@@ -423,11 +458,11 @@ public class crunc {
     }
 
     public class Ba{
-        BlockingQueue<String> po=new LinkedBlockingQueue<String>(10);
-        public void fang(String key) throws InterruptedException {
+        BlockingQueue<String[]> po=new LinkedBlockingQueue<String[]>(10);
+        public void fang(String[] key) throws InterruptedException {
             po.put(key);
         }
-        public String qu() throws InterruptedException {
+        public String[] qu() throws InterruptedException {
             return po.take();
         }
     }

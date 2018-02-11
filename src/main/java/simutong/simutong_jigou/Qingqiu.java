@@ -71,6 +71,33 @@ public class Qingqiu {
         return doc;
     }
 
+    public static Document sousuoget(String url,Map<String,String> map,Proxy proxy,String ye) throws IOException, InterruptedException {
+        Document doc=null;
+        System.out.println("开始请求基本");
+        while (true) {
+            try {
+                Thread.sleep(r.nextInt(2001) + 3000);
+                doc = Jsoup.connect(url)
+                        .ignoreContentType(true)
+                        .cookies(map)
+                        .ignoreHttpErrors(true)
+                        .proxy(proxy)
+                        .data("param.wd","证券" )
+                        .data("param.t","3")
+                        .data("param.ep_sort","")
+                        .data("param.currentPage",ye)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.11 Safari/537.36")
+                        .post();
+                if (!doc.outerHtml().contains("abuyun") && StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("</html>", "").replace("<head></head>", "").replace("<body>", "").replace("</body>", "").trim())) {
+                    break;
+                }
+            }catch (Exception e){
+                System.out.println("time out reget");
+            }
+        }
+        System.out.println("基本请求成功");
+        return doc;
+    }
 
 
 

@@ -32,7 +32,7 @@ public class news_xin {
             @Override
             public void run() {
                 try {
-                    data(c);
+                    data2(c);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -71,8 +71,20 @@ public class news_xin {
         con.close();
     }
 
+    public static void data2(Cang c) throws SQLException, InterruptedException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Connection con=getcon();
+        String sql="select comp_name from gaoxin_qiyemingdan";
+        PreparedStatement ps=con.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        while (rs.next()){
+            String pname=rs.getString(rs.findColumn("comp_name"));
+            c.fang(pname);
+        }
+        con.close();
+    }
+
     public static void get(Cang c) throws IOException, InterruptedException, SQLException {
-        String sql="insert into baidu_news_new(p_name,co_ount,de_count,da_te) values(?,?,?,?)";
+        String sql="insert into baidu_news_newpro(p_name,co_ount,de_count,da_te) values(?,?,?,?)";
         PreparedStatement ps=null;
         Connection con=null;
         int p=0;
@@ -228,7 +240,7 @@ public class news_xin {
 
     public static Connection getcon() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -261,7 +273,7 @@ public class news_xin {
             po.put(key);
         }
         public String qu() throws InterruptedException {
-            return po.poll(10, TimeUnit.SECONDS);
+            return po.poll(6000, TimeUnit.SECONDS);
         }
     }
 }

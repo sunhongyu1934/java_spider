@@ -1,8 +1,10 @@
 package haosou;
 
+import Utils.RedisClu;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import net.sf.json.JSONArray;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -28,10 +30,10 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import spiderKc.kcBean.Count;
 
@@ -39,8 +41,10 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
+import java.net.Proxy;
 import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -60,6 +64,7 @@ import java.util.concurrent.*;
  */
 public class Project {
     private Map<String,String> map=new HashMap<String, String>();
+    private static Ca cc;
     // 代理隧道验证信息
     final static String ProxyUser = "H37O6V2M6C29YK9D";
     final static String ProxyPass = "2BE6C0719BB6A39B";
@@ -96,7 +101,7 @@ public class Project {
 
     public static void main(String args[]) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -120,6 +125,8 @@ public class Project {
         final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
         final Project p=new Project();
         final Cangku c=p.new Cangku();
+        Ca ccc=new Ca();
+        cc=ccc;
 
         ExecutorService pool= Executors.newCachedThreadPool();
         final java.sql.Connection finalCon = con;
@@ -145,7 +152,7 @@ public class Project {
             }
         });
 
-        pool.submit(new Runnable() {
+        Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -156,7 +163,7 @@ public class Project {
             }
         });
 
-
+        thread.start();
 
         for(int x=1;x<=10;x++) {
             pool.submit(new Runnable() {
@@ -170,18 +177,26 @@ public class Project {
                 }
             });
         }
+
+        pool.shutdown();
+        while (true){
+            if (pool.isTerminated()) {
+                System.out.println("结束了！");
+                System.exit(0);
+            }
+            Thread.sleep(2000);
+        }
     }
 
     public static void data(java.sql.Connection con,Cangku c) throws SQLException, InterruptedException {
-        String sql="select id,c_shortname from it_leida_company where c_shortname!='' and id not in (select p_id from haosou) limit 100";
+        String sql="select comp_name from gaoxin_qiyemingdan";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
             try {
-                String pid = rs.getString(rs.findColumn("id"));
-                String pname = rs.getString(rs.findColumn("c_shortname"));
+                String pname = rs.getString(rs.findColumn("comp_name"));
 
-                c.fang(new String[]{pid, pname});
+                c.fang(new String[]{ pname});
             }catch (Exception e){
                 System.out.println("fang error");
             }
@@ -189,15 +204,14 @@ public class Project {
     }
 
     public static void data2(java.sql.Connection con2,Cangku c) throws SQLException, InterruptedException {
-        String sql="select distinct p_id,p_name from haosou";
+        String sql="select project_nm from baidu_news_project";
         PreparedStatement ps=con2.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
             try {
-                String pid = rs.getString(rs.findColumn("p_id"));
-                String pname = rs.getString(rs.findColumn("p_name"));
+                String pid = rs.getString(rs.findColumn("project_nm"));
 
-                c.fang(new String[]{pid, pname});
+                c.fang(new String[]{pid});
             }catch (Exception e){
                 System.out.println("fang error");
             }
@@ -235,10 +249,17 @@ public class Project {
 
     public static Map<String,String> weblogin() throws InterruptedException {
        // "/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs"
-        System.setProperty(Count.phantomjs,"/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        //System.setProperty(Count.phantomjs,"/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
         DesiredCapabilities caps = new DesiredCapabilities();
+        String winphanpath="D:\\工作\\hy\\资源\\phantomjs-2.1.1-windows/bin/phantomjs.exe";
+        String linphanpath="/data1/spider/java_spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs";
+        if(System.getProperty("os.name").contains("Windows")) {
+            caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, winphanpath);
+        }else{
+            caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, linphanpath);
+        }
         caps.setCapability("phantomjs.page.settings.userAgent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
-        //caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[]{"--proxy-type=http", "--proxy=proxy.abuyun.com:9020", "--proxy-auth=H0QCBTTB7675S1XD:26A1FF9238C9050D"});
+        //caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[]{"--proxy-type=http", "--proxy=proxy.abuyun.com:9020","--proxy-auth=H37O6V2M6C29YK9D:2BE6C0719BB6A39B"});
         WebDriver driver=new PhantomJSDriver(caps);
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         Map<String,String> map=new HashMap<String, String>();
@@ -254,7 +275,7 @@ public class Project {
                 out.close();*/
                 driver.findElement(By.xpath("//*[@id=\"index\"]/header/div/ul/li[1]/a")).click();
                 Thread.sleep(10000);
-                driver.findElement(By.className("quc-third-part-icon-sina")).click();
+                driver.findElement(By.className("quc-third-part-icon-tencent")).click();
                 Thread.sleep(5000);
                 String handle1=driver.getWindowHandle();
                 Set<String> set=driver.getWindowHandles();
@@ -264,29 +285,47 @@ public class Project {
                         break;
                     }
                 }
+                driver.switchTo().frame(0);
+                Thread.sleep(2000);
+                driver.findElement(By.id("switcher_plogin")).click();
                 Thread.sleep(5000);
-                driver.findElement(By.id("userId")).sendKeys("13717951934");
-                driver.findElement(By.id("passwd")).sendKeys("3961shy");
+                driver.findElement(By.id("u")).sendKeys("2471264637");
+                driver.findElement(By.id("p")).sendKeys("*963.-+//x");
                 Thread.sleep(5000);
                 Actions action = new Actions(driver);
-                action.click(driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")));
-                driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")).click();
+                action.sendKeys(Keys.ENTER);
+                //action.click(driver.findElement(By.xpath("//*[@id=\"login_button\"]")));
+                //driver.findElement(By.xpath("//*[@id=\"login_button\"]")).click();
                 System.out.println("dianjidenglu********************************************************************************");
+                boolean bo=false;
+                int a=0;
                 while (true) {
                     try {
                         Thread.sleep(3000);
-                        action.click(driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")));
-                        driver.findElement(By.xpath("//*[@id=\"outer\"]/div/div[2]/form/div/div[2]/div/p/a[1]")).click();
+                        action.click(driver.findElement(By.xpath("//*[@id=\"login_button\"]")));
+                        driver.findElement(By.xpath("//*[@id=\"login_button\"]")).click();
+                        action.sendKeys(Keys.ENTER);
+                        a++;
+                        if(a>=3){
+                            bo=true;
+                            break;
+                        }
                     } catch (Exception e) {
                         System.out.println("denglu success&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                         break;
                     }
                 }
+                if(bo){
+                    driver.quit();
+                    driver=new PhantomJSDriver(caps);
+                    driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                    continue;
+                }
                 System.out.println("kaishipanduan--------------------------------------------------------------------------------------");
                 driver.switchTo().window(handle1);
                 while (true) {
                     Thread.sleep(1000);
-                    if (driver.getPageSource().contains("qpalzm12891")) {
+                    if (driver.getPageSource().contains("878402")) {
                         Set<org.openqa.selenium.Cookie> set1 = driver.manage().getCookies();
                         for (org.openqa.selenium.Cookie c : set1) {
                             map.put(c.getName(), c.getValue());
@@ -296,6 +335,7 @@ public class Project {
                 }
                 break;
             }catch (Exception e){
+                e.printStackTrace();
                 driver.quit();
                 driver=new PhantomJSDriver(caps);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
@@ -338,7 +378,7 @@ public class Project {
 
     public static void jiexi(java.sql.Connection con,Cangku c,Proxy proxy,Project pp) throws IOException, SQLException, InterruptedException {
         Random r=new Random();
-        String sql="insert into haosou(p_name,p_id,guan_zhu_seven,guan_zhu_t,guanzhu_huanbi_s,guanzhu_huanbi_t,guanzhu_tongbi_s,guanzhu_tongbi_t,man,woman,haixihuan,diyu,yearf) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql="insert into haosou_new(p_name,guan_zhu_seven,guan_zhu_t,guanzhu_huanbi_s,guanzhu_huanbi_t,guanzhu_tongbi_s,guanzhu_tongbi_t,man,woman,haixihuan,diyu,yearf) values(?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=con.prepareStatement(sql);
 
         String tr=null;
@@ -352,8 +392,7 @@ public class Project {
                     Thread.sleep(300000);
                     System.exit(0);
                 }
-                String pid = values[0];
-                String pname = values[1];
+                String pname = values[0];
                 String jiben = "http://trends.so.com/index/overviewJson?area=%E5%85%A8%E5%9B%BD&q=" + URLEncoder.encode(pname, "utf-8");
                 String json = get(jiben,proxy,pp);
                 tr=json;
@@ -409,24 +448,40 @@ public class Project {
 
 
                 ps.setString(1, pname);
-                ps.setString(2, pid);
-                ps.setString(3, zhouguanzhudu);
-                ps.setString(4, yueguanzhudu);
-                ps.setString(5, zhouhuanbi);
-                ps.setString(6, yuehuanbi);
-                ps.setString(7, zhoutongbi);
-                ps.setString(8, yuetongbi);
-                ps.setString(9, nan);
-                ps.setString(10, nv);
-                ps.setString(11, haixi);
-                ps.setString(12, diyu);
-                ps.setString(13, age);
+                ps.setString(2, zhouguanzhudu);
+                ps.setString(3, yueguanzhudu);
+                ps.setString(4, zhouhuanbi);
+                ps.setString(5, yuehuanbi);
+                ps.setString(6, zhoutongbi);
+                ps.setString(7, yuetongbi);
+                ps.setString(8, nan);
+                ps.setString(9, nv);
+                ps.setString(10, haixi);
+                ps.setString(11, diyu);
+                ps.setString(12, age);
                 ps.executeUpdate();
                 System.out.println("success_haosou");
                 p++;
                 System.out.println(p+"******************************************************");
             }catch (Exception e){
                 System.out.println("error");
+            }
+        }
+    }
+
+    public static void getip() throws IOException, InterruptedException {
+        RedisClu rd=new RedisClu();
+        while (true) {
+            try {
+                String ip=rd.get("ip");
+                if(cc.po.size()<=5) {
+                    cc.fang(ip);
+                }
+                System.out.println(cc.po.size()+"    ip***********************************************");
+                Thread.sleep(4000);
+            }catch (Exception e){
+                Thread.sleep(1000);
+                System.out.println("ip wait");
             }
         }
     }
@@ -555,4 +610,20 @@ public class Project {
         }
         return sslsf;
     }
+    public static void jietu(WebDriver driver,String screenPath) throws IOException {
+        File scrFile = ((TakesScreenshot) driver)
+                .getScreenshotAs(OutputType.FILE); // 关键代码，执行屏幕截图，默认会把截图保存到temp目录
+        FileUtils.copyFile(scrFile, new File(screenPath));
+    }
+
+    public static class Ca{
+        BlockingQueue<String> po=new LinkedBlockingQueue<String>();
+        public void fang(String key) throws InterruptedException {
+            po.put(key);
+        }
+        public String qu() throws InterruptedException {
+            return po.take();
+        }
+    }
+
 }

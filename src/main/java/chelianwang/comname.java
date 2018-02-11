@@ -34,7 +34,7 @@ public class comname {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl2.innotree.org:3308/tyc_xin?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/tyc_xin?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         try {
@@ -108,23 +108,27 @@ public class comname {
     }
 
     public static void serach(Ca c) throws IOException, InterruptedException {
-        for(int x=1;x<=130;x++){
-            try {
-                Document doc = get("http://www.chinasensor.cn/company/yiqiyibiao/company_list_" + x + ".html");
-                Elements ele = JsoupUtils.getElements(doc, "div.list");
-                for (Element e : ele) {
-                    try {
-                        String url = JsoupUtils.getHref(e, "ul li a", "href", 0);
-                        String add = JsoupUtils.getString(e, "td.f_orange", 0);
-                        String logo = JsoupUtils.getHref(e, "a img", "src", 0);
-                        c.fang(new String[]{url, add, logo});
-                    }catch (Exception ee){
-                        System.out.println("fang error");
+        String ss[]=new String[]{"yiliaoyiqi","2296","2297","2298","2299","yaliyibiao","2301","diangongyibiao"};
+
+        for(String s: ss) {
+            for (int x = 1; x <= 100; x++) {
+                try {
+                    Document doc = get("http://www.chinasensor.cn/company/"+s+"/company_list_" + x + ".html");
+                    Elements ele = JsoupUtils.getElements(doc, "div.list");
+                    for (Element e : ele) {
+                        try {
+                            String url = JsoupUtils.getHref(e, "ul li a", "href", 0);
+                            String add = JsoupUtils.getString(e, "td.f_orange", 0);
+                            String logo = JsoupUtils.getHref(e, "a img", "src", 0);
+                            c.fang(new String[]{url, add, logo});
+                        } catch (Exception ee) {
+                            System.out.println("fang error");
+                        }
                     }
+                    System.out.println(x + "#########################################################");
+                } catch (Exception e) {
+                    System.out.println("ser error");
                 }
-                System.out.println(x+"#########################################################");
-            }catch (Exception e){
-                System.out.println("ser error");
             }
         }
     }

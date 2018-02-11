@@ -1,14 +1,24 @@
 package tianyancha.XinxiXin;
 
+import Utils.Dup;
+import Utils.JsoupUtils;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tianyancha.chuli.shuzichu;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 import static Utils.JsoupUtils.*;
@@ -54,6 +64,9 @@ public class Tyc_quan {
     private static PreparedStatement ps32;
     private static PreparedStatement ps33;
     private static PreparedStatement ps34;
+    private static PreparedStatement ps35;
+    private static SAXReader saxReader;
+    private static org.dom4j.Document doo;
     public Tyc_quan(Connection con,String[] value) throws SQLException {
         this.con=con;
         for(int x=0;x<value.length;x++){
@@ -91,7 +104,7 @@ public class Tyc_quan {
                 String sql11="insert into tyc_competing_information(t_id,compet_name,compet_logo,compet_area,p_round,p_industry,compet_business,create_time,p_valucation) values(?,?,?,?,?,?,?,?,?)";
                 this.ps11=con.prepareStatement(sql11);
             }else if(value[x].equals("法律诉讼")){
-                String sql12="insert into tyc_legal_proceedings(t_id,legal_time,legal_document,legal_type,legal_num) values(?,?,?,?,?)";
+                String sql12="insert into tyc_legal_proceedings(t_id,legal_time,legal_document,legal_type,legal_num,legal_sf,legal_doctitle) values(?,?,?,?,?,?,?)";
                 this.ps12=con.prepareStatement(sql12);
             }else if(value[x].equals("法院公告")){
                 String sql13="insert into tyc_court_notice(t_id,notice_time,accuser,defendant,notice_type,court) values(?,?,?,?,?,?)";
@@ -159,25 +172,49 @@ public class Tyc_quan {
             }else if(value[x].equals("微信公众号")){
                 String sql34="insert into tyc_webcat(t_id,w_logo,w_ming,w_hao,w_erwei,w_desc) values(?,?,?,?,?,?)";
                 this.ps34=con.prepareStatement(sql34);
+            } else if(value[x].equals("软件著作权")){
+                String sql35="insert into tyc_ruanzhu(t_id,r_pzrq,r_quan,r_jian,r_dengji,r_fenlei,r_banben) values(?,?,?,?,?,?,?)";
+                this.ps35=con.prepareStatement(sql35);
             }
         }
     }
 
-    public static void jichu(Document doc,String tid,String cname) throws SQLException {
+    static{
+        saxReader=new SAXReader();
+        try {
+            shuzichu.xunlian();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        try {
+            doo = saxReader.read(new FileInputStream("shu.xml"));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void jichu(Document doc, String tid, String cname, String zz, String zs) throws SQLException, ParseException, IOException, InterruptedException, DocumentException {
         Document doc2=doc;
         String quancheng = getString(doc2, "div.company_header_width.ie9Style span.f18.in-block.vertival-middle", 0);
         if(StringUtils.isEmpty(quancheng)){
             System.out.println(doc2);
         }
         String ceng = getString(doc2, "div.historyName45Bottom.position-abs.new-border.pl8.pr8.pt4.pb4", 0);
-        String phone = getString(doc2, "div.f14.sec-c2.mt10 div.in-block.vertical-top:contains(电话) span", 1);
-        String email = getString(doc2, "div.f14.sec-c2.mt10 div.in-block.vertical-top:contains(邮箱) span", 1);
+        String phone = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(电话) span", 1);
+        String email = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(邮箱) span", 1);
         String web = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(网址) a", 0);
         String address = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(地址) span", 1);
-        String logo = getHref(doc2, "div.b-c-white.new-border.over-hide.mr10.ie9Style img", "src", 0);
-        String zhuceziben = getString(doc2, "div.new-border-bottom:contains(注册资本) div.pb10 div.baseinfo-module-content-value", 0);
-        String zhuceshijian = getString(doc2, "div.new-border-bottom:contains(注册时间) div.pb10 div.baseinfo-module-content-value", 1);
-        String statu = getString(doc2, "div.pt10:contains(企业状态) div.baseinfo-module-content-value.statusType1", 0);
+        String logo = getHref(doc2, "div.b-c-white.over-hide.mr10.ie9Style img", "src", 0);
+        String zhucezibe = getString(doc2, "div.new-border-bottom:contains(注册资本) div.pb10 div.baseinfo-module-content-value", 0);
+        String zhuceshijia = getString(doc2, "div.new-border-bottom:contains(注册时间) div.pb10 div.baseinfo-module-content-value", 1);
+        String statu = getString(doc2, "div.pt10:contains(公司状态) div.baseinfo-module-content-value", 0);
         String gongshang = getString(doc2, "div.base0910 table tbody td", 1);
         String zuzhijigou = getString(doc2, "div.base0910 table tbody td", 3);
         String tongyixinyong = getString(doc2, "div.base0910 table tbody td", 6);
@@ -185,13 +222,58 @@ public class Tyc_quan {
         String nashuiren = getString(doc2, "div.base0910 table tbody td", 10);
         String hangye = getString(doc2, "div.base0910 table tbody td", 12);
         String yingyeqixian = getString(doc2, "div.base0910 table tbody td", 14);
-        String hezhunriqi = getString(doc2, "div.base0910 table tbody td", 16);
+        String hezhunriq = getString(doc2, "div.base0910 table tbody td", 16);
         String dengjijiguan = getString(doc2, "div.base0910 table tbody td", 18);
-        String zhucedizhi = getString(doc2, "div.base0910 table tbody td", 20);
-        String yingming=getString(doc2, "div.base0910 table tbody td", 22);
+        String zhucedizhi = getString(doc, "div.base0910 table tbody td", 22).replace("附近公司","");
+        String yingming=getString(doc, "div.base0910 table tbody td", 20);
         String jingyingfanwei = getString(doc, "div.base0910 table tbody td span.js-full-container.hidden", 0);
+        if(!Dup.nullor(jingyingfanwei)){
+            jingyingfanwei=getString(doc, "div.base0910 table tbody td span.js-full-container", 0);
+        }
         String faren = getString(doc2, "div.in-block.vertical-top.pl15 div.f18.overflow-width a", 0);
         String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
+
+        String zhuceziben=zi(zhucezibe);
+        String zhuceshijian=zi(zhuceshijia);
+        String hezhunriqi=zi(hezhunriq);
+
+
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
+        long cur=System.currentTimeMillis();
+        long aur=-5364662400000L;
+
+        if(((Dup.nullor(zhuceshijian)&&zhuceshijian.contains("."))||(Dup.nullor(hezhunriqi)&&hezhunriqi.contains("."))||(Dup.nullor(zhuceshijian)&&zhuceshijia.replaceAll("[^0-9]","").length()>8)||(Dup.nullor(hezhunriqi)&&hezhunriqi.replaceAll("[^0-9]","").length()>8)||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()<aur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()<aur))&&!zhuceshijian.contains("2099")&&!hezhunriqi.contains("2099")){
+            Thread.sleep(7200000);
+            int d=0;
+            while (true) {
+                try {
+                    synchronized (this){
+                        System.out.println("kaishi xunlian");
+                        shuzichu.xunlian();
+                        doo = saxReader.read(new FileInputStream("shu.xml"));
+                    }
+
+                    zhuceziben = zi(zhucezibe);
+                    zhuceshijian = zi(zhuceshijia);
+                    hezhunriqi = zi(hezhunriq);
+                    boolean bo=true;
+                    System.out.println(zhuceshijian+"       "+hezhunriqi+"      "+quancheng);
+                    if(((Dup.nullor(zhuceshijian)&&zhuceshijian.contains("."))||(Dup.nullor(hezhunriqi)&&hezhunriqi.contains("."))||(Dup.nullor(zhuceshijian)&&zhuceshijia.replaceAll("[^0-9]","").length()>8)||(Dup.nullor(hezhunriqi)&&hezhunriqi.replaceAll("[^0-9]","").length()>8)||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()<aur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()<aur))&&!zhuceshijian.contains("2099")&&!hezhunriqi.contains("2099")){
+                        bo=false;
+                    }
+                    if(bo){
+                        break;
+                    }
+                    }catch (Exception ee){
+
+                }
+                Thread.sleep(10000);
+                d++;
+                if(d>=10){
+                    break;
+                }
+            }
+        }
 
         ps1.setString(1,quancheng);
         ps1.setString(2,ceng);
@@ -222,6 +304,31 @@ public class Tyc_quan {
         System.out.println("success_tyc-quan");
     }
 
+    public static String zi(String key) throws FileNotFoundException, DocumentException {
+        List<org.dom4j.Element> list=doo.getRootElement().elements("shu");
+
+        if(Dup.nullor(key)){
+            String keys[]=key.split("|");
+            StringBuffer str=new StringBuffer();
+            for(String s:keys){
+                boolean bo=true;
+                for(org.dom4j.Element e:list){
+                    if(s.equals(e.getText())){
+                        str.append(s.replace(e.getText(),e.attributeValue("yuan")));
+                        bo=false;
+                    }
+                }
+                if(bo){
+                    str.append(s);
+                }
+            }
+
+            return str.toString();
+        }else {
+            return null;
+        }
+    }
+
     public static void zhuyao(Document doc,String tid,String cname) throws SQLException {
         Document doc2=doc;
         Elements zele=getElements(doc2,"div#_container_staff div.clearfix div.staffinfo-module-container");
@@ -241,17 +348,22 @@ public class Tyc_quan {
     }
     public static void duiwaitouzi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_invest div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n","");
+        String page=getString(doc2,"div#_container_invest div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n","").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
         for(int x=1;x<=Integer.parseInt(page);x++) {
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(tid);
                     doc2 = detailget("http://www.tianyancha.com/pagination/invest.xhtml?ps=20&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     Elements duiwai = getElements(doc2, "div.out-investment-container tbody tr");
                     if(duiwai!=null&&StringUtils.isNotEmpty(duiwai.toString())){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -295,10 +407,15 @@ public class Tyc_quan {
         }
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(tid);
                     doc2 = detailget("http://www.tianyancha.com/pagination/changeinfo.xhtml?ps=5&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -369,16 +486,21 @@ public class Tyc_quan {
 
     public static void gudong(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_holder div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_holder div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(tid);
                     doc2 = detailget("http://www.tianyancha.com/pagination/holder.xhtml?ps=20&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -445,16 +567,21 @@ public class Tyc_quan {
 
     public static void hexin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_teamMember div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_teamMember div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(cname);
                     doc2 = detailget("http://www.tianyancha.com/pagination/teamMember.xhtml?ps=5&pn=" + x + "&name=" + cname + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -529,10 +656,15 @@ public class Tyc_quan {
         }
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(cname);
                     doc2 = detailget("http://www.tianyancha.com/pagination/touzi.xhtml?ps=10&pn=" + x + "&name=" + cname + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -671,13 +803,16 @@ public class Tyc_quan {
                     String caiwen=getString(e,"td",1);
                     String cailian=getHref(e,"td a","href",0);
                     String leixing=getString(e,"td",2);
-                    String hao=getString(e,"td",3);
+                    String hao=getString(e,"td",4);
+                    String sf=getString(e,"td",3);
 
                     ps12.setString(1,tid);
                     ps12.setString(2,riqi);
                     ps12.setString(3,cailian);
                     ps12.setString(4,leixing);
                     ps12.setString(5,hao);
+                    ps12.setString(6,sf);
+                    ps12.setString(7,caiwen);
                     ps12.executeUpdate();
                 }
             }
@@ -1435,17 +1570,22 @@ public class Tyc_quan {
 
     public static void gongzhonghao(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
 
         for(int x=1;x<=Integer.parseInt(page);x++){
             if(x>=2){
+                int ai=0;
                 while (true) {
                     Map<String, Object> map = jisuan(tid);
                     doc2 = detailget("http://www.tianyancha.com/pagination/wechat.xhtml?ps=10&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
                         break;
                     }
                 }
@@ -1474,6 +1614,55 @@ public class Tyc_quan {
             }
         }
 
+    }
+
+    public static void ruanzhu(Document doc,String tid,String cname) throws SQLException, IOException, InterruptedException {
+        Document doc2=doc;
+        String page=getString(doc2,"div.copyright div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");
+        if(StringUtils.isEmpty(page)){
+            page="1";
+        }
+
+        for(int x=1;x<=Integer.parseInt(page);x++){
+            if(x>=2){
+                int ai=0;
+                while (true) {
+                    Map<String, Object> map = jisuan(tid);
+                    doc2 = detailget("http://www.tianyancha.com/pagination/copyright.xhtml?ps=5&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
+                    if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                    ai++;
+                    if(ai>=20){
+                        break;
+                    }
+                }
+            }
+
+            Elements ruele= JsoupUtils.getElements(doc,"div.copyright tbody tr");
+            if(x>=2){
+                ruele=getElements(doc2,"tbody tr");
+            }
+            if(ruele!=null){
+                for(Element e:ruele){
+                    String piri=JsoupUtils.getString(e,"td",0);
+                    String rquan=JsoupUtils.getString(e,"td",1);
+                    String rjian=JsoupUtils.getString(e,"td",2);
+                    String dengji=JsoupUtils.getString(e,"td",3);
+                    String fenhao=JsoupUtils.getString(e,"td",4);
+                    String banben=JsoupUtils.getString(e,"td",5);
+
+                    ps35.setString(1,tid);
+                    ps35.setString(2,piri);
+                    ps35.setString(3,rquan);
+                    ps35.setString(4,rjian);
+                    ps35.setString(5,dengji);
+                    ps35.setString(6,fenhao);
+                    ps35.setString(7,banben);
+                    ps35.executeUpdate();
+                }
+            }
+        }
     }
 
 

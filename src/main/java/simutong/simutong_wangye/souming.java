@@ -21,15 +21,15 @@ import static Utils.JsoupUtils.*;
  */
 public class souming {
     // 代理隧道验证信息
-    final static String ProxyUser = "H2CGL101C4D537QD";
-    final static String ProxyPass = "1E60DF24843C82B0";
+    final static String ProxyUser = "HJ3F19379O94DO9D";
+    final static String ProxyPass = "D1766F5002A70BC4";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl2.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -101,12 +101,12 @@ public class souming {
     }
 
     public static void data(Connection con,Keys k) throws SQLException, InterruptedException {
-        String sql="select  jian from spider_dim.si_comp_name";
+        String sql="select  be_exited_name from spider.si_institution_exit_info";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
             String gid="0";
-            String ming=rs.getString(rs.findColumn("jian"));
+            String ming=rs.getString(rs.findColumn("be_exited_name"));
             k.fang(new String[]{gid,ming});
         }
     }
@@ -167,7 +167,7 @@ public class souming {
                 while (true) {
                     try {
                         doc = Jsoup.connect(url)
-                                .header("Cookie", "userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=e4af27a8396968e1a3588a198bb13d18; JSESSIONID=702A01487FB608E4968B12A5E2C7A305; firstEnterUrlInSession=http%3A//www.pedata.cn/; VisitorCapacity=1; operatorId=31183; pageReferrInSession=https%3A//www.baidu.com/link%3Furl%3DV8-iHcGKs-QrNa5waom5pRgzbfwLT5jp65FXhC566Si%26wd%3D%26eqid%3D8b72cfb7000108ec00000003599f84cf; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1503570321,1503572515,1503574566,1503626453; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1503626458")
+                                .header("Cookie", "JSESSIONID=209C959884DB0B85334D7EBD7A1662E9; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1518313515; userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=44b35f5f978b7c77ce7f6ff5cc3a0e75; operatorId=31183; pageReferrInSession=http%3A//www.pedata.cn/auth_do/enter; firstEnterUrlInSession=http%3A//ep.pedata.cn/2773647053.html; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1518313603; VisitorCapacity=1")
                                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
                                 .ignoreContentType(true)
                                 .ignoreHttpErrors(true)

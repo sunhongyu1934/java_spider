@@ -1,5 +1,6 @@
 package tianyancha.Guoxin;
 
+import Utils.RedisClu;
 import baidu.RedisAction;
 import com.google.gson.Gson;
 import net.sf.json.JSONObject;
@@ -49,7 +50,7 @@ public class tyc_guoxin {
         System.out.println("spider begin ******************************************************************************");
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/tyc_xin?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -73,7 +74,7 @@ public class tyc_guoxin {
         //final TYCConsumer tyc=new TYCConsumer("tyc_zl","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         //final TYCConsumer tyc=new TYCConsumer("tyc_linshi3","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         //final TYCConsumer tyc=new TYCConsumer("tyc_shangxianxin","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
-        final RedisAction r=new RedisAction("10.44.51.90",6379);
+        final RedisClu r=new RedisClu();
         ExecutorService pool= Executors.newCachedThreadPool();
         final Connection finalCon = con;
 
@@ -159,7 +160,7 @@ public class tyc_guoxin {
         }
     }
 
-    public static void duqu(RedisAction rs, Key k) throws UnsupportedEncodingException, InterruptedException {
+    public static void duqu(RedisClu rs, Key k) throws UnsupportedEncodingException, InterruptedException {
         Thread.sleep(3000);
         int a=1;
         while (true){
@@ -176,7 +177,7 @@ public class tyc_guoxin {
         }
     }
 
-    public static void duqu(RedisAction rs, Url u) throws UnsupportedEncodingException, InterruptedException {
+    public static void duqu(RedisClu rs, Url u) throws UnsupportedEncodingException, InterruptedException {
         Thread.sleep(3000);
         int a=1;
         while (true){
@@ -185,7 +186,7 @@ public class tyc_guoxin {
                     break;
                 }
                 String cname = rs.get("tyc");
-                u.put(new String[]{cname.split("###",2)[0],cname.split("###",2)[1]});
+                u.put(new String[]{cname,""});
             }catch (Exception e){
                 a++;
                 System.out.println("kong");
@@ -276,12 +277,13 @@ public class tyc_guoxin {
         while (true){
             try {
                 String[] value = u.qu();
-                if((value==null||value.length<2)&&k.bo.size()==0){
+                if(value==null||value.length<2){
                     break;
-                }else if((value==null||value.length<2)&&k.bo.size()>0){
-                    continue;
                 }
-                String url = value[0];
+                String url=value[0];
+                if(url==null){
+                    break;
+                }
                 String cname = URLEncoder.encode(value[1], "UTF-8");
                 String tid = url.replace("https://www.tianyancha.com/company/", "");
                 Document doc = detailget(url);
@@ -606,7 +608,7 @@ public class tyc_guoxin {
     }
 
     public static void getip() throws IOException, InterruptedException {
-        RedisAction rd=new RedisAction("10.44.51.90",6379);
+        RedisClu rd=new RedisClu();
         while (true) {
             try {
                 String ip=rd.get("ip");

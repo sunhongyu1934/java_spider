@@ -30,9 +30,9 @@ public class linshi_qiniu {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://47.95.31.183:3306/innotree_data_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="test";
-        String password="123456";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
+        String username="spider";
+        String password="spider";
         try {
             Class.forName(driver1).newInstance();
         } catch (InstantiationException e) {
@@ -122,12 +122,41 @@ public class linshi_qiniu {
                     break;
                 }
             }
+            break;
         }
     }
 
     public static void shang(Ca c,String path) throws QiniuException, SQLException, InterruptedException {
-        String sql="insert into logo_qiniu(only_id,qiniu_url) values(?,?)";
-        PreparedStatement ps=conn.prepareStatement(sql);
+        String sql0="update dw_dim_online.company_base_info_copy0 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps0=conn.prepareStatement(sql0);
+
+        String sql1="update dw_dim_online.company_base_info_copy1 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps1=conn.prepareStatement(sql1);
+
+        String sql2="update dw_dim_online.company_base_info_copy2 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps2=conn.prepareStatement(sql2);
+
+        String sql3="update dw_dim_online.company_base_info_copy3 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps3=conn.prepareStatement(sql3);
+
+        String sql4="update dw_dim_online.company_base_info_copy4 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps4=conn.prepareStatement(sql4);
+
+        String sql5="update dw_dim_online.company_base_info_copy5 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps5=conn.prepareStatement(sql5);
+
+        String sql6="update dw_dim_online.company_base_info_copy6 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps6=conn.prepareStatement(sql6);
+
+        String sql7="update dw_dim_online.company_base_info_copy7 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps7=conn.prepareStatement(sql7);
+
+        String sql8="update dw_dim_online.company_base_info_copy8 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps8=conn.prepareStatement(sql8);
+
+        String sql9="update dw_dim_online.company_base_info_copy9 set comp_logo_url=? where comp_id=? and (logo_source not like '%人工%' or logo_source='' or logo_source is null)";
+        PreparedStatement ps9=conn.prepareStatement(sql9);
+
         UploadManager uploadManager = new UploadManager();
         int a=0;
         while (true) {
@@ -146,13 +175,54 @@ public class linshi_qiniu {
                 newUrl = "https://" + BUCKET_HOST_NAME + "/" + q.key;
                 System.out.println(newUrl);
 
-                ps.setString(1, f.getName().replace(".png", ""));
-                ps.setString(2, newUrl);
-                //ps.executeUpdate();
-                //renameto(f,path+f.getName());
+                String comp_id=f.getName().replace(".png", "");
+
+                if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==0) {
+                    ps0.setString(1, newUrl);
+                    ps0.setString(2, comp_id);
+                    ps0.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==1){
+                    ps1.setString(1, newUrl);
+                    ps1.setString(2, comp_id);
+                    ps1.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==2){
+                    ps2.setString(1, newUrl);
+                    ps2.setString(2, comp_id);
+                    ps2.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==3){
+                    ps3.setString(1, newUrl);
+                    ps3.setString(2, comp_id);
+                    ps3.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==4){
+                    ps4.setString(1, newUrl);
+                    ps4.setString(2, comp_id);
+                    ps4.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==5){
+                    ps5.setString(1, newUrl);
+                    ps5.setString(2, comp_id);
+                    ps5.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==6){
+                    ps6.setString(1, newUrl);
+                    ps6.setString(2, comp_id);
+                    ps6.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==7){
+                    ps7.setString(1, newUrl);
+                    ps7.setString(2, comp_id);
+                    ps7.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==8){
+                    ps8.setString(1, newUrl);
+                    ps8.setString(2, comp_id);
+                    ps8.executeUpdate();
+                }else if(Integer.parseInt(comp_id.substring(comp_id.length()-1))==9){
+                    ps9.setString(1, newUrl);
+                    ps9.setString(2, comp_id);
+                    ps9.executeUpdate();
+                }
+                renameto(f,path+f.getName());
                 a++;
                 System.out.println(a + "*****************************************************");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("error");
             }
         }
@@ -172,13 +242,26 @@ public class linshi_qiniu {
         out.close();
     }
 
+    public static void linshang(String path) throws QiniuException {
+        UploadManager uploadManager = new UploadManager();
+        String newUrl = null;
+        System.out.println("begin");
+        Response res = uploadManager.put(path, null, auth.uploadToken(BUCKET_NAME));
+        String json = res.bodyString();
+        System.out.println(json);
+        Gson gson = new Gson();
+        qijson q = gson.fromJson(json, qijson.class);
+        newUrl = "https://" + BUCKET_HOST_NAME + "/" + q.key;
+        System.out.println(newUrl);
+    }
+
     class Ca{
-        BlockingQueue<File> po=new LinkedBlockingDeque<File>(50);
+        BlockingQueue<File> po=new LinkedBlockingDeque<File>();
         public void fang(File key) throws InterruptedException {
             po.put(key);
         }
         public File qu() throws InterruptedException {
-            return po.take();
+            return po.poll(10,TimeUnit.SECONDS);
         }
     }
 

@@ -1,5 +1,6 @@
 package java_mail;
 
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -20,9 +21,9 @@ public class email {
         prop.setProperty("mail.trabsport.protocol","smtp");
         prop.setProperty("mail.smtp.auth","true");
 
-        Session session=Session.getInstance(prop);
+        Session session= Session.getInstance(prop);
         session.setDebug(true);
-        Transport transport=session.getTransport();
+        Transport transport=session.getTransport("smtp");
         transport.connect("smtp.mxhichina.com","hongyu.sun@innotree.cn","3961Shy3961");
         Message message = createMimeMessage(session);
                 //5、发送邮件
@@ -32,7 +33,7 @@ public class email {
 
     public static MimeMessage createMimeMessage(Session session) throws MessagingException, UnsupportedEncodingException {
         MimeMessage mimeMessage=new MimeMessage(session);
-        mimeMessage.setFrom(new InternetAddress("hongyu.sun@innotree.cn"));
+        mimeMessage.setFrom(new InternetAddress("hongyu.sun@innotree.cn","spider","utf-8"));
         mimeMessage.setRecipients(Message.RecipientType.TO, "hongyu.sun@innotree.cn");
         mimeMessage.setSubject("服务器配置信息","utf-8");
                  //邮件的文本内容

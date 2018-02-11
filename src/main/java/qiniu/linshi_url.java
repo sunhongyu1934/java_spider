@@ -20,9 +20,9 @@ public class linshi_url {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://47.95.31.183:3306/innotree_data_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
-        String username="test";
-        String password="123456";
+        String url1="jdbc:mysql://172.31.215.36:3306/innotree_data_assessment?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
+        String username="base";
+        String password="imkloKuLiqNMc6Cn";
         try {
             Class.forName(driver1).newInstance();
         } catch (InstantiationException e) {
@@ -53,7 +53,7 @@ public class linshi_url {
     }
 
     public static void main(String args[]) throws Exception {
-        System.out.println(shangchuan("http://qxb-img.oss-cn-hangzhou.aliyuncs.com/logo/e3796230-029b-4c5d-a9e1-4194b71d26c3.jpg",""));
+        //saomiao();
         ExecutorService pool= Executors.newCachedThreadPool();
         linshi_url l=new linshi_url();
         final Ca c=l.new Ca();
@@ -87,13 +87,35 @@ public class linshi_url {
         }
     }
 
+    public static void saomiao() throws Exception {
+        String sql2="update company_base_info set comp_logo_url=? where comp_id=?";
+        PreparedStatement ps2=conn.prepareStatement(sql2);
+
+        String sql="select comp_id,comp_logo_url from company_base_info where comp_logo_url!='' and comp_logo_url is not null and comp_logo_url not like '%qiniu%' and comp_logo_url not like '%7xnnx4%'";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        int a=0;
+        while (rs.next()){
+            String id=rs.getString(rs.findColumn("comp_id"));
+            String logo=rs.getString(rs.findColumn("comp_logo_url"));
+
+            String xin=shangchuan(logo,"");
+
+            ps2.setString(1,xin);
+            ps2.setString(2,id);
+            ps2.executeUpdate();
+            a++;
+            System.out.print(a+"*********************************************************");
+        }
+    }
+
     public static void data(Ca c,String k,String o) throws SQLException, InterruptedException {
-        String sql="select id,comp_logo_tmp from comp_linshi where comp_logo_tmp!='' and comp_logo_tmp is not null and comp_logo_tmp not like '%qiniu%'";
+        String sql="select id,pro_logo_src from project_base_info where pro_logo_src!='' and pro_logo_src is not null and pro_logo_src not like '%qiniu%' and pro_type=1";
         PreparedStatement ps=conn.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
             String onid=rs.getString(rs.findColumn("id"));
-            String logo=rs.getString(rs.findColumn("comp_logo_tmp"));
+            String logo=rs.getString(rs.findColumn("pro_logo_src"));
             c.fang(new String[]{onid,logo});
         }
     }
@@ -117,21 +139,25 @@ public class linshi_url {
     }
 
     public static void chuli2(Ca c) throws Exception {
-        String sql="update comp_linshi set comp_logo_tmp=? where id=?";
+        String sql="update project_base_info set pro_logo=? where id=?";
         PreparedStatement ps=conn.prepareStatement(sql);
         int p=0;
         while (true){
-            String[] value=c.qu();
-            if(value==null||value.length<2){
-                break;
-            }
+            try {
+                String[] value = c.qu();
+                if (value == null || value.length < 2) {
+                    break;
+                }
 
-            String url=shangchuan(value[1],"");
-            ps.setString(1,url);
-            ps.setString(2,value[0]);
-            ps.executeUpdate();
-            p++;
-            System.out.println(p+"********************************************");
+                String url = shangchuan(value[1], "");
+                ps.setString(1, url);
+                ps.setString(2, value[0]);
+                ps.executeUpdate();
+                p++;
+                System.out.println(p + "********************************************");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

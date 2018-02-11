@@ -21,8 +21,8 @@ import static simutong.simutong_jigou.Qingqiu.*;
  */
 public class simutong_jigou {
     // 代理隧道验证信息
-    final static String ProxyUser = "H4KKF9EHDF26260D";
-    final static String ProxyPass = "2A64AB23C97FCA79";
+    final static String ProxyUser = "H6STQJ2G9011329D";
+    final static String ProxyPass = "E946B835EC9D2ED7";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -30,7 +30,7 @@ public class simutong_jigou {
 
     public static Connection getcon() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl2.innotree.org:3308/dw_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.44:3306/dw_online?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -61,7 +61,10 @@ public class simutong_jigou {
         final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
 
 
-        data(con,proxy);
+        String[] zhanghu=new String[]{"wang.hao@lingweispace.cn","111111","wang.hao@lingweispace.cn","111111"};
+        String[] pc=new String[]{"9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A","9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A"};
+        Map<String,String> map=denglu(proxy,zhanghu[2],zhanghu[3],pc[1]);
+        sousuo(con, "", map,proxy);
     }
 
 
@@ -72,8 +75,8 @@ public class simutong_jigou {
         ResultSet rs=ps.executeQuery();
         long begin=System.currentTimeMillis();
         long cur=(r.nextInt(50) * 60 * 1000) + 1800000;
-        String[] zhanghu=new String[]{"simutong3@gaiyachuangxin.cn","111111","xiaohang.qu@lingweispace.cn","111111"};
-        String[] pc=new String[]{"50-7B-9D-FB-57-4B,2C-6E-85-9C-6A-F3,2C-6E-85-9C-6A-F7","50-7B-9D-FB-57-4B,2C-6E-85-9C-6A-F3,2C-6E-85-9C-6A-F7"};
+        String[] zhanghu=new String[]{"wang.hao@lingweispace.cn","111111","wang.hao@lingweispace.cn","111111"};
+        String[] pc=new String[]{"9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A","9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A"};
         Map<String,String> map=denglu(proxy,zhanghu[2],zhanghu[3],pc[1]);
         int flag=0;
         int p=0;
@@ -82,7 +85,7 @@ public class simutong_jigou {
                 int th = r.nextInt(5001) + 10000;
                 String pid = "0";
                 String key = rs.getString(rs.findColumn("sInstitution"));
-                sousuo(con, key, pid, map,proxy);
+                sousuo(con, pid, map,proxy);
                 Thread.sleep(th);
                 long t = System.currentTimeMillis();
                 if (t > (begin + cur)) {
@@ -131,35 +134,39 @@ public class simutong_jigou {
 
     }
 
-    public static void sousuo(Connection con,String key,String pid,Map<String,String> map,Proxy proxy) throws IOException, InterruptedException, SQLException {
+
+    public static void sousuo(Connection con,String pid,Map<String,String> map,Proxy proxy) throws IOException, InterruptedException, SQLException {
         Random r=new Random();
-        String keys= URLEncoder.encode(key,"UTF-8");
-        System.out.println("开始搜索："+key);
-        String url="http://pe.pedata.cn/categorySearchIndex.action?param.wd="+keys+"&param.t=3&param.ep_sort=";
-        Document doc=jichuget(url,map,proxy);
-        Elements souele=getElements(doc,"div.all_search_main ul");
-        System.out.println("搜索完成，开始请求");
-        if(souele!=null){
-            for(Element e:souele){
-                try {
-                    String sid = getHref(e, "li.all_search_main_title a", "href", 0).replace("getDetailOrg.action?param.org_id=", "");
-                    if(sid!=null&&sid.replaceAll("\\s","").length()>0) {
-                        del(con,sid);
-                        jichu(con, sid, pid, map, proxy);
-                        Thread.sleep(r.nextInt(5001) + 5000);
-                        guanli(con, sid, pid, map, proxy);
-                        Thread.sleep(r.nextInt(5001) + 5000);
-                        tuichu(con, sid, pid, map, proxy);
-                        Thread.sleep(r.nextInt(5001) + 5000);
-                        touzi(con, sid, pid, map, proxy);
-                        Thread.sleep(r.nextInt(5001) + 5000);
-                        jijin(con, sid, pid, map, proxy);
-                        Thread.sleep(r.nextInt(5001) + 5000);
+        String url="http://pe.pedata.cn/categorySearchIndex.action";
+        for(int p=85;p<=203;p++) {
+            try {
+                Document doc = sousuoget(url, map, proxy, String.valueOf(p));
+                Elements souele = getElements(doc, "div.all_search_main ul");
+                System.out.println("搜索完成，开始请求");
+                if (souele != null) {
+                    for (Element e : souele) {
+                        try {
+                            String sid = getHref(e, "li.all_search_main_title a", "href", 0).replace("getDetailOrg.action?param.org_id=", "");
+                            if (sid != null && sid.replaceAll("\\s", "").length() > 0) {
+                                del(con, sid);
+                                jichu(con, sid, pid, map, proxy);
+                                Thread.sleep(r.nextInt(5001) + 5000);
+                                guanli(con, sid, pid, map, proxy);
+                                Thread.sleep(r.nextInt(5001) + 5000);
+                                tuichu(con, sid, pid, map, proxy);
+                                Thread.sleep(r.nextInt(5001) + 5000);
+                                touzi(con, sid, pid, map, proxy);
+                                Thread.sleep(r.nextInt(5001) + 5000);
+                                jijin(con, sid, pid, map, proxy);
+                                Thread.sleep(r.nextInt(5001) + 5000);
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
                     }
-                    break;
-                }catch (Exception e1){
-                    e1.printStackTrace();
                 }
+            }catch (Exception e){
+                System.out.println("error");
             }
         }
 

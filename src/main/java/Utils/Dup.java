@@ -1,5 +1,7 @@
 package Utils;
 
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,4 +47,10 @@ public class Dup {
             return null;
         }
     }
+
+    public static String qujson(Document doc){
+        String json = doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("<font color=\"red\">", "").replace("</font>", "").replace("  ", "").replace("\n", "").trim();
+        return json;
+    }
+
 }

@@ -1,19 +1,30 @@
 package tianyancha.Guoxin;
 
+import Utils.Dup;
+import Utils.JsoupUtils;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tianyancha.chuli.shuzichu;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 import static Utils.JsoupUtils.*;
-import static tianyancha.Guoxin.tyc_guoxin.jisuan;
 import static tianyancha.Guoxin.tyc_guoxin.detailget;
+import static tianyancha.Guoxin.tyc_guoxin.jisuan;
+
 
 /**
  * Created by Administrator on 2017/7/3.
@@ -54,7 +65,10 @@ public class Tyc_quan_guo {
     private static PreparedStatement ps32;
     private static PreparedStatement ps33;
     private static PreparedStatement ps34;
-    public Tyc_quan_guo(Connection con, String[] value) throws SQLException {
+    private static PreparedStatement ps35;
+    private static SAXReader saxReader;
+    private static org.dom4j.Document doo;
+    public Tyc_quan_guo(Connection con,String[] value) throws SQLException {
         this.con=con;
         for(int x=0;x<value.length;x++){
             if(value[x].equals("基本信息")){
@@ -159,11 +173,25 @@ public class Tyc_quan_guo {
             }else if(value[x].equals("微信公众号")){
                 String sql34="insert into tyc_webcat(t_id,w_logo,w_ming,w_hao,w_erwei,w_desc) values(?,?,?,?,?,?)";
                 this.ps34=con.prepareStatement(sql34);
+            } else if(value[x].equals("软件著作权")){
+                String sql35="insert into tyc_ruanzhu(t_id,r_pzrq,r_quan,r_jian,r_dengji,r_fenlei,r_banben) values(?,?,?,?,?,?,?)";
+                this.ps35=con.prepareStatement(sql35);
             }
         }
     }
 
-    public static void jichu(Document doc,String tid,String cname) throws SQLException {
+    static{
+        saxReader=new SAXReader();
+        try {
+            doo=saxReader.read(new FileInputStream("shu.xml"));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void jichu(Document doc,String tid,String cname) throws SQLException, ParseException, IOException, InterruptedException, DocumentException {
         Document doc2=doc;
         String quancheng = getString(doc2, "div.company_header_width.ie9Style span.f18.in-block.vertival-middle", 0);
         if(StringUtils.isEmpty(quancheng)){
@@ -174,10 +202,10 @@ public class Tyc_quan_guo {
         String email = getString(doc2, "div.f14.sec-c2.mt10 div.in-block.vertical-top:contains(邮箱) span", 1);
         String web = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(网址) a", 0);
         String address = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(地址) span", 1);
-        String logo = getHref(doc2, "div.b-c-white.new-border.over-hide.mr10.ie9Style img", "src", 0);
+        String logo = getHref(doc2, "div.b-c-white.over-hide.mr10.ie9Style img", "src", 0);
         String zhuceziben = getString(doc2, "div.new-border-bottom:contains(注册资本) div.pb10 div.baseinfo-module-content-value", 0);
         String zhuceshijian = getString(doc2, "div.new-border-bottom:contains(注册时间) div.pb10 div.baseinfo-module-content-value", 1);
-        String statu = getString(doc2, "div.pt10:contains(企业状态) div.baseinfo-module-content-value.statusType1", 0);
+        String statu = getString(doc2, "div.pt10:contains(公司状态) div.baseinfo-module-content-value", 0);
         String gongshang = getString(doc2, "div.base0910 table tbody td", 1);
         String zuzhijigou = getString(doc2, "div.base0910 table tbody td", 3);
         String tongyixinyong = getString(doc2, "div.base0910 table tbody td", 6);
@@ -187,11 +215,35 @@ public class Tyc_quan_guo {
         String yingyeqixian = getString(doc2, "div.base0910 table tbody td", 14);
         String hezhunriqi = getString(doc2, "div.base0910 table tbody td", 16);
         String dengjijiguan = getString(doc2, "div.base0910 table tbody td", 18);
-        String zhucedizhi = getString(doc2, "div.base0910 table tbody td", 20);
-        String yingming=getString(doc2, "div.base0910 table tbody td", 22);
+        String zhucedizhi = getString(doc, "div.base0910 table tbody td", 22).replace("附近公司","");
+        String yingming=getString(doc, "div.base0910 table tbody td", 20);
         String jingyingfanwei = getString(doc, "div.base0910 table tbody td span.js-full-container.hidden", 0);
+        if(!Dup.nullor(jingyingfanwei)){
+            jingyingfanwei=getString(doc, "div.base0910 table tbody td span.js-full-container", 0);
+        }
         String faren = getString(doc2, "div.in-block.vertical-top.pl15 div.f18.overflow-width a", 0);
         String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
+
+        zhuceziben=zi(zhuceziben);
+        zhuceshijian=zi(zhuceshijian);
+        hezhunriqi=zi(hezhunriqi);
+
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
+        long cur=System.currentTimeMillis();
+        long aur=-5364662400000L;
+
+        if((Dup.nullor(zhuceshijian)&&zhuceshijian.contains("."))||(Dup.nullor(hezhunriqi)&&hezhunriqi.contains("."))||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()>cur)||(Dup.nullor(zhuceshijian)&&!zhuceshijian.contains("未公开")&&simpleDateFormat.parse(zhuceshijian.replaceAll("[^0-9]","")).getTime()<aur)||(Dup.nullor(hezhunriqi)&&!hezhunriqi.contains("未公开")&&simpleDateFormat.parse(hezhunriqi.replaceAll("[^0-9]","")).getTime()<aur)){
+            while (true) {
+                shuzichu.xunlian();
+                doo = saxReader.read(new FileInputStream("shu.xml"));
+
+                zhuceziben = zi(zhuceziben);
+                zhuceshijian = zi(zhuceshijian);
+                hezhunriqi = zi(hezhunriqi);
+
+                break;
+            }
+        }
 
         ps1.setString(1,quancheng);
         ps1.setString(2,ceng);
@@ -222,6 +274,31 @@ public class Tyc_quan_guo {
         System.out.println("success_tyc-quan");
     }
 
+    public static String zi(String key) throws FileNotFoundException, DocumentException {
+        List<org.dom4j.Element> list=doo.getRootElement().elements("shu");
+
+        if(Dup.nullor(key)){
+            String keys[]=key.split("|");
+            StringBuffer str=new StringBuffer();
+            for(String s:keys){
+                boolean bo=true;
+                for(org.dom4j.Element e:list){
+                    if(s.equals(e.getText())){
+                        str.append(s.replace(e.getText(),e.attributeValue("yuan")));
+                        bo=false;
+                    }
+                }
+                if(bo){
+                    str.append(s);
+                }
+            }
+
+            return str.toString();
+        }else {
+            return null;
+        }
+    }
+
     public static void zhuyao(Document doc,String tid,String cname) throws SQLException {
         Document doc2=doc;
         Elements zele=getElements(doc2,"div#_container_staff div.clearfix div.staffinfo-module-container");
@@ -241,7 +318,7 @@ public class Tyc_quan_guo {
     }
     public static void duiwaitouzi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_invest div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n","");
+        String page=getString(doc2,"div#_container_invest div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n","").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -369,7 +446,7 @@ public class Tyc_quan_guo {
 
     public static void gudong(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_holder div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_holder div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -445,7 +522,7 @@ public class Tyc_quan_guo {
 
     public static void hexin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_teamMember div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_teamMember div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1435,7 +1512,7 @@ public class Tyc_quan_guo {
 
     public static void gongzhonghao(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1474,6 +1551,50 @@ public class Tyc_quan_guo {
             }
         }
 
+    }
+
+    public static void ruanzhu(Document doc,String tid,String cname) throws SQLException, IOException, InterruptedException {
+        Document doc2=doc;
+        String page=getString(doc2,"div.copyright div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");
+        if(StringUtils.isEmpty(page)){
+            page="1";
+        }
+
+        for(int x=1;x<=Integer.parseInt(page);x++){
+            if(x>=2){
+                while (true) {
+                    Map<String, Object> map = jisuan(tid);
+                    doc2 = detailget("http://www.tianyancha.com/pagination/copyright.xhtml?ps=5&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
+                    if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
+                        break;
+                    }
+                }
+            }
+
+            Elements ruele= JsoupUtils.getElements(doc,"div.copyright tbody tr");
+            if(x>=2){
+                ruele=getElements(doc2,"tbody tr");
+            }
+            if(ruele!=null){
+                for(Element e:ruele){
+                    String piri=JsoupUtils.getString(e,"td",0);
+                    String rquan=JsoupUtils.getString(e,"td",1);
+                    String rjian=JsoupUtils.getString(e,"td",2);
+                    String dengji=JsoupUtils.getString(e,"td",3);
+                    String fenhao=JsoupUtils.getString(e,"td",4);
+                    String banben=JsoupUtils.getString(e,"td",5);
+
+                    ps35.setString(1,tid);
+                    ps35.setString(2,piri);
+                    ps35.setString(3,rquan);
+                    ps35.setString(4,rjian);
+                    ps35.setString(5,dengji);
+                    ps35.setString(6,fenhao);
+                    ps35.setString(7,banben);
+                    ps35.executeUpdate();
+                }
+            }
+        }
     }
 
 

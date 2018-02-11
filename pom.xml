@@ -50,7 +50,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>23.0</version>
+      <version>21.0</version>
     </dependency>
 
     <dependency>
@@ -142,7 +142,19 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>3.6.0</version>
+      <version>3.4.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>3.4.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>1.4.3</version>
     </dependency>
 
     <dependency>
@@ -151,11 +163,6 @@
       <version>2.6</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.codeborne</groupId>
-      <artifactId>phantomjsdriver</artifactId>
-      <version>1.4.3</version>
-    </dependency>
 
     <dependency>
       <groupId>com.qiniu</groupId>
@@ -169,11 +176,18 @@
       <version>1.6.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.jai</groupId>
+      <artifactId>jai-img</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/jai-imageio-1.1.jar</systemPath>
+    </dependency>
   </dependencies>
 
 
   <build>
-    <finalName>App</finalName>
+    <finalName>si_ming</finalName>
     <plugins>
 
       <plugin>
@@ -185,7 +199,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>tianyancha.XinxiXin.send_redis</mainClass>
+              <mainClass>simutong.simutong_wangye.souming</mainClass>
             </manifest>
           </archive>
         </configuration>

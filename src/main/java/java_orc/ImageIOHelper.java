@@ -1,4 +1,4 @@
-/*
+
 package java_orc;
 
 import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
@@ -13,39 +13,39 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
 
-*/
+
 /**
  * Created by Administrator on 2017/5/10.
- *//*
+ */
 
 public class ImageIOHelper {
     private Locale locale=Locale.CHINESE;
-    */
+
 /**
      * user set locale Construct
      * @param locale
-     *//*
+     */
 
     public ImageIOHelper(Locale locale){
         this.locale=locale;
     }
 
-    */
+
 /**
      * default construct using default locale Locale.CHINESE
-     *//*
+     */
 
     public ImageIOHelper(){
 
     }
-    */
+
 /**
      * create tempFile of Image in order to prevent damaging original file
      * @param imageFile
      * @param imageFormat like png,jps .etc
      * @return TempFile of Image
      * @throws
-     *//*
+     */
 
     public static File createImage(File imageFile, String imageFormat) throws IOException {
         Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName(imageFormat);
@@ -69,13 +69,13 @@ public class ImageIOHelper {
         reader.dispose();
         return tempFile;
     }
-    */
+
 /**
      * add suffix to tempfile
      * @param imageFile
      * @return
      * @throws IOException
-     *//*
+     */
 
     private static File tempImageFile(File imageFile) throws IOException {
         String path = imageFile.getPath();
@@ -87,4 +87,4 @@ public class ImageIOHelper {
     }
 
 }
-*/
+

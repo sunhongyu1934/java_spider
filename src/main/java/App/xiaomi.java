@@ -26,8 +26,8 @@ import static Utils.JsoupUtils.*;
  */
 public class xiaomi {
     // 代理隧道验证信息
-    final static String ProxyUser = "H71K6773EZ870E0D";
-    final static String ProxyPass = "341C5939CFF9F8B5";
+    final static String ProxyUser = "H4KKF9EHDF26260D";
+    final static String ProxyPass = "2A64AB23C97FCA79";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -37,7 +37,7 @@ public class xiaomi {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         try {
@@ -156,7 +156,7 @@ public class xiaomi {
     }
 
     public static void detail(Url u) throws InterruptedException, IOException, SQLException {
-        String sql="insert into xiaomi(a_name,a_logo,a_bao,a_ping,a_size,a_fen,a_update,a_ban,a_kaifa,a_jietu,a_desc,a_all) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql="insert into xiaomi_xin(a_name,a_logo,a_bao,a_ping,a_size,a_fen,a_update,a_ban,a_kaifa,a_jietu,a_desc,a_all) values(?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps=conn.prepareStatement(sql);
         Document doc;
         while (true){

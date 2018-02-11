@@ -56,7 +56,7 @@ public class Serach {
 
     static{
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl2.innotree.org:3308/tyc_xin?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8&tcpRcvBuf=1024000";
         String username="spider";
         String password="spider";
         try {
@@ -95,13 +95,15 @@ public class Serach {
 
     }
     public static void main(String args[]) throws IOException, SQLException, InterruptedException {
-        String sql="insert into tyc_seurl_car(se_url) values(?)";
+        String sql="insert into tyc_seurl(se_url) values(?)";
         PreparedStatement ps=conn.prepareStatement(sql);
-        Document doc=Jsoup.connect("https://www.tianyancha.com/search?key=%E6%B1%BD%E8%BD%A6&checkFrom=searchBox")
+        Document doc=Jsoup.connect("https://www.tianyancha.com/search?key=%E5%85%AC%E5%85%B1%E5%B0%B1%E4%B8%9A%E6%9C%8D%E5%8A%A1&checkFrom=searchBox")
                 .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
-                .header("Cookie","TYCID=9160f710b2e711e7b643af5ebdbb7a9f; uccid=b892f92f5fe54642598480201c212821; ssuid=4014964150; aliyungf_tc=AQAAAEGO0mHSjAoAKiluJHr0QpbTpHdg; csrfToken=DwuXOrQjNsjG16XH5c4aAMaj; tyc-user-info=%257B%2522token%2522%253A%2522eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzcxNzk1MTkzNCIsImlhdCI6MTUwOTMzNDE5NCwiZXhwIjoxNTI0ODg2MTk0fQ.ZEr71cWaKveVmWpav-46UaMoD0m5-H2bZWiUAglaXKQSUKxPOOzk87IfxzO5uJuUHH1Upk_87ZttkhnlB6HjPQ%2522%252C%2522integrity%2522%253A%25220%2525%2522%252C%2522state%2522%253A%25220%2522%252C%2522vnum%2522%253A%25220%2522%252C%2522onum%2522%253A%25220%2522%252C%2522mobile%2522%253A%252213717951934%2522%257D; auth_token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzcxNzk1MTkzNCIsImlhdCI6MTUwOTMzNDE5NCwiZXhwIjoxNTI0ODg2MTk0fQ.ZEr71cWaKveVmWpav-46UaMoD0m5-H2bZWiUAglaXKQSUKxPOOzk87IfxzO5uJuUHH1Upk_87ZttkhnlB6HjPQ; RTYCID=de5b31bf27ed46baac09db7afa073fd3; token=415e69b318804690891465b3175747fc; _utm=913d407b9a7a4532b3f13d256d8794f6; _csrf=0bJufoJmyf8MPzQXW+IfYQ==; OA=YNGeB47BtD1R7+Rs9+zc+SwwX5d+CecFEBvpwFXi/DS0mwvH4pgnosoiDAJveU16NN1OMWMqjaMQOuMuyW9k/B4iGlKpjVsMS2hE9gdQ+i8=; _csrf_bk=a4ce571bb66a119f2b3db2530b2f9805; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1509005547,1509015716,1509091523,1509334177; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1509334766")
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .header("Cookie","TYCID=e25abfa0f9e311e7af0fd7c3005ea0e5; undefined=e25abfa0f9e311e7af0fd7c3005ea0e5; ssuid=1465301810; tyc-user-info=%257B%2522token%2522%253A%2522eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzcxNzk1MTkzNCIsImlhdCI6MTUxNzc5NjE5MCwiZXhwIjoxNTMzMzQ4MTkwfQ.mgoWASBscyQtPi9GkQstV8_rbISjx3ugfdTFeQjSW9MMLXBD7GcgiraBMXEexUlQc1esIGQVg2fDPN5PhmuGBw%2522%252C%2522integrity%2522%253A%25220%2525%2522%252C%2522state%2522%253A%25220%2522%252C%2522vipManager%2522%253A%25220%2522%252C%2522vnum%2522%253A%25220%2522%252C%2522onum%2522%253A%25222%2522%252C%2522mobile%2522%253A%252213717951934%2522%257D; auth_token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzcxNzk1MTkzNCIsImlhdCI6MTUxNzc5NjE5MCwiZXhwIjoxNTMzMzQ4MTkwfQ.mgoWASBscyQtPi9GkQstV8_rbISjx3ugfdTFeQjSW9MMLXBD7GcgiraBMXEexUlQc1esIGQVg2fDPN5PhmuGBw; aliyungf_tc=AQAAAJ2+uFQXswMAyhD53AZwMY02ArGI; csrfToken=DQf5-A3ZGgD6FOCrwrcqAhFY; bannerFlag=true; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1517796173,1517807408,1517972441,1517989753; _csrf=ac0Ugb3TqNwizRzca0lnaA==; OA=Yvnw1322juwTykiMUMxYfyifNheD81wZl20pGIatFQMY3d4UF97/a0qyFw1BvrHWlo6ITclkV/xh1c5O82QOvg==; _csrf_bk=412643650362e458f6ca3b3c87143d25; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1517990095")
                 .get();
-        Elements ele=JsoupUtils.getElements(doc,"a.new-list");
+        /*Elements ele=JsoupUtils.getElements(doc,"a.new-list");
         System.out.println(ele.size());
         int a=0;
         for(org.jsoup.nodes.Element e:ele){
@@ -109,9 +111,9 @@ public class Serach {
             ps.executeUpdate();
             a++;
             System.out.println(a + "*******************************************");
-        }
+        }*/
 
-        /*Elements ele=JsoupUtils.getElements(doc,"div.position-abs.b-c-white.new-border.cate_sub_item a");
+        Elements ele=JsoupUtils.getElements(doc,"div.position-abs.b-c-white.new-border.cate_sub_item a");
 
         String[] zhu=new String[]{"","-r0100","-r100200","-r200500","-r5001000","-r1000"};
         String[] shi=new String[]{"","-e01","-e015","-e510","-e1015","-e15"};
@@ -124,15 +126,18 @@ public class Serach {
                 for(String s:shi){
                     for(String zh:zhuang){
                         for(String p:pai) {
-                            ps.setString(1, url + z + s + zh+p);
-                            ps.executeUpdate();
-                            a++;
-                            System.out.println(a + "*******************************************");
+                            //for(int page=1;page<=5;page++) {
+                                //ps.setString(1, url.replace("?key=%E4%BA%BA%E6%89%8D","") + z + s + zh + p+"/p"+page+"?key=%E4%BA%BA%E6%89%8D");
+                            ps.setString(1, url.replace("?key=%E5%85%AC%E5%85%B1%E5%B0%B1%E4%B8%9A%E6%9C%8D%E5%8A%A1","") + z + s + zh + p+"?key=%E5%85%AC%E5%85%B1%E5%B0%B1%E4%B8%9A%E6%9C%8D%E5%8A%A1");
+                                ps.executeUpdate();
+                                a++;
+                                System.out.println(a + "*******************************************");
+                           // }
                         }
                     }
                 }
             }
-        }*/
+        }
     }
     public static Document detailget(String url,Ca c) throws IOException, InterruptedException {
         System.out.println(url);

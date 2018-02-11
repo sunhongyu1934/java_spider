@@ -1,5 +1,8 @@
 package itjuzi.zl;
 
+import Utils.Dup;
+import Utils.JsoupUtils;
+import Utils.RedisClu;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
@@ -18,22 +21,34 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.xpath.operations.Bool;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import spiderKc.kcBean.Count;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -41,11 +56,17 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+
+import static Utils.JsoupUtils.*;
+import static Utils.JsoupUtils.getString;
 
 /**
  * Created by Administrator on 2017/4/18.
  */
-public class itjz_l {
+public class    itjz_l {
     // 代理隧道验证信息
     final static String ProxyUser = "H6STQJ2G9011329D";
     final static String ProxyPass = "E946B835EC9D2ED7";
@@ -53,11 +74,12 @@ public class itjz_l {
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
+    private static Ca c=new Ca();
     public static void main(String args[]) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, DocumentException, InterruptedException, ParseException {
         String str[]=jiexi();
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://"+str[1]+":3308/"+str[2]+"?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://"+str[1]+":3306/"+str[2]+"?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username=str[3];
         String password=str[4];
         Class.forName(driver1).newInstance();
@@ -84,8 +106,55 @@ public class itjz_l {
 
 
 
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getip();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        Thread thread1=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    conip();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread1.start();
+
+        Thread thread2=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    over();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread2.start();
         search(con,str);
 
+    }
+
+    public static void over() throws InterruptedException {
+        int a=0;
+        while (true){
+            Thread.sleep(60000);
+            a++;
+            if(a>=60){
+                System.exit(0);
+            }
+        }
     }
 
     public static String get() throws IOException, InterruptedException {
@@ -110,47 +179,71 @@ public class itjz_l {
         return ip;
     }
 
+    public static void conip() throws InterruptedException {
+        while (true){
+            if(c.po.size()>=10) {
+                c.qu();
+            }
+            Thread.sleep(1000);
+        }
+    }
+
 
 
     public static void search(Connection con,String[] str) throws IOException, DocumentException, SQLException, InterruptedException, ParseException {
-        System.out.println("begin login");
-        Map<String,String> map=login(str);
-        System.out.println("login success");
         int page= Integer.parseInt(jiexi()[0]);
         int day=Integer.parseInt(jiexi()[5]);
         System.out.println("begin search");
+        Map<String,String> map;
+        List<Object> list;
+        map= login(str);
+
+
         for(int x=1;x<=page;x++) {
-            HttpGet get = new HttpGet("https://www.itjuzi.com/investevents?page="+x);
-            get.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
             String tag = null;
             while (true) {
                 try {
+                    String proxyIpAndPort=c.qu();
+                    HttpGet get = new HttpGet("https://www.itjuzi.com/investevents?page="+x);
+                    get.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+                    get.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                    get.addHeader("Accept-Encoding","gzip, deflate, br");
+                    get.addHeader("Accept-Language","zh-CN,zh;q=0.9");
+                    get.addHeader("Host","www.itjuzi.com");
+                    get.addHeader("Referer","https://www.itjuzi.com/investevents");
+                    get.addHeader("Cookie",map.toString().replace("{","").replace("}","").replace(",",";"));
+                    System.out.println(map.toString().replace("{","").replace("}","").replace(",",";"));
                     //String ip=get();
-                    CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                    //CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-                    credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
-                    HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
+                    //credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
+                    HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
                     DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
                     RequestConfig requestConfig = RequestConfig.custom()
-                            .setConnectTimeout(50000).setConnectionRequestTimeout(50000)
-                            .setSocketTimeout(50000).build();
+                            .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
+                            .setSocketTimeout(5000).build();
 
                     HttpClientBuilder builder = HttpClients.custom();
-
                     builder.setRoutePlanner(routePlanner);
 
-                    builder.setDefaultCredentialsProvider(credsProvider);
+                    //builder.setDefaultCredentialsProvider(credsProvider);
                     builder.setDefaultRequestConfig(requestConfig);
                     CloseableHttpClient httpclient = builder.build();
-
                     CloseableHttpResponse response = httpclient.execute(get);
                     HttpEntity resEntity = response.getEntity();
                     tag = EntityUtils.toString(resEntity);
-                    if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")) {
+                    resEntity.getContent().close();
+                    if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")&&!tag.contains("too many request")) {
+                        for(int qq=1;qq<=5;qq++) {
+                            if(!c.po.contains(proxyIpAndPort)) {
+                                c.fang(proxyIpAndPort);
+                            }
+                        }
+                        httpclient.close();
                         break;
                     }
                 } catch (Exception e) {
-                    System.out.println("time out reget");
+                    e.printStackTrace();
                 }
             }
             Document doc=Jsoup.parse(tag);
@@ -186,11 +279,12 @@ public class itjz_l {
                         }
                         String detailurl = getHref(e, "i.cell.maincell p.title a", "href", 0);
                         String cid = detailurl.split("/", 5)[4];
-                        String table[] = new String[]{"it_company_pc", "it_competitor_pc", "it_finacing_pc", "it_founders_pc", "it_news_pc", "it_product_pc", "it_roadmap_pc", "it_tag_pc"};
+                        System.out.println(detailurl);
+                        String table[] = new String[]{"it_company_pc", "it_competitor_pc", "it_tag_pc","it_finacing_pc"};
                         for (int g = 0; g < table.length; g++) {
                             flagdata(con, cid, table[g]);
                         }
-                        get(con, cid,map);
+                        get(con, cid,map,str);
                         oo++;
                     }
                     a++;
@@ -201,6 +295,7 @@ public class itjz_l {
             }
 
         }
+        System.exit(0);
 
     }
 
@@ -210,106 +305,296 @@ public class itjz_l {
         ps1.executeUpdate();
     }
 
-    public static void get(Connection con,String cid,Map<String,String> map) throws IOException, SQLException, InterruptedException {
-        HttpGet get = new HttpGet("http://www.itjuzi.com/company/"+cid );
-        get.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-        get.addHeader("Cache-Control","max-age=0");
-        get.addHeader("Host","www.itjuzi.com");
-        get.addHeader("Upgrade-Insecure-Requests","1");
-        get.addHeader("If-Modified-Since","Tue, 25 Jul 2017 06:33:17 GMT");
-        get.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+    public static void get(Connection con,String cid,Map<String,String> map,String[] str) throws IOException, SQLException, InterruptedException {
         String tag = null;
-        //String ip=get();
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
-        HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(100000).setConnectionRequestTimeout(100000)
-                .setSocketTimeout(100000).build();
-
-        CookieStore cookieStore=new BasicCookieStore();
-        HttpClientBuilder builder = HttpClients.custom().setDefaultCookieStore(cookieStore);
-        for(Map.Entry<String,String> entry:map.entrySet()){
-            BasicClientCookie cookie=new BasicClientCookie(entry.getKey(),entry.getValue());
-            cookie.setDomain("www.itjuzi.com");
-            cookie.setVersion(0);
-            cookie.setPath("/");
-            cookieStore.addCookie(cookie);
-        }
-        builder.setRoutePlanner(routePlanner);
-
-        builder.setDefaultCredentialsProvider(credsProvider);
-        builder.setDefaultRequestConfig(requestConfig);
-
-        CloseableHttpClient httpclient = builder.build();
         int ji=0;
         while (true) {
             try {
+                String proxyIpAndPort=c.qu();
+                HttpGet get = new HttpGet("http://www.itjuzi.com/company/"+cid );
+                get.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                get.addHeader("Accept-Encoding","gzip, deflate, br");
+                get.addHeader("Accept-Language","zh-CN,zh;q=0.9");
+                get.addHeader("Referer","https://www.itjuzi.com/investevents");
+
+                get.addHeader("Host","www.itjuzi.com");
+                get.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+                get.addHeader("Cookie",map.toString().replace("{","").replace("}","").replace(",",";"));
+
+                //String ip=get();
+                //CredentialsProvider credsProvider = new BasicCredentialsProvider();
+
+                //credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
+                HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
+                RequestConfig requestConfig = RequestConfig.custom()
+                        .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
+                        .setSocketTimeout(5000).build();
+
+                HttpClientBuilder builder = HttpClients.custom();
+                builder.setRoutePlanner(routePlanner);
+
+                //builder.setDefaultCredentialsProvider(credsProvider);
+                builder.setDefaultRequestConfig(requestConfig);
+                CloseableHttpClient httpclient = builder.build();
+
+
+                List<Object> list;
+                System.out.println("begin qingqiu detail");
                 CloseableHttpResponse response = httpclient.execute(get);
+                System.out.println("qingqiu detail success");
                 HttpEntity resEntity = response.getEntity();
                 tag = EntityUtils.toString(resEntity);
+                resEntity.getContent().close();
                 ji++;
-                if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")&&!tag.contains("找不到您访问的页面")&&!tag.contains("No required SSL certificate")) {
-                    break;
-                }
-                if(ji>=20){
+                if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")&&!tag.contains("No required SSL certificate")&&!tag.contains("too many request")) {
+                    for(int qq=1;qq<=5;qq++) {
+                        if(!c.po.contains(proxyIpAndPort)) {
+                            c.fang(proxyIpAndPort);
+                        }
+                    }
+                    httpclient.close();
                     break;
                 }
             } catch (Exception e) {
-                System.out.println("time out detail reget");
+                e.printStackTrace();
             }
         }
         try {
             Document doc=Jsoup.parse(tag);
             System.out.println("begin store data");
-            storedata(con, doc, cid);
+            storedata(con, doc, cid,map,str);
             System.out.println("insert mysql success ");
             System.out.println("------------------------------------------------------------");
         }catch (Exception e1){
+            e1.printStackTrace();
             System.out.println("error");
         }
 
     }
 
-    public static Map<String,String> login(String[] str) throws IOException {
-//创建认证，并设置认证范围
-        Map<String,String> map=new HashMap<String, String>();
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
-        HttpHost proxy2 = new HttpHost("proxy.abuyun.com", 9020);
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(50000).setConnectionRequestTimeout(50000)
-                .setSocketTimeout(50000).build();
-
-        HttpClientBuilder builder = HttpClients.custom();
-
-        builder.setRoutePlanner(routePlanner);
-
-        builder.setDefaultCredentialsProvider(credsProvider);
-        builder.setDefaultRequestConfig(requestConfig);
-        CookieStore cookieStore = new BasicCookieStore();
-        CloseableHttpClient httpclient = builder.setDefaultCookieStore(cookieStore).build();
-        HttpPost post=new HttpPost("https://www.itjuzi.com/user/login?redirect=&flag=");
-        post.addHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
-        List<NameValuePair> params = Lists.newArrayList();
-        params.add(new BasicNameValuePair("identity",str[6]));
-        params.add(new BasicNameValuePair("password",str[7]));
-        params.add(new BasicNameValuePair("remember","1"));
-        params.add(new BasicNameValuePair("page",""));
-        params.add(new BasicNameValuePair("url",""));
-        post.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
-        List<Cookie> cookies =null;
+    public static String get2(String cid,Map<String,String> map,String[] str) throws InterruptedException, IOException {
+        String tag = null;
+        int ji=0;
         while (true) {
-            CloseableHttpResponse response = httpclient.execute(post);
-            HttpEntity resEntity = response.getEntity();
-            String tag = EntityUtils.toString(resEntity);
-            cookies=cookieStore.getCookies();
-            if (cookies != null && cookies.size()>2) {
-                break;
+            try {
+                String proxyIpAndPort=c.qu();
+                HttpGet get = new HttpGet("https://www.itjuzi.com/company/ajax_load_com_invse/"+cid );
+                get.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                get.addHeader("Cache-Control","max-age=0");
+                get.addHeader("Host","www.itjuzi.com");
+                get.addHeader("Upgrade-Insecure-Requests","1");
+                get.addHeader("If-Modified-Since","Tue, 25 Jul 2017 06:33:17 GMT");
+                get.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+                get.addHeader("Cookie",map.toString().replace("{","").replace("}","").replace(",",";"));
+
+                //String ip=get();
+                //CredentialsProvider credsProvider = new BasicCredentialsProvider();
+
+                //credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
+                HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
+                RequestConfig requestConfig = RequestConfig.custom()
+                        .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
+                        .setSocketTimeout(5000).build();
+
+                HttpClientBuilder builder = HttpClients.custom();
+                builder.setRoutePlanner(routePlanner);
+
+                //builder.setDefaultCredentialsProvider(credsProvider);
+                builder.setDefaultRequestConfig(requestConfig);
+
+                CloseableHttpClient httpclient = builder.build();
+
+
+                List<Object> list;
+                CloseableHttpResponse response = httpclient.execute(get);
+                HttpEntity resEntity = response.getEntity();
+                tag = EntityUtils.toString(resEntity);
+                resEntity.getContent().close();
+                ji++;
+                if (StringUtils.isNotEmpty(tag) && !tag.contains("abuyun")&&!tag.contains("找不到您访问的页面")&&!tag.contains("No required SSL certificate")&&!tag.contains("too many request")) {
+                    for(int qq=1;qq<=5;qq++) {
+                        if(!c.po.contains(proxyIpAndPort)) {
+                            c.fang(proxyIpAndPort);
+                        }
+                    }
+                    httpclient.close();
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return tag;
+    }
+
+    public static List<Object> logins(String[] str) throws InterruptedException, IOException {
+        Map<String,String> map = new HashMap<>();
+        String ip=c.qu();
+       /* List<Object> list;
+        list=getdriver();
+        WebDriver driver= (WebDriver) list.get(0);
+        ip= (String) list.get(1);
+        
+        while (true){
+            try {
+
+                System.out.println("begin qingqiu");
+                driver.get("https://www.itjuzi.com/user/login");
+                System.out.println("qingqiu success");
+                Thread.sleep(5000);;
+                System.out.println(driver.manage().getCookies());
+                Set<org.openqa.selenium.Cookie> set1 = driver.manage().getCookies();
+                String ac = null;
+                String va = null;
+                for (org.openqa.selenium.Cookie c : set1) {
+                    if(c.getName().equals("acw_sc__")){
+                        ac=c.getName();
+                        va=c.getValue();
+                    }
+                    map.put(c.getName(), c.getValue());
+                }
+                map=login(str,map.toString().replace("{","").replace("}","").replace(",",";"),ip);
+                if(map.size()>3){
+                    map.put(ac,va);
+                    try {
+                        driver.quit();
+                    }catch (Exception e){
+
+                    }
+                    break;
+                }else{
+                    driver.quit();
+                    list=getdriver();
+                    driver = (WebDriver) list.get(0);
+                    ip= (String) list.get(1);
+                }
+                *//*Thread.sleep(5000);
+                System.out.println("sleep over");
+                System.out.println(driver.getPageSource().length());
+                if (driver.getPageSource().length()<10000) {
+                    driver.quit();
+                    list=getdriver();
+                    driver = (WebDriver) list.get(0);
+                    ip= (String) list.get(1);
+                    continue;
+                }
+                driver.findElement(By.name("identity")).sendKeys(str[6]);
+                driver.findElement(By.name("password")).sendKeys(str[7]);
+                System.out.println("dian ji denglu");
+                driver.findElement(By.id("login_btn")).click();
+
+                Thread.sleep(2000);
+                System.out.println("kaishi huoqu cookie");
+                if (driver.manage().getCookies().size() > 2) {
+                    Set<org.openqa.selenium.Cookie> set1 = driver.manage().getCookies();
+                    for (org.openqa.selenium.Cookie c : set1) {
+                        System.out.println(c.getPath());
+                        System.out.println(c.getDomain());
+                        System.out.println(c.getExpiry());
+                        map.put(c.getName(), c.getValue());
+                        driver.quit();
+                    }
+                    break;
+                }
+                driver.quit();
+                list=getdriver();
+                driver = (WebDriver) list.get(0);
+                ip= (String) list.get(1);*//*
+            }catch (Exception e){
+                e.printStackTrace();
+                try {
+                    driver.quit();
+                }catch (Exception e1){
+
+                }
+                list=getdriver();
+                driver = (WebDriver) list.get(0);
+                ip= (String) list.get(1);
+            }
+        }*/
+        //map=login(str,"",ip);
+        System.out.println(map);
+        List<Object> lists=new ArrayList<>();
+        lists.add(map);
+        lists.add(ip);
+        return lists;
+    }
+
+
+    public static List<Object> getdriver() throws InterruptedException {
+        String proxyIpAndPort=c.qu();
+        DesiredCapabilities caps = new DesiredCapabilities();
+        org.openqa.selenium.Proxy proxy=new org.openqa.selenium.Proxy();
+        proxy.setHttpProxy(proxyIpAndPort).setFtpProxy(proxyIpAndPort).setSslProxy(proxyIpAndPort);
+        caps.setCapability(CapabilityType.ForSeleniumServer.AVOIDING_PROXY, true);
+        caps.setCapability(CapabilityType.ForSeleniumServer.ONLY_PROXYING_SELENIUM_TRAFFIC, true);
+        caps.setCapability(CapabilityType.PROXY, proxy);
+        ChromeOptions options=new ChromeOptions();
+        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+        options.addArguments("--disable-plugins","--disable-images","--disable-javascript");
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("profile.managed_default_content_settings.images", 2);
+        options.setExperimentalOption("prefs", prefs);
+        caps.setCapability(ChromeOptions.CAPABILITY,options);
+        System.setProperty(Count.chrome, "/data1/spider/java_spider/chrome/chromedriver");
+        WebDriver driver=new ChromeDriver(caps);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+        //driver.manage().timeouts().setScriptTimeout(20,TimeUnit.SECONDS);
+        List<Object> list=new ArrayList<>();
+        list.add(driver);
+        list.add(proxyIpAndPort);
+        return list;
+    }
+
+    public static Map<String,String> login(String[] str) throws IOException, InterruptedException {
+        List<Cookie> cookies =null;
+        Map<String,String> map=new HashMap<String, String>();
+        while (true) {
+            try {
+                //创建认证，并设置认证范围
+
+                String proxyIpAndPort=c.qu();
+                //CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                //credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
+                HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
+                RequestConfig requestConfig = RequestConfig.custom()
+                        .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
+                        .setSocketTimeout(5000).build();
+
+                HttpClientBuilder builder = HttpClients.custom();
+
+                builder.setRoutePlanner(routePlanner);
+
+                //builder.setDefaultCredentialsProvider(credsProvider);
+                builder.setDefaultRequestConfig(requestConfig);
+                CookieStore cookieStore = new BasicCookieStore();
+                CloseableHttpClient httpclient = builder.setDefaultCookieStore(cookieStore).build();
+                HttpPost post=new HttpPost("https://www.itjuzi.com/user/login?redirect=&flag=&radar_coupon=");
+                post.addHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+                //post.addHeader("Cookie",cookie);
+                List<NameValuePair> params = Lists.newArrayList();
+                params.add(new BasicNameValuePair("identity",str[6]));
+                params.add(new BasicNameValuePair("password",str[7]));
+                params.add(new BasicNameValuePair("remember","1"));
+                params.add(new BasicNameValuePair("submit",""));
+                params.add(new BasicNameValuePair("page",""));
+                params.add(new BasicNameValuePair("url",""));
+                post.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
+                //post.setEntity(new StringEntity(json, Charset.forName("UTF-8")));
+
+                CloseableHttpResponse response = httpclient.execute(post);
+                HttpEntity resEntity = response.getEntity();
+                String tag = EntityUtils.toString(resEntity);
+                cookies = cookieStore.getCookies();
+                if(cookies!=null&&cookies.size()>2){
+                    break;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         for (int i = 0; i < cookies.size(); i++) {
@@ -343,8 +628,34 @@ public class itjz_l {
         return map;
     }
 
-    public static void storedata(Connection con,Document doc,String cid) throws SQLException, IOException {
-        String sql1="insert into it_company_pc(c_id,`sName`,web_url,company_slogan,company_industry,sub_industry,company_address,company_logo,company_tags,product_logos,company_introduction,company_full_name,found_time,company_scale,company_status,mongo_id,`source_url`,data_date) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public static void getip() throws IOException, InterruptedException {
+        RedisClu rd=new RedisClu();
+        while (true) {
+            try {
+                /*Document doc = Jsoup.connect("http://api.ip.data5u.com/dynamic/get.html?order=552166bfe40bf4f7af05ae2b6c6ccd2a&sep=3")
+                        .ignoreContentType(true)
+                        .ignoreHttpErrors(true)
+                        .get();
+                String[] ips = doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").trim().split(" ");
+                for(String s:ips){
+                    if (s.contains("requests") || s.contains("请控制")) {
+                        continue;
+                    }
+                    c.fang(s.trim());
+                }*/
+                String ip=rd.get("ip");
+                c.fang(ip);
+                System.out.println(c.po.size()+"    ip***********************************************");
+                Thread.sleep(4000);
+            }catch (Exception e){
+                Thread.sleep(1000);
+                System.out.println("ip wait");
+            }
+        }
+    }
+
+    public static void storedata(Connection con,Document doc,String cid,Map<String,String> map,String[] str) throws SQLException, IOException, InterruptedException {
+        String sql1="insert into it_company_pc(c_id,`sName`,web_url,company_slogan,company_industry,sub_industry,company_address,company_logo,company_tags,product_logos,company_introduction,company_full_name,found_time,company_scale,company_status,mongo_id,`source_url`,data_date,e_mail,phone) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps1=con.prepareStatement(sql1);
 
         String sql2="insert into it_competitor_pc(c_id,rc_id,`name`,industry,sub_industry,logo_url,round,money,data_date) values(?,?,?,?,?,?,?,?,?)";
@@ -368,27 +679,28 @@ public class itjz_l {
         String sql8="insert into it_tag_pc(c_id,`name`,url,data_date) values(?,?,?,?)";
         PreparedStatement ps8=con.prepareStatement(sql8);
 
-        parse(doc,cid,ps1,ps2,ps3,ps4,ps5,ps6,ps7,ps8);
+        parse(doc,cid,ps1,ps2,ps3,ps4,ps5,ps6,ps7,ps8,map,str);
     }
 
-    public static void parse(Document doc,String cid,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6,PreparedStatement ps7,PreparedStatement ps8) throws IOException, SQLException {
+    public static void parse(Document doc,String cid,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6,PreparedStatement ps7,PreparedStatement ps8,Map<String,String> mapd,String[] strr) throws IOException, SQLException, InterruptedException {
         Map<String,String> map=new HashMap<String,String>();
+        Gson gson=new Gson();
         String name=getString(doc, "div.picinfo div.line-title span.title h1.seo-important-title", 0);
-        String urlguan=getHref(doc, "div.link-line a.weblink", "href", 1);
+        String urlguan=getHref(doc, "div.link-line a", "href", 2);
         String kouhao=getString(doc,"div.info-line h2.seo-slogan",0);
-        String hangye=getString(doc,"div.info-line span.scope.c-gray-aset a",0);
-        String zihangye=getString(doc,"div.info-line span.scope.c-gray-aset a",1);
-        String dizhi=getString(doc,"div.info-line span.loca.c-gray-aset a",0)+"-"+getString(doc,"div.info-line span.loca.c-gray-aset a",1);
+        String hangye=getString(doc,"div.rowfoot div.tagset.dbi.c-gray-aset.tag-list.feedback-btn-parent a.one-level-tag",0);
+        String zihangye=getString(doc,"div.rowfoot div.tagset.dbi.c-gray-aset.tag-list.feedback-btn-parent a.two-level-tag",0);
+        String dizhi= JsoupUtils.getString(doc,"ul.list-block.aboutus li:has(i.fa.icon.icon-address-o) span",0);
         String logo=getHref(doc, "div.rowhead div.pic img", "src", 0);
         String tags=null;
-        Elements tagele=getElements(doc,"div.tagset.dbi.c-gray-aset a");
+        Elements tagele=getElements(doc,"div.rowfoot div.tagset.dbi.c-gray-aset.tag-list.feedback-btn-parent a");
         if(tagele!=null){
             StringBuffer str=new StringBuffer();
             for(Element e:tagele){
-                String tag=getString(e, "span.tag", 0);
+                String tag=getString(e, "a", 0);
                 String tagurl=e.attr("href");
                 map.put(tagurl,tag);
-                str.append(getString(e,"span.tag",0)+";");
+                str.append(tag+";");
             }
             tags=str.toString();
         }
@@ -403,11 +715,14 @@ public class itjz_l {
             }
             productlogos=str.toString();
         }
-        String yewu=getString(doc,"div.block",2);
+        String yewu=JsoupUtils.getHref(doc,"meta[name='Description']","content",0);
+
         String fullname=getString(doc,"div.block div.des-more h2.seo-second-title",0).replace("公司全称：","");
-        String chenglitime=getString(doc,"div.block div.des-more h2.seo-second-title",1).replace("成立时间：","");
-        String guimo=getString(doc,"div.block div.des-more h2.seo-second-title",2).replace(" 公司规模：","");
-        String zhuangtai=getString(doc,"div.block div.des-more span",0);
+        String chenglitime=getString(doc,"div.block div.des-more h3.seo-secand-tilte span",0);
+        String guimo=getString(doc,"div.block div.des-more h3.seo-secand-tilte span",1);
+        String zhuangtai=getString(doc,"div.block div.des-more span.tag.green",0);
+        String email=JsoupUtils.getString(doc,"ul.list-block.aboutus li:has(i.fa.icon.icon-email-o) span",0);
+        String phone=JsoupUtils.getString(doc,"ul.list-block.aboutus li:has(i.fa.icon.icon-phone-o) span",0);
 
         String mongo_id="0";
 
@@ -433,6 +748,8 @@ public class itjz_l {
         ps1.setString(16,mongo_id);
         ps1.setString(17,"http://www.itjuzi.com/company/"+cid);
         ps1.setString(18,d);
+        ps1.setString(19,email);
+        ps1.setString(20,phone);
         ps1.executeUpdate();
 
 
@@ -462,53 +779,27 @@ public class itjz_l {
         }
 
 
-        Elements rzele=getElements(doc,"table.list-round-v2 tbody tr");
+        int pp=0;
+        Elements rzele=getElements(doc,"div#invest-portfolio table.list-round-v2 tbody tr.feedback-btn-parent");
         if(rzele!=null){
             for(Element e:rzele){
-                String rzjjurl=getHref(e,"td.mobile-none span.round a","href",0);
-                String fid=getHref(e,"td.mobile-none span.round a","href",0).split("/",5)[4];
-                String rztime=getString(e,"td span.date.c-gray",0);
+                String rzjjurl=getHref(e,"td:contains(详情) a","href",0);
                 String rzlc=getString(e,"td.mobile-none span.round a",0);
+                String fid=getHref(e,"td:contains(详情) a","href",0).split("/",5)[4];
+                String rztime=getString(e,"td span.date",0);
                 String rzje=getString(e,"td span.finades a",0);
-                String tzfs=getString(e,"td span.c-gray:not(.date)",0);
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",1))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",1);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",2))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",2);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",3))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",3);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",4))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",4);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",5))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",5);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",6))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",6);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",7))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",7);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",8))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",8);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",9))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",9);
-                }
-                if(StringUtils.isNotEmpty(getString(e,"td span.c-gray:not(.date)",10))){
-                    tzfs=tzfs+";"+getString(e,"td span.c-gray:not(.date)",10);
-                }
-                String tzf=tzfs;
-                Elements tzs=getElements(e,"td",3,"a");
-                if(tzs!=null){
-                    StringBuffer st=new StringBuffer();
-                    for(Element te:tzs){
-                        st.append(te.text()+";");
+                Elements vceles=JsoupUtils.getElements(getElement(e,"td",3),"a");
+                String vc=null;
+                StringBuffer str=new StringBuffer();
+                if(vceles!=null){
+                    for(Element ee:vceles){
+                        str.append(ee.text()+";");
                     }
-                    tzf=st.toString()+tzfs;
+                }
+                try{
+                    vc=str.substring(0,str.length()-1).toString();
+                }catch (Exception eee){
+
                 }
 
 
@@ -519,12 +810,55 @@ public class itjz_l {
                 ps3.setString(4,rztime);
                 ps3.setString(5,rzlc);
                 ps3.setString(6,rzje);
-                ps3.setString(7,tzf);
+                ps3.setString(7,vc);
                 ps3.setString(8,rzjjurl);
                 ps3.setString(9,d);
                 ps3.addBatch();
+                pp++;
             }
             ps3.executeBatch();
+        }
+
+        if(pp>=3) {
+            String json = get2(cid, mapd, strr);
+            if (Dup.nullor(json)) {
+                try {
+                    fin f = gson.fromJson(json, fin.class);
+                    for (fin.Dd dd : f.data) {
+                        String rzjjurl = dd.url;
+                        String rzlc = dd.round;
+                        String fid = dd.investevents_id;
+                        if (!Dup.nullor(fid)) {
+                            fid = dd.acquisition_id;
+                        }
+                        String rztime = dd.date;
+                        String rzje = dd.money;
+                        String vc = null;
+                        StringBuffer str = new StringBuffer();
+                        for (fin.Dd.ito i : dd.investors) {
+                            str.append(i.name + ";");
+                        }
+                        try {
+                            vc = str.substring(0, str.length() - 1).toString();
+                        } catch (Exception ee) {
+
+                        }
+                        ps3.setString(1, cid);
+                        ps3.setString(2, fid);
+                        ps3.setString(3, name);
+                        ps3.setString(4, rztime);
+                        ps3.setString(5, rzlc);
+                        ps3.setString(6, rzje);
+                        ps3.setString(7, vc);
+                        ps3.setString(8, rzjjurl);
+                        ps3.setString(9, d);
+                        ps3.addBatch();
+                    }
+                    ps3.executeBatch();
+                } catch (Exception es) {
+
+                }
+            }
         }
 
 
@@ -698,10 +1032,20 @@ public class itjz_l {
         return ele;
     }
 
+    public static class Ca{
+        BlockingQueue<String> po=new LinkedBlockingQueue<String>();
+        public void fang(String key) throws InterruptedException {
+            po.put(key);
+        }
+        public String qu() throws InterruptedException {
+            return po.take();
+        }
+    }
+
 
     public static String[] jiexi() throws FileNotFoundException, DocumentException {
         SAXReader saxReader=new SAXReader();
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(new File("/home/etl_user/etl/program/config/itjzzl.xml")));
+        org.dom4j.Document dom =  saxReader.read(new FileInputStream(new File("/data1/spider/java_spider/implement/itjz/itjzzl.xml")));
         org.dom4j.Element root=dom.getRootElement();
         org.dom4j.Element table=root.element("table");
         String page=table.element("page").getText();
@@ -719,5 +1063,20 @@ public class itjz_l {
         return str;
     }
 
+    public static class fin{
+        public List<Dd> data;
+        public static class Dd{
+            public String url;
+            public String investevents_id;
+            public String acquisition_id;
+            public String date;
+            public String round;
+            public String money;
+            public List<ito> investors;
+            public static class ito{
+                public String name;
+            }
+        }
+    }
 
 }

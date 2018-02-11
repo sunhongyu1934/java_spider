@@ -19,20 +19,22 @@ import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static chuangyebang.cyb_tzsjzl.flagdata;
+
 /**
  * Created by Administrator on 2017/4/19.
  */
 public class cyb_tzsj {
     // 代理隧道验证信息
-    final static String ProxyUser = "H8V9IIOLYT0W064D";
-    final static String ProxyPass = "CB867F5433AF1A31";
+    final static String ProxyUser = "H4KKF9EHDF26260D";
+    final static String ProxyPass = "2A64AB23C97FCA79";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
     final static Integer ProxyPort = 9020;
     public static void main(String args[]) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -81,13 +83,13 @@ public class cyb_tzsj {
                     }
                 }
             });
-            p=p+123;
+            p=p+130;
         }
 
     }
 
     public static void getlb(int p,Connection con,Proxy proxy) throws SQLException {
-        for(int x=p;x<p+123;x++){
+        for(int x=p;x<p+130;x++){
             try {
                 Document doc = null;
                 System.out.println("begin request search");
@@ -170,11 +172,11 @@ public class cyb_tzsj {
         String sql6="insert into cyb_tag(cid,tag,url) values(?,?,?)";
         PreparedStatement ps6=con.prepareStatement(sql6);
 
-        parse(doc,url,ps1,ps2,ps3,ps4,ps5,ps6);
+        parse(doc,url,ps1,ps2,ps3,ps4,ps5,ps6,con);
     }
 
 
-    public static void parse(Document doc,String detailurl,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6) throws SQLException {
+    public static void parse(Document doc,String detailurl,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6,Connection con) throws SQLException {
         String cid=detailurl.split("/",6)[3]+"-"+detailurl.split("/",6)[4]+"-"+detailurl.split("/",6)[5].replace(".html","");
         String name=getString(doc,"div.top-info.clearfix div.ti-left.pull-left li.name",0);
         String fullname=getString(doc,"div.top-info.clearfix div.ti-left.pull-left li.time",0).replace("公司全称：","");

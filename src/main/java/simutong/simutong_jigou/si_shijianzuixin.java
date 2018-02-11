@@ -49,7 +49,7 @@ public class si_shijianzuixin {
 
 
         String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://etl1.innotree.org:3308/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100?useUnicode=true&characterEncoding=utf-8&tcpRcvBuf=1024000";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
         String username="spider";
         String password="spider";
         Class.forName(driver1).newInstance();
@@ -80,7 +80,7 @@ public class si_shijianzuixin {
                         .data("param.loginName", "wang.hao@lingweispace.cn")
                         .data("param.pwd", "111111")
                         .data("param.iscs", "true")
-                        .data("param.macaddress", "20-68-9D-31-CD-3C,04-7D-7B-FB-55-BA")
+                        .data("param.macaddress", "9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A")
                         .data("param.language", "zh_CN")
                         .data("request_locale", "zh_CN")
                         .ignoreContentType(true)
@@ -196,7 +196,7 @@ public class si_shijianzuixin {
                 p++;
             }
 
-            System.out.println(x+"***************************************************");
+            System.out.println(x+"---------------------------------------------------------");
             if(bo){
                 break;
             }
@@ -215,20 +215,21 @@ public class si_shijianzuixin {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         Long time=simpleDateFormat.parse(simpleDateFormat.format(date)).getTime();
         for(Element e:eles){
-            String hangye=e.select("td").get(4).text();
-            String diqu=e.select("td").get(5).text();
-            String touzijieduan=e.select("td").get(6).text();
-            String touzitime=e.select("td").get(7).text();
-            String touzijinem=e.select("td").get(8).text();
-            String touzijineusdm=e.select("td").get(9).text();
-            String guquan=e.select("td").get(10).text();
-            String lunci=e.select("td").get(11).text();
-            String guzhi=e.select("td").get(12).text();
-            String pe=e.select("td").get(13).text();
+            String hangye=e.select("td").get(6).text();
+            String diqu=e.select("td").get(7).text();
+            String touzijieduan=e.select("td").get(8).text();
+            String touzitime=e.select("td").get(9).text();
+            String touzijinem=e.select("td").get(10).text();
+            String touzijineusdm=e.select("td").get(11).text();
+            String guquan=e.select("td").get(12).text();
+            String lunci=e.select("td").get(13).text();
+            String guzhi=e.select("td").get(14).text();
+            String pe=e.select("td").get(15).text();
 
             if(simpleDateFormat.parse(touzitime).getTime()<time){
                 bo=true;
             }
+
 
             if(p==q){
                 ps.setString(5,hangye);
@@ -260,7 +261,7 @@ public class si_shijianzuixin {
             int x = 0;
             for (Element e : ele) {
                 String jigouming = JsoupUtils.getString(e, "td:nth-child(1)", 0);
-                String jigousid = JsoupUtils.getHref(e, "td:nth-child(1) a", "href", 0).replace("getDetailOrg.action?param.org_id=", "");
+                String jigousid = JsoupUtils.getHref(e, "td:nth-child(1) a", "href", 0).replace("getDetailED.action?param.qkid=", "").replace("getDetailOfBasicPerson.action?param.person_id=","");
                 String jijin = JsoupUtils.getString(e, "td:nth-child(2)", 0);
                 String touziren = JsoupUtils.getString(e, "td:nth-child(3)", 0);
                 String touzijine = JsoupUtils.getString(e, "td:nth-child(4)", 0);
