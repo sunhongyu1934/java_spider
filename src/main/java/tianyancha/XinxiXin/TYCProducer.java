@@ -1,3 +1,4 @@
+/*
 package tianyancha.XinxiXin;
 
 import kafka.javaapi.producer.Producer;
@@ -53,3 +54,4 @@ public class TYCProducer
 
 }
 
+*/

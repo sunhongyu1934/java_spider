@@ -1,5 +1,6 @@
 package Utils;
 
+import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
@@ -43,6 +44,22 @@ public class Dup {
             }else{
                 return key.replaceAll("\\s", "").replace(" ", "").trim();
             }
+        }else{
+            return null;
+        }
+    }
+
+    public static String getJsonValue(JSONObject jsonObject, String key){
+        try{
+            return jsonObject.getString(key);
+        }catch (Exception e){
+            return "";
+        }
+    }
+
+    public static String reAllNull(String key){
+        if(Dup.nullor(key)){
+            return key.replaceAll("\\s", "").replace(" ", "").trim();
         }else{
             return null;
         }

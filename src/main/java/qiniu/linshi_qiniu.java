@@ -96,7 +96,7 @@ public class linshi_qiniu {
                 }
             });
         }*/
-        c.fang(new File("C:\\Users\\13434\\Desktop\\1.png"));
+        c.fang(new File("C:\\Users\\13434\\Desktop\\1.jpg"));
         shang(c,"");
     }
 

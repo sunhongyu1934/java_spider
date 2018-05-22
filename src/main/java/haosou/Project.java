@@ -3,7 +3,6 @@ package haosou;
 import Utils.RedisClu;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import net.sf.json.JSONArray;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
@@ -27,6 +26,7 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -432,15 +432,15 @@ public class Project {
                         }
                     }
                     List<haosouBean.quantu.Data.Int> haixihuan = q.data.interest;
-                    JSONArray js = JSONArray.fromObject(haixihuan.toString());
+                    JSONArray js = new JSONArray(haixihuan.toString());
                     haixi = js.toString();
 
                     List<haosouBean.quantu.Data.Pro> diyus = q.data.province;
-                    JSONArray js2 = JSONArray.fromObject(diyus.toString());
+                    JSONArray js2 = new JSONArray(diyus.toString());
                     diyu = js2.toString();
 
                     List<haosouBean.quantu.Data.AAA> agss = q.data.age;
-                    JSONArray js3 = JSONArray.fromObject(agss.toString());
+                    JSONArray js3 = new JSONArray(agss.toString());
                     age = js3.toString();
                 }catch (Exception e){
 

@@ -3,7 +3,6 @@ package qiniu;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import net.sf.json.JSONObject;
 
 import java.sql.*;
 import java.util.concurrent.*;

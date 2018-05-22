@@ -1,11 +1,11 @@
 package tianyancha.XinxiXin;
 
+import Utils.Consumer;
 import Utils.Dup;
 import Utils.JsoupUtils;
 import Utils.RedisClu;
 import baidu.RedisAction;
 import com.google.gson.Gson;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
@@ -22,6 +22,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
+import org.dom4j.DocumentException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,10 +34,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 import static Utils.JsoupUtils.*;
@@ -44,26 +43,12 @@ import static Utils.JsoupUtils.*;
  * Created by Administrator on 2017/7/3.
  */
 public class XinxiXin {
-    private static Ca c;
+    static Ca c;
+    private static RedisClu redisClu=new RedisClu();
+    private static Random random=new Random();
     public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         System.out.println("spider begin ******************************************************************************");
 
-        String driver1="com.mysql.jdbc.Driver";
-        String url1="jdbc:mysql://172.31.215.38:3306/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
-        String username="spider";
-        String password="spider";
-        Class.forName(driver1).newInstance();
-        java.sql.Connection con=null;
-        try {
-            con = DriverManager.getConnection(url1, username, password);
-        }catch (Exception e){
-            while(true){
-                con = DriverManager.getConnection(url1, username, password);
-                if(con!=null){
-                    break;
-                }
-            }
-        }
 
         XinxiXin x=new XinxiXin();
         final Url u=x.new Url();
@@ -75,13 +60,13 @@ public class XinxiXin {
         //final TYCConsumer tyc=new TYCConsumer("tyc_shangxianxin","web","10.44.51.90:12181,10.44.152.49:12181,10.51.82.74:12181");
         final RedisClu r=new RedisClu();
         ExecutorService pool= Executors.newCachedThreadPool();
-        final Connection finalCon = con;
+        final Connection finalCon = getcon();
 
         Thread th=new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    duqu(finalCon,k);
+                    duqu(r,k);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -108,7 +93,7 @@ public class XinxiXin {
                 @Override
                 public void run() {
                     try {
-                        serachget(u,k,finalCon);
+                        serachget(u,k);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -134,6 +119,8 @@ public class XinxiXin {
                         e.printStackTrace();
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (DocumentException e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -147,6 +134,12 @@ public class XinxiXin {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -167,7 +160,6 @@ public class XinxiXin {
 
         tconip.start();
 
-
         pool.shutdown();
         while (true) {
             if (pool.isTerminated()) {
@@ -179,20 +171,47 @@ public class XinxiXin {
 
     }
 
-    public static void xin(Connection con) throws SQLException, InterruptedException {
+    public static Connection getcon() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
+        String driver1="com.mysql.jdbc.Driver";
+        String url1="jdbc:mysql://172.31.215.38:3306/tyc?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
+        String username="spider";
+        String password="spider";
+        Class.forName(driver1).newInstance();
+        java.sql.Connection con=null;
+        try {
+            con = DriverManager.getConnection(url1, username, password);
+        }catch (Exception e){
+            while(true){
+                con = DriverManager.getConnection(url1, username, password);
+                if(con!=null){
+                    break;
+                }
+            }
+        }
+        return con;
+    }
+
+    public static void xin(Connection con) throws SQLException, InterruptedException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         while (true) {
-            String sql = "select 1";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.executeQuery();
-            Thread.sleep(60000);
+            try {
+                String sql = "select 1";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.executeQuery();
+                ps.close();
+                Thread.sleep(10000);
+            }catch (Exception e){
+                con=getcon();
+            }
         }
     }
 
-    public static void duqu(TYCConsumer tyc,Key k) throws UnsupportedEncodingException, InterruptedException {
+    public static void duqu(Consumer tyc, Key k) throws UnsupportedEncodingException, InterruptedException {
         Thread.sleep(3000);
         while (true){
-            String cname=tyc.getmessage();
-            k.put(cname);
+            List<String> cname=tyc.Read();
+            for(String s:cname) {
+                k.put(s);
+            }
         }
     }
 
@@ -286,6 +305,7 @@ public class XinxiXin {
                     }
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("serach error");
             }
         }
@@ -314,8 +334,8 @@ public class XinxiXin {
                         String cname = getString(e, "a", 0).replace(" ", "").trim();
                         String souyin= JsoupUtils.getString(e,"div[class=add] span.sec-c3",0);
                         String vv=JsoupUtils.getString(e,"div[class=add] span.overflow-width.over-hide.vertical-bottom.in-block",0);
-                        String zhuzi=JsoupUtils.getString(e,"div.title.overflow-width span",0);
-                        String zhushi=JsoupUtils.getString(e,"div.title.overflow-width span",0);
+                        String zhuzi=JsoupUtils.getString(e,"div.title.overflow-width:contains(注册资本) span",0);
+                        String zhushi=JsoupUtils.getString(e,"div.title.overflow-width:contains(注册时间) span",0);
 
                         p++;
                         if(p==1){
@@ -339,7 +359,7 @@ public class XinxiXin {
         }
     }
 
-    public static void data(Url u,Connection con,String[] zhua,Key k) throws InterruptedException, IOException, SQLException {
+    public static void data(Url u,Connection con,String[] zhua,Key k) throws InterruptedException, IOException, SQLException, DocumentException {
         Tyc_quan t=new Tyc_quan(con,zhua);
 
         while (true){
@@ -354,7 +374,7 @@ public class XinxiXin {
                 String cname = URLEncoder.encode(value[1], "UTF-8");
                 String tid = url.replace("https://www.tianyancha.com/company/", "");
                 Document doc = detailget(url);
-                String quancheng=getString(doc,"div.company_header_width.ie9Style span.f18.in-block.vertival-middle",0);
+                String quancheng=getString(doc,"div.company_header_width.ie9Style h1.f18.mt0.mb0.in-block.vertival-middle.sec-c2",0);
                 if(StringUtils.isEmpty(quancheng)){
                     continue;
                 }
@@ -447,7 +467,18 @@ public class XinxiXin {
         Document doc=null;
         int p=0;
         while (true) {
+            Thread.sleep(random.nextInt(5)+2);
             try {
+                while (true){
+                    if(redisClu.getslength("tyc_cookie")>=500){
+                        break;
+                    }
+                    Thread.sleep(1000);
+                }
+                String cookie=redisClu.getrand("tyc_cookie");
+                for(Map.Entry<String,Object> entry:new JSONObject(cookie.split("######")[1]).toMap().entrySet()){
+                    map.put(entry.getKey(),entry.getValue().toString());
+                }
                 String ip=c.qu();
                 p++;
                 if(p>=20){
@@ -463,21 +494,27 @@ public class XinxiXin {
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
                         .get();
-                if (!doc.outerHtml().contains("请输入验证码")&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("forbidden3.png")&&!doc.outerHtml().contains("503 Service Temporarily Unavailable")&&!doc.outerHtml().contains("too many request")) {
+                if (doc!=null&& StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("forbidden3.png")&&!doc.outerHtml().contains("503 Service Temporarily Unavailable")&&!doc.outerHtml().contains("too many request")&&!doc.outerHtml().contains("500 Internal Server Error")) {
                     if (!c.po.contains(ip)) {
                         for (int x = 1; x <= 10; x++) {
                             c.fang(ip);
                         }
                     }
-                    break;
+                    if(doc.outerHtml().contains("我们只是确认一下你不是机器人")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else {
+                        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())||doc.outerHtml().contains("获取验证码")||doc.outerHtml().contains("访问拒绝")||doc.outerHtml().contains("abuyun")||doc.outerHtml().contains("Unauthorized")||doc.outerHtml().contains("访问禁止")||doc.outerHtml().contains("forbidden3.png")||doc.outerHtml().contains("500 Internal Server Error")){
+                            return null;
+                        }
+                        break;
+                    }
                 }
             }catch (Exception e){
                 Thread.sleep(500);
                 System.out.println("time out detail");
             }
-        }
-        if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())||doc.outerHtml().contains("获取验证码")||doc.outerHtml().contains("访问拒绝")||doc.outerHtml().contains("abuyun")||doc.outerHtml().contains("Unauthorized")||doc.outerHtml().contains("访问禁止")||doc.outerHtml().contains("forbidden3.png")){
-            return null;
         }
         return doc;
     }
@@ -486,7 +523,21 @@ public class XinxiXin {
         System.out.println(url);
         Document doc=null;
         while (true) {
+            Thread.sleep(random.nextInt(5)+2);
             try {
+                while (true){
+                    if(redisClu.getslength("tyc_cookie")>=500){
+                        break;
+                    }
+                    Thread.sleep(1000);
+                }
+                String cookie=redisClu.getrand("tyc_cookie");
+                Map<String,Object> map1=new JSONObject(cookie.split("######")[1]).toMap();
+                Map<String,String> map=new HashMap<>();
+                for(Map.Entry<String,Object> entry:map1.entrySet()){
+                    map.put(entry.getKey(),entry.getValue().toString());
+                }
+
                 String ip=c.qu();
                 doc = Jsoup.connect(url)
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -496,14 +547,21 @@ public class XinxiXin {
                         .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
+                        .cookies(map)
                         .get();
-                if (!doc.outerHtml().contains("请输入验证码")&& doc.outerHtml().length()>50&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("503 Service Temporarily Unavailable")&&!doc.outerHtml().contains("too many request")) {
+                if ( doc!=null&&doc.outerHtml().length()>50&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("503 Service Temporarily Unavailable")&&!doc.outerHtml().contains("too many request")) {
                     if (!c.po.contains(ip)) {
                         for (int x = 1; x <= 10; x++) {
                             c.fang(ip);
                         }
                     }
-                    break;
+                    if(doc.outerHtml().contains("我们只是确认一下你不是机器人")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else {
+                        break;
+                    }
                 }
             }catch (Exception e){
                 Thread.sleep(500);
@@ -530,6 +588,20 @@ public class XinxiXin {
         String html = null;
         while (true) {
             try {
+                Thread.sleep(random.nextInt(5)+2);
+                while (true){
+                    if(redisClu.getslength("tyc_cookie")>=500){
+                        break;
+                    }
+                    Thread.sleep(1000);
+                }
+                String cookie=redisClu.getrand("tyc_cookie");
+                Map<String,Object> map1=new JSONObject(cookie.split("######")[1]).toMap();
+                Map<String,String> map=new HashMap<>();
+                for(Map.Entry<String,Object> entry:map1.entrySet()){
+                    map.put(entry.getKey(),entry.getValue().toString());
+                }
+
                 String ip=c.qu();
                 ti=System.currentTimeMillis();
                 doc = Jsoup.connect("https://www.tianyancha.com/tongji/" + URLEncoder.encode(tid,"utf-8") + ".json?_=" +ti )
@@ -538,6 +610,7 @@ public class XinxiXin {
                         .ignoreHttpErrors(true)
                         .timeout(5000)
                         .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
+                        .cookies(map)
                         .method(org.jsoup.Connection.Method.GET)
                         .execute();
                 if (doc != null && !doc.body().contains("http://www.qq.com/404/search_children.js")&& StringUtils.isNotEmpty(doc.body().replace("<html>", "").replace(" <head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())&&!doc.body().contains("abuyun")&&doc.body().length()>50&&!doc.body().contains("访问禁止")&&!doc.body().contains("访问拒绝")&&!doc.body().contains("503 Service Temporarily Unavailable")&&!doc.body().contains("too many request")) {
@@ -548,7 +621,13 @@ public class XinxiXin {
                     }
                     html = doc.body().replace("<html>", "").replace(" <head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim();
                     s = gson.fromJson(html, tongji.class);
-                    break;
+                    if(html.contains("我们只是确认一下你不是机器人")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else if(html.contains("你已在其他地点登录")||doc.body().contains("下次自动登录")){
+                        redisClu.removeset("tyc_cookie",cookie);
+                    }else {
+                        break;
+                    }
                 }
             }catch (Exception e){
                 Thread.sleep(500);
@@ -663,7 +742,8 @@ public class XinxiXin {
         map.put("cdpassword","349617b80072ce2b45926f82f0b2d492");
         map.put("loginway","PL");
         map.put("mobile","13717951934");
-        StringEntity entity = new StringEntity(JSONObject.fromObject(map).toString(), ContentType.APPLICATION_JSON);
+
+        StringEntity entity = new StringEntity(new JSONObject(map).toString(), ContentType.APPLICATION_JSON);
         post.setEntity(entity);
         CloseableHttpResponse response=httpClient.execute(post);
         Header[] head=response.getHeaders("Set-Cookie");
@@ -745,7 +825,7 @@ public class XinxiXin {
 
 
     public static class Ca{
-        BlockingQueue<String> po=new LinkedBlockingQueue<String>();
+        public BlockingQueue<String> po=new LinkedBlockingQueue<String>();
         public void fang(String key) throws InterruptedException {
             po.put(key);
         }

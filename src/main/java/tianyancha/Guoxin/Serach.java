@@ -1,7 +1,6 @@
 package tianyancha.Guoxin;
 
 import Utils.JsoupUtils;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

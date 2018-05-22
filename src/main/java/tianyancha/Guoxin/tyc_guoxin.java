@@ -3,7 +3,6 @@ package tianyancha.Guoxin;
 import Utils.RedisClu;
 import baidu.RedisAction;
 import com.google.gson.Gson;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -21,11 +20,11 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import tianyancha.XinxiXin.TYCConsumer;
 import tianyancha.XinxiXin.Tyc_quan;
 import tianyancha.XinxiXin.XinxiXin;
 import tianyancha.XinxiXin.tongji;
@@ -152,13 +151,6 @@ public class tyc_guoxin {
 
     }
 
-    public static void duqu(TYCConsumer tyc, Key k) throws UnsupportedEncodingException, InterruptedException {
-        Thread.sleep(3000);
-        while (true){
-            String cname=tyc.getmessage();
-            k.put(cname);
-        }
-    }
 
     public static void duqu(RedisClu rs, Key k) throws UnsupportedEncodingException, InterruptedException {
         Thread.sleep(3000);
@@ -594,7 +586,7 @@ public class tyc_guoxin {
         map.put("cdpassword","349617b80072ce2b45926f82f0b2d492");
         map.put("loginway","PL");
         map.put("mobile","13717951934");
-        StringEntity entity = new StringEntity(JSONObject.fromObject(map).toString(), ContentType.APPLICATION_JSON);
+        StringEntity entity = new StringEntity(new JSONObject(map).toString(), ContentType.APPLICATION_JSON);
         post.setEntity(entity);
         CloseableHttpResponse response=httpClient.execute(post);
         Header[] head=response.getHeaders("Set-Cookie");

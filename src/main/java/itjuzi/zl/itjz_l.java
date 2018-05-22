@@ -30,6 +30,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.xpath.operations.Bool;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -246,6 +247,7 @@ public class    itjz_l {
                     e.printStackTrace();
                 }
             }
+            System.out.println(tag);
             Document doc=Jsoup.parse(tag);
             Elements dateele=getElements(doc,"ul.list-main-eventset li i.cell.date span");
             int pp=1;
@@ -258,7 +260,7 @@ public class    itjz_l {
                 for(Element e:dateele){
                     String date=e.text();
                     long date3=simpleDateFormat.parse(date).getTime();
-                    if(date3<dd2){
+                    if(date3<=dd2){
                         break;
                     }
                     pp++;
@@ -533,10 +535,11 @@ public class    itjz_l {
         caps.setCapability(CapabilityType.PROXY, proxy);
         ChromeOptions options=new ChromeOptions();
         options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-        options.addArguments("--disable-plugins","--disable-images","--disable-javascript");
-        Map<String, Object> prefs = new HashMap<String, Object>();
-        prefs.put("profile.managed_default_content_settings.images", 2);
-        options.setExperimentalOption("prefs", prefs);
+
+        //options.addArguments("--disable-plugins","--disable-images","--disable-javascript");
+        //Map<String, Object> prefs = new HashMap<String, Object>();
+        //prefs.put("profile.managed_default_content_settings.images", 2);
+        //options.setExperimentalOption("prefs", prefs);
         caps.setCapability(ChromeOptions.CAPABILITY,options);
         System.setProperty(Count.chrome, "/data1/spider/java_spider/chrome/chromedriver");
         WebDriver driver=new ChromeDriver(caps);
@@ -556,18 +559,18 @@ public class    itjz_l {
             try {
                 //创建认证，并设置认证范围
 
-                String proxyIpAndPort=c.qu();
+                //String proxyIpAndPort=c.qu();
                 //CredentialsProvider credsProvider = new BasicCredentialsProvider();
                 //credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H6STQJ2G9011329D", "E946B835EC9D2ED7"));
-                HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
-                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);
+                /*HttpHost proxy2 = new HttpHost(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]));
+                DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy2);*/
                 RequestConfig requestConfig = RequestConfig.custom()
                         .setConnectTimeout(5000).setConnectionRequestTimeout(5000)
                         .setSocketTimeout(5000).build();
 
                 HttpClientBuilder builder = HttpClients.custom();
 
-                builder.setRoutePlanner(routePlanner);
+                //builder.setRoutePlanner(routePlanner);
 
                 //builder.setDefaultCredentialsProvider(credsProvider);
                 builder.setDefaultRequestConfig(requestConfig);
@@ -751,6 +754,52 @@ public class    itjz_l {
         ps1.setString(19,email);
         ps1.setString(20,phone);
         ps1.executeUpdate();
+
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("comp_industry",hangye+"--"+zihangye);
+        jsonObject.put("comp_off_addr",dizhi);
+        jsonObject.put("comp_tag",tags);
+        jsonObject.put("comp_create_date",chenglitime);
+        jsonObject.put("comp_scale",guimo);
+        jsonObject.put("comp_opreat_status",zhuangtai);
+        jsonObject.put("comp_full_name",fullname);
+        jsonObject.put("comp_id","createid=comp_full_name");
+        jsonObject.put("tablename","company_base_info");
+        jsonObject.put("familyname","it");
+        jsonObject.put("rowkey","comp_full_name");
+
+        JSONObject jsonObject1=new JSONObject();
+        jsonObject1.put("comp_introduction",kouhao+"。"+yewu);
+        jsonObject1.put("comp_full_name",fullname);
+        jsonObject1.put("comp_id","createid=comp_full_name");
+        jsonObject1.put("tablename","company_introduction");
+        jsonObject1.put("familyname","it");
+        jsonObject1.put("rowkey","comp_full_name");
+
+        JSONObject jsonObject2=new JSONObject();
+        jsonObject2.put("comp_web",urlguan);
+        jsonObject2.put("comp_full_name",fullname);
+        jsonObject2.put("comp_id","createid=comp_full_name");
+        jsonObject2.put("tablename","company_web");
+        jsonObject2.put("familyname","it");
+        jsonObject2.put("rowkey","comp_full_name");
+
+        JSONObject jsonObject3=new JSONObject();
+        jsonObject3.put("comp_shortname",name);
+        jsonObject3.put("comp_full_name",fullname);
+        jsonObject3.put("comp_id","createid=comp_full_name");
+        jsonObject3.put("tablename","company_shortname");
+        jsonObject3.put("familyname","it");
+        jsonObject3.put("rowkey","comp_full_name+comp_shortname");
+
+        JSONObject jsonObject4=new JSONObject();
+        jsonObject4.put("comp_logo",logo);
+        jsonObject4.put("comp_full_name",fullname);
+        jsonObject4.put("comp_id","createid=comp_full_name");
+        jsonObject4.put("tablename","company_shortname");
+        jsonObject4.put("familyname","it");
+        jsonObject4.put("rowkey","comp_full_name+comp_shortname");
+
 
 
         Elements jpele=getElements(doc,"ul.list-main-icnset.list-compete-info li");

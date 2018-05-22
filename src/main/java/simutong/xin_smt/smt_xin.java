@@ -2,6 +2,7 @@ package simutong.xin_smt;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
+import Utils.RedisClu;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,10 +17,8 @@ import java.net.Proxy;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,7 +37,7 @@ public class smt_xin {
     private static Map<String,String> map;
     private static Connection conn;
     private static Ca c=new Ca();
-    private static Pa p=new Pa();
+    private static RedisClu rd=new RedisClu();
 
     static{
         Authenticator.setDefault(new Authenticator() {
@@ -81,11 +80,10 @@ public class smt_xin {
         conn=con;
     }
     public static void main(String args[]) throws IOException, InterruptedException, ParseException {
-        map=sutils.login("xiaohang.qu@lingweispace.cn","96e79218965eb72c92a549dd5a330112");
-
         //System.out.println(sutils.tzlist("http://pe.pedata.cn/getListInvest.action", String.valueOf(3), map, "2017-01-01", "2017-01-16"));
         //System.exit(0);
 
+        String k=args[0];
         ExecutorService pool= Executors.newCachedThreadPool();
         pool.submit(new Runnable() {
             @Override
@@ -99,7 +97,7 @@ public class smt_xin {
                 }
             }
         });
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -112,7 +110,7 @@ public class smt_xin {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
         pool.submit(new Runnable() {
             @Override
@@ -131,8 +129,21 @@ public class smt_xin {
             @Override
             public void run() {
                 try {
-                    controller();
+                    controller(Integer.parseInt(k));
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    xin();
+                } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -141,10 +152,51 @@ public class smt_xin {
         });
     }
 
-    public static void controller() throws IOException, InterruptedException {
+    public static void controller(String key) throws IOException, InterruptedException {
+        List<String[]> list=new ArrayList<>();
+        String[] str1=new String[]{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","xiaohang.qu@lingweispace.cn","96e79218965eb72c92a549dd5a330112","dc:a9:04:91:9c:e6,0e:a9:04:91:9c:e6,b6:3b:f5:52:98:6a,c2:00:9c:f1:f4:01,c2:00:9c:f1:f4:00,c2:00:9c:f1:f4:00,0:0:0:0:0:0,0:0:0:0:0:0","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"cldr\":\"31.0.1\",\"tz\":\"2017b\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"darwin\"}"};
+        String[] str2=new String[]{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","wang.hao@lingweispace.cn","96e79218965eb72c92a549dd5a330112","dc:a9:04:91:9c:e6,0e:a9:04:91:9c:e6,b6:3b:f5:52:98:6a,c2:00:9c:f1:f4:01,c2:00:9c:f1:f4:00,c2:00:9c:f1:f4:00,0:0:0:0:0:0,0:0:0:0:0:0","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"cldr\":\"31.0.1\",\"tz\":\"2017b\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"darwin\"}"};
+        String[] str3=new String[]{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","chengyu.liang@lingweispace.cn","96e79218965eb72c92a549dd5a330112","84-EF-18-FE-2E-AA,84-EF-18-FE-2E-AE","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"win32\"}"};
+
+        list.add(str1);
+        list.add(str2);
+        list.add(str3);
+        Random r=new Random();
+
         while (true){
             try {
-                map = sutils.login("xiaohang.qu@lingweispace.cn", "96e79218965eb72c92a549dd5a330112");
+                for(String s:key.split(",")) {
+                    map = sutils.login(list.get(Integer.parseInt(s)));
+                    Thread.sleep((r.nextInt(2)+1)*60*60*1000);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void xin() throws SQLException, InterruptedException {
+        while (true) {
+            String sql = "select 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeQuery();
+            Thread.sleep(60000);
+        }
+    }
+
+    public static void controller(int k) throws IOException, InterruptedException {
+        List<String[]> list=new ArrayList<>();
+        String[] str1=new String[]{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","xiaohang.qu@lingweispace.cn","96e79218965eb72c92a549dd5a330112","dc:a9:04:91:9c:e6,0e:a9:04:91:9c:e6,b6:3b:f5:52:98:6a,c2:00:9c:f1:f4:01,c2:00:9c:f1:f4:00,c2:00:9c:f1:f4:00,0:0:0:0:0:0,0:0:0:0:0:0","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"cldr\":\"31.0.1\",\"tz\":\"2017b\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"darwin\"}"};
+        String[] str2=new String[]{"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","wang.hao@lingweispace.cn","96e79218965eb72c92a549dd5a330112","dc:a9:04:91:9c:e6,0e:a9:04:91:9c:e6,b6:3b:f5:52:98:6a,c2:00:9c:f1:f4:01,c2:00:9c:f1:f4:00,c2:00:9c:f1:f4:00,0:0:0:0:0:0,0:0:0:0:0:0","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"cldr\":\"31.0.1\",\"tz\":\"2017b\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"darwin\"}"};
+        String[] str3=new String[]{"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36","chengyu.liang@lingweispace.cn","96e79218965eb72c92a549dd5a330112","84-EF-18-FE-2E-AA,84-EF-18-FE-2E-AE","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"win32\"}"};
+
+        list.add(str1);
+        list.add(str2);
+        list.add(str3);
+
+        while (true){
+            try {
+                map = sutils.login(list.get(k));
                 Thread.sleep(3600000);
             }catch (Exception e){
                 e.printStackTrace();
@@ -156,84 +208,116 @@ public class smt_xin {
         String sql="select id from si_institution_base_info where si_id='"+sid+"'";
         PreparedStatement ps=conn.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
+
+        String sql2="select id from si_fund_base_info where fund_id='"+sid+"'";
+        PreparedStatement ps2=conn.prepareStatement(sql2);
+        ResultSet rs2=ps2.executeQuery();
         boolean bo=true;
         while (rs.next()){
+            bo=false;
+        }
+        while (rs2.next()){
             bo=false;
         }
        return bo;
     }
 
     public static void serach() throws ParseException, IOException, InterruptedException {
-        int d=0;
-        String qi="2017-01-01";
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        String liurls[]=new String[]{"http://pe.pedata.cn/getListInvest.action","http://pe.pedata.cn/getListExit.action"};
-        for (int q=1;q<=24;q++){
-            String end=simpleDateFormat.format(simpleDateFormat.parse(qi).getTime() + 15 * 24 * 60 * 60 * 1000);
-            if(simpleDateFormat.parse(end).getTime()>simpleDateFormat.parse("2018-01-01").getTime()){
-                end="2017-12-31";
+        long start=System.currentTimeMillis();
+        while (true) {
+            if(map==null||map.size()==0){
+                Thread.sleep(1000);
+                continue;
             }
+            int d = 0;
+            String qi = "1900-01-01";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String liurls[] = new String[]{"http://pe.pedata.cn/getListOrg.action", "http://pe.pedata.cn/getListFund.action"};
+            for (int q = 1; q <= 2832; q++) {
+                String end = simpleDateFormat.format(simpleDateFormat.parse(qi).getTime() + 15 * 24 * 60 * 60 * 1000);
+                if (simpleDateFormat.parse(end).getTime() > simpleDateFormat.parse("2018-01-01").getTime()) {
+                    end = "2018-02-11";
+                    q = 10000;
+                }
 
-            for(int b=0;b<liurls.length;b++) {
-                for (int a = 1; a <= 40; a++){
-                    try {
-                        Document doc = null;
-                        if (b == 0) {
-                            doc = sutils.tzlist(liurls[0], String.valueOf(a), map, qi, end);
-                        } else if (b == 1) {
-                            doc = sutils.tclist(liurls[1], String.valueOf(a), map, qi, end);
-                        }
-                        boolean bo=true;
-                        Elements ele = JsoupUtils.getElements(doc, "div.leftTableDivID.float_left.search_width20 table.table.table-hover tbody tr");
-                        for (Element e : ele) {
-                            bo=false;
-                            String href = JsoupUtils.getHref(e, "td a", "href", 0);
-                            
-                            if (!href.contains("person") && Dup.nullor(href)) {
-                                if(flagdata(href.replace("getDetailED.action?param.qkid=",""))){
-                                    p.fang(href);
-                                    d++;
-                                    System.out.println(d+"*********************************************************************");
+                System.out.println(qi+"     "+end);
+                for (int b = 0; b < liurls.length; b++) {
+                    for (int a = 1; a <= 40; a++) {
+                        try {
+                            Document doc = null;
+                            if (b == 0) {
+                                doc = sutils.jglist(liurls[0], String.valueOf(a), map, qi, end);
+                            } else if (b == 1) {
+                                doc = sutils.jjlist(liurls[1], String.valueOf(a), map, qi, end);
+                            }
+                            boolean bo = true;
+                            Elements ele = JsoupUtils.getElements(doc, "div.leftTableDivID.float_left.search_width20 table.table.table-hover tbody tr");
+                            for (Element e : ele) {
+                                bo = false;
+                                String href = JsoupUtils.getHref(e, "td a", "href", 0);
+                                System.out.println(href);
+
+                                if (!href.contains("person") && Dup.nullor(href)) {
+                                    if (flagdata(href.replace("getDetailED.action?param.qkid=", ""))) {
+                                        rd.set("smt", href);
+                                        d++;
+                                        System.out.println(d + "*********************************************************************");
+                                    }
                                 }
                             }
+                            if (bo) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        if(bo){
-                            break;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
+                qi = end;
+                long zh=System.currentTimeMillis();
+                if(((zh-start)/1000/60/60)>=5){
+                    Thread.sleep(3600000);
+                    start=System.currentTimeMillis();
+                }
             }
-            qi=end;
         }
     }
 
     public static void detail() throws IOException, InterruptedException {
-        int pp=0;
         while (true) {
-            try {
-                String href = p.qu();
-                Document doc = sutils.detail("http://pe.pedata.cn/" + href, map);
-                Elements tele = JsoupUtils.getElements(doc, "div.qy_detail_info p.qy_tag span");
-                StringBuffer str = new StringBuffer();
-                String tag = null;
-                for (Element e : tele) {
-                    str.append(e.text() + ";");
+            if(map==null||map.size()==0){
+                Thread.sleep(1000);
+                continue;
+            }
+            int pp = 0;
+            while (true) {
+                try {
+                    String href = rd.get("smt");
+                    if(!Dup.nullor(href)){
+                        Thread.sleep(1000);
+                        continue;
+                    }
+                    Document doc = sutils.detail("http://pe.pedata.cn/" + href, map);
+                    Elements tele = JsoupUtils.getElements(doc, "div.qy_detail_info p.qy_tag span");
+                    StringBuffer str = new StringBuffer();
+                    String tag = null;
+                    for (Element e : tele) {
+                        str.append(e.text() + ";");
+                    }
+                    if (str != null && str.length() > 2) {
+                        tag = str.substring(0, str.length() - 1);
+                    }
+                    if (tag != null && tag.contains("基金")) {
+                        jjdetail(href, doc);
+                    }
+                    if (tag != null && tag.contains("机构")) {
+                        jgdetail(href, doc);
+                    }
+                    pp++;
+                    System.out.println(pp + "-------------------------------------------------------------------------------");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                if (str != null && str.length() > 2) {
-                    tag = str.substring(0, str.length() - 1);
-                }
-                if (tag != null && tag.contains("基金")) {
-                    jjdetail(href, doc);
-                }
-                if (tag != null && tag.contains("机构")) {
-                    jgdetail(href, doc);
-                }
-                pp++;
-                System.out.println(pp+"-------------------------------------------------------------------------------");
-            }catch (Exception e){
-                e.printStackTrace();
             }
         }
     }
@@ -665,7 +749,11 @@ public class smt_xin {
                 smt_bean.jigou.tzjj t=new smt_bean.jigou.tzjj();
                 t.setJjmc(JsoupUtils.getString(e,"td",0));
                 t.setGjjg(JsoupUtils.getString(e,"td",1));
-                t.setGljgid(e.select("td").get(1).select("a").attr("href").replace("getDetailED.action?param.qkid=",""));
+                try {
+                    t.setGljgid(e.select("td").get(1).select("a").attr("href").replace("getDetailED.action?param.qkid=", ""));
+                }catch (Exception e1){
+                    t.setGljgid("0");
+                }
                 t.setJjlx(JsoupUtils.getString(e,"td",2));
                 t.setMjlc(JsoupUtils.getString(e,"td",3));
                 t.setMbgm(JsoupUtils.getString(e,"td",4));
@@ -701,7 +789,11 @@ public class smt_xin {
                 tx.setLc(JsoupUtils.getString(e,"td",7));
                 tx.setTzje(JsoupUtils.getString(e,"td",8));
                 tx.setGq(JsoupUtils.getString(e,"td",9));
-                tx.setXq(e.select("td").get(10).select("a").attr("href"));
+                try {
+                    tx.setXq(e.select("td").get(10).select("a").attr("href"));
+                }catch (Exception e1){
+                    tx.setXq("");
+                }
                 tx.setSid(sid);
                 c.fang(tx);
             }
@@ -724,16 +816,28 @@ public class smt_xin {
                 smt_bean.jigou.xmtc xt=new smt_bean.jigou.xmtc();
                 xt.setTcf(JsoupUtils.getString(e,"td",0));
                 xt.setGljg(JsoupUtils.getString(e,"td",1));
-                xt.setGljgid(e.select("td").get(1).select("a").attr("href").replace("getDetailED.action?param.qkid=",""));
+                try {
+                    xt.setGljgid(e.select("td").get(1).select("a").attr("href").replace("getDetailED.action?param.qkid=", ""));
+                }catch (Exception e1){
+                    xt.setGljgid("0");
+                }
                 xt.setBtcf(JsoupUtils.getString(e,"td",2));
-                xt.setBtcfid(e.select("td").get(2).select("a").attr("href").replace("getDetailED.action?param.qkid=",""));
+                try {
+                    xt.setBtcfid(e.select("td").get(2).select("a").attr("href").replace("getDetailED.action?param.qkid=", ""));
+                }catch (Exception eee){
+                    xt.setBtcfid("0");
+                }
                 xt.setTcfs(JsoupUtils.getString(e,"td",3));
                 xt.setTcsj(JsoupUtils.getString(e,"td",4));
                 xt.setSctzsj(JsoupUtils.getString(e,"td",5));
                 xt.setTcje(JsoupUtils.getString(e,"td",6));
                 xt.setHbbs(JsoupUtils.getString(e,"td",7));
                 xt.setNbsy(JsoupUtils.getString(e,"td",8));
-                xt.setXq(e.select("td").get(9).select("a").attr("href"));
+                try {
+                    xt.setXq(e.select("td").get(9).select("a").attr("href"));
+                }catch (Exception ee){
+                    xt.setXq("");
+                }
                 xt.setSid(sid);
                 c.fang(xt);
             }
@@ -788,7 +892,11 @@ public class smt_xin {
         smt_bean.jijin.base b=new smt_bean.jijin.base();
         b.setJjlx(JsoupUtils.getString(doc,"div#base_info_label div.detail_wrapper_table table tbody td:contains(基金类型)+td",0));
         b.setGljg(JsoupUtils.getString(doc,"div#base_info_label div.detail_wrapper_table table tbody td:contains(管理机构)+td",0));
-        b.setGljgid(doc.select("div#base_info_label div.detail_wrapper_table table tbody td:contains(管理机构)+td a").get(0).attr("href").replace("getDetailED.action?param.entityType=2&amp;param.qkid=",""));
+        try {
+            b.setGljgid(doc.select("div#base_info_label div.detail_wrapper_table table tbody td:contains(管理机构)+td a").get(0).attr("href").replace("getDetailED.action?param.entityType=2&amp;param.qkid=", ""));
+        }catch (Exception e){
+            b.setGljgid("0");
+        }
         b.setMjzt(JsoupUtils.getString(doc,"div#base_info_label div.detail_wrapper_table table tbody td:contains(募集状态)+td",0));
         b.setMbgm(JsoupUtils.getString(doc,"div#base_info_label div.detail_wrapper_table table tbody td:contains(目标规模)+td",0));
         b.setZzxs(JsoupUtils.getString(doc,"div#base_info_label div.detail_wrapper_table table tbody td:contains(组织形式)+td",0));
@@ -833,6 +941,9 @@ public class smt_xin {
         for(int a=1;a<=100;a++){
             Document jmdoc = sutils.lxfs("http://pe.pedata.cn/ajaxGetFundRaiseED.action", map, sid, String.valueOf(a));
             Elements ele=JsoupUtils.getElements(jmdoc,"div.detail_wrapper_table table tbody tr.table_bd.info_table");
+            if(ele==null){
+                break;
+            }
             if(ele.size()<=1){
                 break;
             }
@@ -891,16 +1002,6 @@ public class smt_xin {
             po.put(obj);
         }
         public Object qu() throws InterruptedException {
-            return po.take();
-        }
-    }
-
-    public static class Pa{
-        BlockingQueue<String> po=new LinkedBlockingQueue<>(100);
-        public void fang(String key) throws InterruptedException {
-            po.put(key);
-        }
-        public String qu() throws InterruptedException {
             return po.take();
         }
     }

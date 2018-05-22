@@ -1,5 +1,6 @@
 package chuangyebang;
 
+import Utils.Dup;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -76,7 +77,7 @@ public class cyb_tzsjzl {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     String date1 = simpleDateFormat.format(datee);
                     long dd1 = simpleDateFormat.parse(date1).getTime();
-                    long dd2 = dd1 - (2 - 1) * 24 * 60 * 60 * 1000;
+                    long dd2 = dd1 - (10 - 1) * 24 * 60 * 60 * 1000;
                     for (Element e : ele) {
                         String time = getString(e, ">td", 6);
                         long date3 = simpleDateFormat.parse(time).getTime();
@@ -92,7 +93,7 @@ public class cyb_tzsjzl {
                 if (dele != null) {
                     for (Element e : dele) {
                         try {
-                            if (pp > 1 && oo == pp - 1 || pp == 1 && oo == pp) {
+                            if (pp > 1 && oo == pp - 1 && pp<20 || pp == 1 && oo == pp) {
                                 br = true;
                                 break;
                             }
@@ -136,7 +137,7 @@ public class cyb_tzsjzl {
                         .proxy(proxy)
                         .timeout(5000)
                         .get();
-                if (org.apache.commons.lang3.StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("</html>", "").replace("<head></head>", "").replace("<body>", "").replace("</body>", "").trim()) && !doc.outerHtml().contains("abuyun")) {
+                if (Dup.nullor(doc.outerHtml().replace("<html>", "").replace("</html>", "").replace("<head></head>", "").replace("<body>", "").replace("</body>", "").trim()) && !doc.outerHtml().contains("abuyun")) {
                     break;
                 }
             } catch (Exception e) {

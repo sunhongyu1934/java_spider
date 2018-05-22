@@ -1,3 +1,4 @@
+/*
 package qiniu;
 
 import JavaBean.qiniubean;
@@ -31,9 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+*/
 /**
  * Created by Administrator on 2017/3/30.
- */
+ *//*
+
 public class shangchuan {
     public static final String ACCESS_KEY = "Wbw_tA3cCzYqakUdU5Xqf-NBbnk80nWMbH4yGr0B"; // 你的access_key
     public static final String SECRET_KEY = "n9ahK41uBFqdKoM-n8EcnwCPJVBOFvKhlnml9qu9"; // 你的secret_key
@@ -309,3 +312,4 @@ public class shangchuan {
 
 
 }
+*/

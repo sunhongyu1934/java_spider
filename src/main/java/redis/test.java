@@ -3,8 +3,8 @@ package redis;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import net.sf.json.JSONObject;
 import org.apache.http.HttpStatus;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -26,7 +26,7 @@ public class test {
         map.put( "arr", new String[]{"a","b"} );
         map.put( "func", "function(i){ return this.arr[i]; }" );
 
-        JSONObject jsonObject = JSONObject.fromObject( map );
+        JSONObject jsonObject = new JSONObject(map);
         System.out.println( jsonObject.toString() );
 
 

@@ -1,3 +1,4 @@
+/*
 package tianyancha.XinxiXin;
 
 import kafka.consumer.ConsumerConfig;
@@ -21,9 +22,11 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+*/
 /**
  * Created by mac on 17/7/3.
- */
+ *//*
+
 public class TYCConsumer {
     private static Connection conn;
 
@@ -133,3 +136,4 @@ public class TYCConsumer {
         }
     }
 }
+*/

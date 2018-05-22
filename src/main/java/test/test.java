@@ -1,5 +1,7 @@
 package test;
 
+import Utils.MD5Util;
+import Utils.RedisClu;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.mongodb.DBObject;
@@ -9,7 +11,6 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
-import net.sf.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -20,6 +21,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import spiderKc.kcBean.kcBean;
 
 import java.io.IOException;
@@ -36,93 +38,52 @@ import java.util.concurrent.Executors;
  * Created by Administrator on 2017/3/15.
  */
 public class test {
-    public static void main(String args[]) throws IOException {
-        List<String> list=new ArrayList<String>();
-        list.add("aaa");
-        list.add("bbb");
+    private static java.sql.Connection conn;
 
-        System.out.println(list.toString());
-        JSONArray js=JSONArray.fromObject(list);
-        System.out.println(js.toString());
-        JSONArray jj=JSONArray.fromObject(js.toString());
-
-        List<String> li=JSONArray.toList(js);
-
-        System.out.println(li.get(0));
-
-
-
-
-
-
-
-
-        String coo="_Coolchuan_com_session=kuchuan; uname=; uid=; bcelin=; uniqueId=39ef4c2c45d94b179577aa085c0c26cb; UM_distinctid=15ab685c229284-0c61bee7205db9-5e4f2b18-100200-15ab685c22a1c6; activityCookie=true; activityCount0117=5; _qddamta_4006343800=3-0; _qdda=3-1.7i6em; JSESSIONID=npkixc82a7341bu26aq086t9; _qddaz=QD.980csd.6xs7zz.j0al087s; CNZZDATA5103679=cnzz_eid%3D268665709-1489558435-http%253A%252F%252Fios.kuchuan.com%252F%26ntime%3D1489558435; CNZZDATA1257619731=495438552-1489558506-http%253A%252F%252Fios.kuchuan.com%252F%7C1489558506; CNZZDATA1260525360=528350431-1489554610-http%253A%252F%252Fios.kuchuan.com%252F%7C1489554610; _ga=GA1.2.210977837.1489559053; _gat=1; token=7c20bed027240e2263366f8e2e57d68c; sign=d9kVwTwEG01m%2BqOGYC8WAh5cdLF6iCrNx%2FOUUObkKAnlcgmDV6cKT9BOZbi%2BWyqqRCOydjYb7eH5XgAL0U1FZABQVdjpY%2B6h4W1eoDxQyRdFwf0G%2BdP26etP267OgXKpToIWnG78xlkBbDW3m92exMap3epyZSupCrw189gvECI%3D";
-        String cooo[]=coo.split(";");
-        Map map=new HashMap();
-        for(int x=0;x<cooo.length;x++){
-            map.put(cooo[x].split("=",2)[0],cooo[x].split("=",2)[1]);
+    static{
+        String driver1="com.mysql.jdbc.Driver";
+        String url1="jdbc:mysql://172.31.215.38:3306/spider?useUnicode=true&useCursorFetch=true&defaultFetchSize=100";
+        String username="spider";
+        String password="spider";
+        try {
+            Class.forName(driver1).newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
-
-
-        CookieStore cookieStore = new BasicCookieStore();
-
-
-       /* HttpHost proxy = new HttpHost("proxy.abuyun.com",9020,"http");
-
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-
-        //创建认证，并设置认证范围
-
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-        credsProvider.setCredentials(new AuthScope("proxy.abuyun.com",9020),new UsernamePasswordCredentials("H112205236B5G2PD", "E9484DB291BFC579"));
-
-
-
-        HttpClientBuilder builder = HttpClients.custom();
-
-        builder.setRoutePlanner(routePlanner);
-
-        builder.setDefaultCredentialsProvider(credsProvider);*/
-
-        final CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
-
-
-        for(Object key : map.keySet()){
-            BasicClientCookie cookie = new BasicClientCookie((String) key, (String) map.get(key));
-            System.out.println(key+"    "+map.get(key));
-            cookie.setDomain("android.kuchuan.com");
-            cookie.setPath("/");
-            cookieStore.addCookie(cookie);
-        }
-
-
-
-
-
-
-
-
-        int x=0;
-        ExecutorService pool= Executors.newFixedThreadPool(1);
-        for(int i=1;i<=1;i++) {
-            final int finalX = x;
-            pool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        storedata(finalX,httpclient);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        java.sql.Connection con=null;
+        try {
+            con = DriverManager.getConnection(url1, username, password);
+        }catch (Exception e){
+            while(true){
+                try {
+                    con = DriverManager.getConnection(url1, username, password);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
                 }
-            });
-            x=x+30000;
+                if(con!=null){
+                    break;
+                }
+            }
         }
+        conn=con;
 
-
+    }
+    public static void main(String args[]) throws IOException, InterruptedException, SQLException {
+        String sql="select comp_full_name from temp_database.comp_mingdan_1000";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        RedisClu rd=new RedisClu();
+        int a=0;
+        while (rs.next()){
+            String cname=rs.getString(rs.findColumn("comp_full_name"));
+            rd.set("comp_zl_test",cname);
+            a++;
+            System.out.println(a+"***************************************");
+        }
     }
 
 

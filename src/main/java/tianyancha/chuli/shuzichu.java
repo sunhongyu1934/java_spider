@@ -6,6 +6,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
+import org.dom4j.tree.DefaultDocument;
 import tianyancha.XinxiXin.XinxiXin;
 
 import java.io.File;

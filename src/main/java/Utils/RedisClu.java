@@ -29,7 +29,23 @@ public class RedisClu {
         cluster.sadd(key,valye);
     }
 
+    public String getrand(String key){
+        return cluster.srandmember(key);
+    }
+
+    public void clearset(String key){
+        cluster.del(key);
+    }
+
     public long getslength(String key){
         return cluster.scard(key);
+    }
+
+    public Set<String> getAll(String key){
+        return cluster.smembers(key);
+    }
+
+    public void removeset(String key,String value){
+        cluster.srem(key,value);
     }
 }

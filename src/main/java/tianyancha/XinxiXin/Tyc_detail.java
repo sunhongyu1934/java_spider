@@ -1,3 +1,4 @@
+/*
 package tianyancha.XinxiXin;
 
 import com.google.gson.Gson;
@@ -23,9 +24,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+*/
 /**
  * Created by Administrator on 2017/7/4.
- */
+ *//*
+
 public class Tyc_detail {
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -285,3 +288,4 @@ public class Tyc_detail {
         }
     }
 }
+*/

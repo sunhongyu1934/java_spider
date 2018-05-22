@@ -1,6 +1,5 @@
 package linshi_spider;
 
-import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
@@ -10,6 +9,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -225,7 +225,7 @@ public class test {
 
         map.put("tablePro",TablePro);
         map.put("detail",list);
-        JSONObject jsonObject=JSONObject.fromObject(map);
+        JSONObject jsonObject=new JSONObject(map);
         System.out.println(jsonObject.toString());
 
         while (true) {

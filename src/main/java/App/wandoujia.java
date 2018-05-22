@@ -1,6 +1,10 @@
 package App;
 
+import Utils.Dup;
+import Utils.Producer;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,8 +28,8 @@ import static Utils.JsoupUtils.*;
  */
 public class wandoujia {
     // 代理隧道验证信息
-    final static String ProxyUser = "H4KKF9EHDF26260D";
-    final static String ProxyPass = "2A64AB23C97FCA79";
+    final static String ProxyUser = "H30W5D0WBHL6301D";
+    final static String ProxyPass = "782C396260F8755D";
 
     // 代理服务器
     final static String ProxyHost = "proxy.abuyun.com";
@@ -95,7 +99,7 @@ public class wandoujia {
             });
         }
 
-        for(int x=1;x<=25;x++){
+        for(int x=1;x<=5;x++){
             pool.submit(new Runnable() {
                 @Override
                 public void run() {
@@ -107,6 +111,8 @@ public class wandoujia {
                         e.printStackTrace();
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (DocumentException e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -114,12 +120,14 @@ public class wandoujia {
     }
 
     public static void serach(Fk f) throws IOException, InterruptedException {
-        Document doc=get("http://www.wandoujia.com/category/app");
-        Elements ele=getElements(doc,"nav#j-head-menu li.child-cate");
+        Document docs=get("http://www.wandoujia.com/category/app");
+        Document doc=Jsoup.parse(docs.outerHtml().replace("<!--","").replace("-->",""));
+        Elements ele=getElements(doc,"ul.app-popup.tag-popup.clearfix a,ul.game-popup.tag-popup.clearfix a");
         if(ele!=null) {
             for (Element e : ele) {
                 String lie = getHref(e, "a", "href", 0);
                 if(StringUtils.isNotEmpty(lie)){
+                    System.out.println(lie);
                     f.fang(lie);
                 }
             }
@@ -133,7 +141,7 @@ public class wandoujia {
                 break;
             }
             Document doc = get(lie + "/1");
-            for (int x = 1; x <= 100; x++) {
+            for (int x = 1; x <= 300; x++) {
                 try {
                     if ("javascript:;".equals(getHref(doc, "div.pagination div.page-wp.roboto a.page-item.next-page.next-disabled", "href", 0)) || StringUtils.isEmpty(getHref(doc, "div.pagination div.page-wp.roboto a.page-item.next-page", "href", 0))) {
                         break;
@@ -157,9 +165,10 @@ public class wandoujia {
         }
     }
 
-    public static void detail(Url u) throws IOException, InterruptedException, SQLException {
-        String sql="insert into wandoujia_xin(a_name,a_logo,a_bao,a_xia,a_hap,a_ping,a_size,a_fen,a_tag,a_update,a_ban,a_kaifa,a_jietu,a_desc,a_all) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement ps=conn.prepareStatement(sql);
+    public static void detail(Url u) throws IOException, InterruptedException, SQLException, DocumentException {
+        Producer producer=new Producer(false);
+        //String sql="insert into wandoujia_xin_18510(a_name,a_logo,a_bao,a_xia,a_hap,a_ping,a_size,a_fen,a_tag,a_update,a_ban,a_kaifa,a_jietu,a_desc,a_all) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        //PreparedStatement ps=conn.prepareStatement(sql);
         int p=0;
         while (true) {
             try {
@@ -169,7 +178,7 @@ public class wandoujia {
                 }
                 Document doc = get(url);
                 String logo = getHref(doc, "div.detail-wrap div.detail-top.clearfix div.app-icon img", "src", 0);
-                String baoming = url.split("/", 5)[4];
+                String baoming = url.split("/", 4)[3];
                 String ming = getString(doc, "div.app-info p.app-name span.title", 0);
                 String xiazai = getString(doc, "div.num-list span.item i", 0);
                 String haoping = getString(doc, "div.num-list span.item.love i", 0);
@@ -183,24 +192,24 @@ public class wandoujia {
                 Elements jieele = getElements(doc, "div.screenshot div.overview img");
                 String jietu = "";
                 StringBuffer str = new StringBuffer();
-                if (jieele != null) {
+                if (jieele != null&&jieele.toString().length()>0) {
                     for (Element e : jieele) {
                         str.append(getHref(e, "img", "src", 0) + ";");
                     }
+                    jietu = str.substring(0, str.length() - 1);
                 }
-                jietu = str.substring(0, str.length() - 1);
                 String desc = getString(doc, "div.desc-info div.con", 0);
                 String haizai = "";
                 StringBuffer str2 = new StringBuffer();
-                Elements hele = getElements(doc, "div.infos ul.clearfix.relative-download li");
-                if (hele != null) {
+                Elements hele = getElements(doc, "ol.clearfix.pc-download.log-param-f li.new-app");
+                if (hele != null&&hele.toString().length()>0) {
                     for (Element e : hele) {
-                        str2.append(getString(e, ">a", 0) + ";");
+                        str2.append(getString(e, ">a", 1) + ";");
                     }
+                    haizai = str2.substring(0, str2.length() - 1);
                 }
-                haizai = str2.substring(0, str2.length() - 1);
 
-                ps.setString(1, ming);
+                /*ps.setString(1, ming);
                 ps.setString(2, logo);
                 ps.setString(3, baoming);
                 ps.setString(4, xiazai);
@@ -215,10 +224,33 @@ public class wandoujia {
                 ps.setString(13, jietu);
                 ps.setString(14, desc);
                 ps.setString(15, haizai);
-                ps.executeUpdate();
+                ps.executeUpdate();*/
+
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("familyname","wandoujia");
+                jsonObject.put("tablename","app_base_info");
+                jsonObject.put("rowkey","app_name+app_name###develop_name###app_package###familyname");
+                jsonObject.put("app_id","createid=app_name###develop_name");
+                jsonObject.put("app_name",ming);
+                jsonObject.put("app_sort",fenlei);
+                jsonObject.put("develop_name",kaifa);
+                jsonObject.put("app_intro",desc);
+                jsonObject.put("app_update",gengxin);
+                jsonObject.put("app_total_download",xiazai);
+                jsonObject.put("app_logo",logo);
+                jsonObject.put("app_package",baoming);
+                jsonObject.put("feedback_rate",haoping);
+                jsonObject.put("app_total_comment",pinglun);
+                jsonObject.put("app_size",size);
+                jsonObject.put("app_tag",tag);
+                jsonObject.put("app_version",banben);
+                jsonObject.put("app_screenshot",jietu);
+                jsonObject.put("app_other_like",haizai);
+                producer.send("ControlTotal",jsonObject.toString());
                 p++;
                 System.out.println(u.bo.size()+"****************************************************************");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("error");
             }
         }
@@ -227,7 +259,6 @@ public class wandoujia {
 
     public static Document get(String url) throws IOException {
         Document doc= null;
-        int m=0;
         while (true) {
             try {
                 doc = Jsoup.connect(url)
@@ -237,15 +268,11 @@ public class wandoujia {
                         .proxy(proxy)
                         .timeout(5000)
                         .get();
-                if (!doc.outerHtml().contains("获取验证码") && StringUtils.isNotEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim()) && !doc.outerHtml().contains("访问拒绝") && !doc.outerHtml().contains("abuyun")) {
+                if (!doc.outerHtml().contains("获取验证码") && !doc.outerHtml().contains("abuyun")&&doc.outerHtml().length()>50) {
                     break;
                 }
             }catch (Exception e){
                 System.out.println("time out");
-            }
-            m++;
-            if(m>=20){
-                break;
             }
         }
         return doc;

@@ -1,10 +1,10 @@
+/*
 package tianyancha.quanxinxi;
 
 import com.google.gson.*;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,9 +19,11 @@ import java.util.concurrent.*;
 
 
 
+*/
 /**
  * Created by Administrator on 2017/5/20.
- */
+ *//*
+
 public class Xinxi {
     // 代理隧道验证信息
     final static String ProxyUser = "H4TL2M827AIJ963D";
@@ -193,7 +195,8 @@ public class Xinxi {
 
 
 
-                /*Document doc = Jsoup.parse(html.substring(0,html.lastIndexOf("\r\n")-1));
+                */
+/*Document doc = Jsoup.parse(html.substring(0,html.lastIndexOf("\r\n")-1));
                 String tid = doc.select("div.shareBox.pt8.pb8.mt20.text-right div.text-left.in-block a").attr("ng-href").split(";")[0].split("&")[0].split("\\?")[1].split("/", 5)[4];
                 String quancheng=getString(doc,"span.f18.in-block.vertival-middle.ng-binding",0);
                 String cengyongming=getString(doc,"div.historyName45Bottom.position-abs.new-border.pl8.pr8.pt4.pb4.ng-binding",0);
@@ -215,10 +218,12 @@ public class Xinxi {
                 String hezhunriqi=getString(doc,"div.row.b-c-white.company-content.base2017 tbody tr td div.c8 span.ng-binding",6);
                 String dengjijiguan=getString(doc,"div.row.b-c-white.company-content.base2017 tbody tr td div.c8 span.ng-binding",7);
                 String zhucedizhi=getString(doc,"div.row.b-c-white.company-content.base2017 tbody tr td div.c8 span.ng-binding",8);
-                String jingyingfanwei=getString(doc,"div.row.b-c-white.company-content.base2017 tbody tr td div.c8 span.ng-binding",9);*/
+                String jingyingfanwei=getString(doc,"div.row.b-c-white.company-content.base2017 tbody tr td div.c8 span.ng-binding",9);*//*
 
 
-                /*Map<String,String> map=new HashMap<String, String>();
+
+                */
+/*Map<String,String> map=new HashMap<String, String>();
                 map.put("quancheng",quancheng);
                 map.put("cengyongming",cengyongming);
                 map.put("logo",logo);
@@ -239,7 +244,8 @@ public class Xinxi {
                 map.put("hezhunriqi",hezhunriqi);
                 map.put("dengjijiguan",dengjijiguan);
                 map.put("zhucedizhi",zhucedizhi);
-                map.put("jingyingfanwei",jingyingfanwei);*/
+                map.put("jingyingfanwei",jingyingfanwei);*//*
+
 
                 //String json=JSONObject.fromObject(map).toString();
                 String[] kk=new String[]{tid,quancheng};
@@ -314,7 +320,7 @@ public class Xinxi {
         TablePro.put("table","tyc_information4");
         maps.put("tablePro",TablePro);
         maps.put("detail",list);
-        JSONObject jsonObject=JSONObject.fromObject(maps);
+        JSONObject jsonObject=new JSONObject(maps);
         try {
             Document doc =null;
             int j=0;
@@ -1640,3 +1646,4 @@ public class Xinxi {
 
 
 }
+*/

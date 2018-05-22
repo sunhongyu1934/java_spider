@@ -1,10 +1,13 @@
+/*
 package tianyancha.XinxiXin;
 
 import java.sql.*;
 
+*/
 /**
  * Created by Administrator on 2017/9/6.
- */
+ *//*
+
 public class send_kafka {
     private static Connection conn;
 
@@ -60,3 +63,4 @@ public class send_kafka {
     }
 
 }
+*/

@@ -1,10 +1,13 @@
+/*
 package tianyancha.XinxiXin;
 
 import java.io.UnsupportedEncodingException;
 
+*/
 /**
  * Created by mac on 17/7/4.
- */
+ *//*
+
 public class abuyun {
     private String user=null;
     private String pass=null;
@@ -48,3 +51,4 @@ public class abuyun {
         Thread.sleep(10000);
     }
 }
+*/

@@ -19,34 +19,40 @@ public class smt_utils {
         Random random=new Random();
         return (random.nextInt(2)+1)*1000;
     }
-    public Map<String,String> login(String user, String pwd) throws IOException {
+    public Map<String,String> login(String[] str) throws IOException {
         Connection.Response doc;
         while (true){
-            doc= Jsoup.connect("http://pe.pedata.cn/ajaxLoginMember.action")
-                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36")
-                    .header("Accept","application/json, text/javascript, */*; q=0.01")
-                    .header("Accept-Encoding","gzip, deflate")
-                    .header("Accept-Language","zh-CN,zh;q=0.9")
-                    .header("Host","pe.pedata.cn")
-                    .header("Origin","chrome-extension://pjkgicchjgaacdbclmpmbhpkcipedjid")
-                    .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
-                    .data("param.loginName",user)
-                    .data("param.pwd",pwd)
-                    .data("param.iscs","true")
-                    .data("param.macaddress","9C-B6-D0-E6-8E-89,A4-4C-C8-10-B4-99,9C-B6-D0-E6-8E-8A")
-                    .data("param.language","zh_CN")
-                    .data("request_locale","zh_CN")
-                    .data("param.versions","{\"http_parser\":\"2.7.0\",\"node\":\"9.1.0\",\"v8\":\"6.2.414.42\",\"uv\":\"1.15.0\",\"zlib\":\"1.2.11\",\"ares\":\"1.13.0\",\"modules\":\"59\",\"nghttp2\":\"1.25.0\",\"openssl\":\"1.0.2m\",\"icu\":\"59.1\",\"unicode\":\"9.0\",\"nw\":\"0.26.6\",\"node-webkit\":\"0.26.6\",\"nw-commit-id\":\"b12ee45-2da8f18-05043ec-58095c1\",\"chromium\":\"62.0.3202.94\",\"platform\":\"win32\"}")
-                    .data("param.enmode","1")
-                    .method(Connection.Method.POST)
-                    .execute();
-            if(doc!=null&&doc.body().length()>50&&!doc.body().contains("abuyun")){
-                break;
+            try {
+                doc = Jsoup.connect("http://pe.pedata.cn/ajaxLoginMember.action")
+                        .userAgent(str[0])
+                        .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                        .header("Accept-Encoding", "gzip, deflate")
+                        .header("Accept-Language", "zh-CN,zh;q=0.9")
+                        .header("Host", "pe.pedata.cn")
+                        .header("Origin", "chrome-extension://pjkgicchjgaacdbclmpmbhpkcipedjid")
+                        .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                        .data("param.loginName", str[1])
+                        .data("param.pwd", str[2])
+                        .data("param.iscs", "true")
+                        .data("param.macaddress", str[3])
+                        .data("param.language", "zh_CN")
+                        .data("request_locale", "zh_CN")
+                        .data("param.versions", str[4])
+                        .data("param.enmode", "1")
+                        .timeout(5000)
+                        .method(Connection.Method.POST)
+                        .proxy(proxy)
+                        .execute();
+                if (doc != null && doc.body().length() > 50 && !doc.body().contains("abuyun")) {
+                    break;
+                }
+            }catch (Exception e){
+
             }
         }
         return doc.cookies();
     }
-    public Document jglist(String url,String page,Map<String,String> map) throws IOException, InterruptedException {
+    public Document jglist(String url,String page,Map<String,String> map,String begin,String end) throws IOException, InterruptedException {
         Thread.sleep(getran());
         Document doc = null;
         int q=0;
@@ -66,30 +72,31 @@ public class smt_utils {
                         .data("param.orderByField", "history_invest_count")
                         .data("param.search_type", "base")
                         .data("param.showInfo", "true")
-                        .data("param.search_type_check", "")
+                        .data("param.search_type_check", "ownerCheck,conditionsUl,")
                         .data("param.org_manage_capital_begin", "")
                         .data("param.org_manage_capital_end", "")
                         .data("param.orgBackground", "")
                         .data("param.org_record", "")
-                        .data("param.org_setup_date_begin", "yyyy-mm-dd")
-                        .data("param.org_setup_date_end", "yyyy-mm-dd")
+                        .data("param.org_setup_date_begin", begin)
+                        .data("param.org_setup_date_end", end)
+                        .data("param.org_setup_date_base_lable_id","自定义")
                         .data("param.fund_goal_money_us_begin", "")
                         .data("param.fund_goal_money_us_end", "")
                         .data("param.fund_record", "")
-                        .data("param.fund_setup_date_begin", "yyyy-mm-dd")
-                        .data("param.fund_setup_date_end", "yyyy-mm-dd")
+                        .data("param.fund_setup_date_begin", "")
+                        .data("param.fund_setup_date_end", "")
                         .data("param.epValue__start", "")
                         .data("param.epValue__end", "")
-                        .data("param.epSetupDate_begin", "yyyy-mm-dd")
-                        .data("param.epSetupDate_end", "yyyy-mm-dd")
+                        .data("param.epSetupDate_begin", "")
+                        .data("param.epSetupDate_end", "")
                         .data("param.invest_money_begin", "")
                         .data("param.invest_money_end", "")
                         .data("param.invest_stake_start", "")
                         .data("param.invest_stake_end", "")
                         .data("param.invest_enterprise_start", "")
                         .data("param.invest_enterprise_end", "")
-                        .data("param.invest_date_begin", "yyyy-mm-dd")
-                        .data("param.invest_date_end", "yyyy-mm-dd")
+                        .data("param.invest_date_begin", "")
+                        .data("param.invest_date_end", "")
                         .data("param.column", "0")
                         .data("param.column", "1")
                         .data("param.column", "2")
@@ -100,6 +107,7 @@ public class smt_utils {
                         .data("param.column", "12")
                         .data("param.currentPage", page)
                         .timeout(5000)
+                        .proxy(proxy)
                         .post();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;
@@ -116,7 +124,7 @@ public class smt_utils {
         return doc;
     }
 
-    public Document jjlist(String url,String page,Map<String,String> map) throws IOException, InterruptedException {
+    public Document jjlist(String url,String page,Map<String,String> map,String begin,String end) throws IOException, InterruptedException {
         Thread.sleep(getran());
         Document doc = null;
         int q=0;
@@ -136,12 +144,13 @@ public class smt_utils {
                         .data("param.orderByField", "fund_setup_date")
                         .data("param.search_type", "base")
                         .data("param.showInfo", "true")
-                        .data("param.search_type_check", "")
+                        .data("param.search_type_check", "ownerCheck,conditionsUl,")
                         .data("param.fund_goal_money_us_begin", "")
                         .data("param.fund_goal_money_us_end", "")
                         .data("param.fund_record", "")
-                        .data("param.fund_setup_date_begin", "")
-                        .data("param.fund_setup_date_end", "")
+                        .data("param.fund_setup_date_begin", begin)
+                        .data("param.fund_setup_date_end", end)
+                        .data("param.fund_setup_date_base_lable_id","自定义")
                         .data("param.fund_raise_date_start_begin", "")
                         .data("param.fund_raise_date_start_end", "")
                         .data("param.raise_complete_date_begin", "")
@@ -159,6 +168,7 @@ public class smt_utils {
                         .data("param.column", "12")
                         .data("param.currentPage", page)
                         .timeout(5000)
+                        .proxy(proxy)
                         .post();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;
@@ -235,6 +245,7 @@ public class smt_utils {
                         .data("param.column", "14")
                         .data("param.currentPage", page)
                         .timeout(5000)
+                        .proxy(proxy)
                         .post();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;
@@ -301,6 +312,7 @@ public class smt_utils {
                         .data("param.column", "10")
                         .data("param.currentPage", page)
                         .timeout(5000)
+                        .proxy(proxy)
                         .post();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;
@@ -333,6 +345,7 @@ public class smt_utils {
                         .header("Host", "pe.pedata.cn")
                         .cookies(map)
                         .timeout(5000)
+                        .proxy(proxy)
                         .get();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;
@@ -368,6 +381,7 @@ public class smt_utils {
                         .data("param.pageSize", "5")
                         .data("param.currentPage", page)
                         .timeout(5000)
+                        .proxy(proxy)
                         .post();
                 if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
                     break;

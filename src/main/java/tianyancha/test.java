@@ -1,3 +1,4 @@
+/*
 package tianyancha;
 
 import com.google.gson.Gson;
@@ -20,9 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
+*/
 /**
  * Created by Administrator on 2017/4/12.
- */
+ *//*
+
 public class test {
     // 代理隧道验证信息
     final static String ProxyUser = "H741D356Z4WO7V7D";
@@ -2089,7 +2092,8 @@ public class test {
 
 
 
-        /*Elements eleduiwaitouzi=getElements(doc,"div[ng-if=dataItemCount.inverstCount>0] table.table.companyInfo-table tbody tr.ng-scope");
+        */
+/*Elements eleduiwaitouzi=getElements(doc,"div[ng-if=dataItemCount.inverstCount>0] table.table.companyInfo-table tbody tr.ng-scope");
         if(eleduiwaitouzi!=null){
             for(Element e:eleduiwaitouzi){
                 String beitouziqiyeming=getString(e,"td span.ng-binding",0);
@@ -2101,11 +2105,13 @@ public class test {
                 String zhuangtai=getString(e,"td span.ng-binding",6);
                 System.out.println(beitouziqiyeming+"   "+beitouzifading+"    "+zhuceziben+"    "+touzishue+"   "+touzizhanbi+"   "+zhuceshijian+"   "+zhuangtai);
             }
-        }*/
+        }*//*
 
 
 
-        /*Elements elebiangeng=getElements(doc,"div[ng-if=items2.changeCount.show&&dataItemCount.changeCount>0] table.table.companyInfo-table tbody tr.ng-scope");
+
+        */
+/*Elements elebiangeng=getElements(doc,"div[ng-if=items2.changeCount.show&&dataItemCount.changeCount>0] table.table.companyInfo-table tbody tr.ng-scope");
         if(elebiangeng!=null){
             for(Element e:elebiangeng){
                 String biangengshijian=getString(e,"td:nth-child(1) div.ng-binding",0);
@@ -2114,7 +2120,8 @@ public class test {
                 String biangenghou=getString(e,"td:nth-child(4) div.textJustFy.changeHoverText.ng-binding",0);
                 System.out.println(biangengshijian+"    "+biangengxiangmu+"    "+biangengqian+"    "+biangenghou);
             }
-        }*/
+        }*//*
+
 
 
 
@@ -2205,3 +2212,4 @@ public class test {
         return ele;
     }
 }
+*/

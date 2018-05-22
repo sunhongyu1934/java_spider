@@ -75,7 +75,7 @@ public class souming {
                 @Override
                 public void run() {
                     try {
-                        sousuo(c, proxy, k);
+                        sousuo(c, proxy, k,finalCon);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -101,7 +101,7 @@ public class souming {
     }
 
     public static void data(Connection con,Keys k) throws SQLException, InterruptedException {
-        String sql="select  be_exited_name from spider.si_institution_exit_info";
+        String sql="select distinct be_exited_name from spider.si_institution_exit_info";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
         while (rs.next()){
@@ -111,7 +111,18 @@ public class souming {
         }
     }
 
-    public static void sousuo(Cang c,Proxy proxy,Keys k) throws IOException, InterruptedException {
+    public static boolean flagcomp(String key,Connection con) throws SQLException {
+        String sql="select id from si_company where quan_cheng='"+key+"'";
+        PreparedStatement ps=con.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        if(rs.next()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static void sousuo(Cang c,Proxy proxy,Keys k,Connection con) throws IOException, InterruptedException {
         int p=0;
         while (true) {
             try {
@@ -122,7 +133,7 @@ public class souming {
                 while (true) {
                     try {
                         doc = Jsoup.connect("http://www.pedata.cn/search/pedata_1_" + URLEncoder.encode(name, "UTF-8") + ".html")
-                                .header("Cookie", "userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=e4af27a8396968e1a3588a198bb13d18; JSESSIONID=702A01487FB608E4968B12A5E2C7A305; firstEnterUrlInSession=http%3A//www.pedata.cn/; VisitorCapacity=1; operatorId=31183; pageReferrInSession=https%3A//www.baidu.com/link%3Furl%3DV8-iHcGKs-QrNa5waom5pRgzbfwLT5jp65FXhC566Si%26wd%3D%26eqid%3D8b72cfb7000108ec00000003599f84cf; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1503570321,1503572515,1503574566,1503626453; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1503626458")
+                                .header("Cookie", "pageReferrInSession=http%3A//www.pedata.cn/auth_do/enter; firstEnterUrlInSession=http%3A//ep.pedata.cn/2773647053.html; VisitorCapacity=1; JSESSIONID=5F4B0115FDEE1DE2F3F4C201F5CDCCAC; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1518313515,1518317525; userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=44b35f5f978b7c77ce7f6ff5cc3a0e75; operatorId=31183; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1518317600")
                                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
                                 .ignoreContentType(true)
                                 .ignoreHttpErrors(true)
@@ -142,7 +153,11 @@ public class souming {
                     if (ele != null) {
                         for (Element e : elee) {
                             String url = getHref(e, "div.index_one_news_title a", "href", 0);
-                            c.fang(new String[]{url, gid});
+                            String quan=getString(e, "div.index_one_news_title a",0);
+                            System.out.println(url+"        "+ quan);
+                            if(flagcomp(quan,con)) {
+                                c.fang(new String[]{url, gid});
+                            }
                         }
                     }
                 }
@@ -167,7 +182,7 @@ public class souming {
                 while (true) {
                     try {
                         doc = Jsoup.connect(url)
-                                .header("Cookie", "JSESSIONID=209C959884DB0B85334D7EBD7A1662E9; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1518313515; userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=44b35f5f978b7c77ce7f6ff5cc3a0e75; operatorId=31183; pageReferrInSession=http%3A//www.pedata.cn/auth_do/enter; firstEnterUrlInSession=http%3A//ep.pedata.cn/2773647053.html; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1518313603; VisitorCapacity=1")
+                                .header("Cookie", "pageReferrInSession=http%3A//www.pedata.cn/auth_do/enter; firstEnterUrlInSession=http%3A//ep.pedata.cn/2773647053.html; VisitorCapacity=1; JSESSIONID=5F4B0115FDEE1DE2F3F4C201F5CDCCAC; Hm_lvt_787334dc3d58f9a34c5292796f0b9185=1518313515,1518317525; userName=%E5%BC%A0%E5%BC%80; userId=5CDAB65D-80E4-4108-B76E-271753FBAA2F; userStatus=%E8%BF%87%E6%9C%9F; userPsd=44b35f5f978b7c77ce7f6ff5cc3a0e75; operatorId=31183; Hm_lpvt_787334dc3d58f9a34c5292796f0b9185=1518317600")
                                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36")
                                 .ignoreContentType(true)
                                 .ignoreHttpErrors(true)

@@ -1,6 +1,6 @@
+/*
 package redis;
 
-import tianyancha.XinxiXin.TYCProducer;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.DriverManager;
@@ -8,9 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+*/
 /**
  * Created by Administrator on 2017/7/3.
- */
+ *//*
+
 public class chuli {
     public static void main(String args[]) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, UnsupportedEncodingException {
         String driver1="com.mysql.jdbc.Driver";
@@ -31,7 +33,8 @@ public class chuli {
         }
         TYCProducer ty=new TYCProducer("bs_tyc_search","10.44.158.42:9092,10.44.137.192:9092,10.44.143.200:9092,10.44.155.195:9092");
         int a=0;
-        /*String sql="select t_id from tyc_information";
+        */
+/*String sql="select t_id from tyc_information";
         PreparedStatement ps=con.prepareStatement(sql);
         ResultSet rs=ps.executeQuery();
 
@@ -60,8 +63,10 @@ public class chuli {
             redisAction.setAllInfoCompanyId(tid,"name");
             a++;
             System.out.println(a+"*******************************************************************************");
-        }*/
-        /*RedisAction redisAction = new RedisAction("a026.hb2.innotree.org", 6379);
+        }*//*
+
+        */
+/*RedisAction redisAction = new RedisAction("a026.hb2.innotree.org", 6379);
         int q=0;
         for(int x=1;x<=330;x++) {
             String sql4 = "select tyc_id,company_name from key_company_qygx limit "+q+",10000";
@@ -75,7 +80,8 @@ public class chuli {
                 System.out.println(a + "********************************************************************************************************");
             }
             q=q+10000;
-        }*/
+        }*//*
+
 
         int p=0;
         for(int x=1;x<=15;x++) {
@@ -94,3 +100,4 @@ public class chuli {
        // ty.close();
     }
 }
+*/

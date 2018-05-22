@@ -1,6 +1,7 @@
 package App;
 
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -113,6 +114,8 @@ public class wansousuo {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (DocumentException e) {
                         e.printStackTrace();
                     }
                 }
