@@ -27,7 +27,7 @@ public class imgduibi {
              * 从左至右扫描
              */
             boolean flag = false;
-            for (int i = 0; i < width1; i++) {
+            for (int i = 55; i < width1; i++) {
                 for (int j = 0; j < height1; j++)
                     if (isPixelNotEqual(image1, image2, i, j)) {
                         left = i;

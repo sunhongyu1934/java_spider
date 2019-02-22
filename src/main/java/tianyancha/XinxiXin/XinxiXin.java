@@ -126,7 +126,7 @@ public class XinxiXin {
             });
         }
 
-        Thread txin=new Thread(new Runnable() {
+        /*Thread txin=new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -143,9 +143,9 @@ public class XinxiXin {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
-        txin.start();
+        //txin.start();
 
         Thread tconip=new Thread(new Runnable() {
             @Override
@@ -320,7 +320,7 @@ public class XinxiXin {
                     break;
                 }
                 doc = detailget("https://www.tianyancha.com/search?key=" + URLEncoder.encode(key, "utf-8") + "&checkFrom=searchBox");
-                Elements eles = getElements(doc, "div.search_result_single.search-2017.pb25.pt25.pl30.pr30 div.search_right_item");
+                Elements eles = getElements(doc, "div.result-list div.search-result-single");
 
                 int p=0;
                 boolean ff=false;
@@ -330,12 +330,14 @@ public class XinxiXin {
                 String zs=null;
                 if (eles != null) {
                     for (Element e : eles) {
-                        String url = getHref(e, "a", "href", 0).replace(" ", "").trim();
-                        String cname = getString(e, "a", 0).replace(" ", "").trim();
-                        String souyin= JsoupUtils.getString(e,"div[class=add] span.sec-c3",0);
-                        String vv=JsoupUtils.getString(e,"div[class=add] span.overflow-width.over-hide.vertical-bottom.in-block",0);
-                        String zhuzi=JsoupUtils.getString(e,"div.title.overflow-width:contains(注册资本) span",0);
-                        String zhushi=JsoupUtils.getString(e,"div.title.overflow-width:contains(注册时间) span",0);
+                        String url = getHref(e, "div.content div.header a", "href", 0).replace(" ", "").trim();
+                        String cname = getString(e, "div.content div.header a", 0).replace(" ", "").trim();
+                        String souyin= JsoupUtils.getString(e,"div.match.text-ellipsis span.label",0)!=null
+                                ?JsoupUtils.getString(e,"div.match.text-ellipsis span.label",0).replace("：","")
+                                :null;
+                        String vv=JsoupUtils.getString(e,"div.match.text-ellipsis span",1);
+                        String zhuzi=JsoupUtils.getString(e,"div.title.text-ellipsis:containsOwn(注册资本) span",0);
+                        String zhushi=JsoupUtils.getString(e,"div.title.text-ellipsis:containsOwn(成立日期) span",0);
 
                         p++;
                         if(p==1){
@@ -374,7 +376,7 @@ public class XinxiXin {
                 String cname = URLEncoder.encode(value[1], "UTF-8");
                 String tid = url.replace("https://www.tianyancha.com/company/", "");
                 Document doc = detailget(url);
-                String quancheng=getString(doc,"div.company_header_width.ie9Style h1.f18.mt0.mb0.in-block.vertival-middle.sec-c2",0);
+                String quancheng=getString(doc,"div.content div.header h1.name",0);
                 if(StringUtils.isEmpty(quancheng)){
                     continue;
                 }

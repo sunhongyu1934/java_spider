@@ -198,5 +198,14 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.id:create-id:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/CreateId-jar-with-dependencies.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

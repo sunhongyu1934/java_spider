@@ -147,6 +147,7 @@ public class cyb_tzsj {
                 System.out.println("time out detail");
             }
         }
+
         System.out.println("request detail success and begin store data");
         storedata(con, doc, url);
         System.out.println("insert mysql success");
@@ -177,7 +178,7 @@ public class cyb_tzsj {
 
 
     public static void parse(Document doc,String detailurl,PreparedStatement ps1,PreparedStatement ps2,PreparedStatement ps3,PreparedStatement ps4,PreparedStatement ps5,PreparedStatement ps6,Connection con) throws SQLException {
-        String cid=detailurl.split("/",6)[3]+"-"+detailurl.split("/",6)[4]+"-"+detailurl.split("/",6)[5].replace(".html","");
+        String cid=detailurl.split("/", 5)[4].replace(".html","");
         String name=getString(doc,"div.top-info.clearfix div.ti-left.pull-left li.name",0);
         String fullname=getString(doc,"div.top-info.clearfix div.ti-left.pull-left li.time",0).replace("公司全称：","");
         String logo=getHref(doc,"div.top-info.clearfix div.ti-left.pull-left div.tl-img-bar img","src",0);

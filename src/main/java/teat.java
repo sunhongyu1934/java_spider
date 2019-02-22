@@ -1,3 +1,4 @@
+import Utils.Producer;
 import com.google.gson.Gson;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
@@ -8,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.dom4j.DocumentException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
@@ -37,24 +39,10 @@ import java.util.concurrent.Executors;
  * Created by Administrator on 2017/3/6.
  */
 public class teat {
-    private static Logger logger1 = Logger.getLogger("loggercool");
-    public static void main(String args[]) throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, InterruptedException {
-        int x=0;
-        ExecutorService pool=Executors.newFixedThreadPool(1);
-        for(int i=1;i<=2;i++) {
-            final int finalX = x;
-            pool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Data(finalX);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            x=x+30000;
-        }
+   private static Logger logger1 = Logger.getLogger("loggercool");
+    public static void main(String args[]) throws IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, InterruptedException, DocumentException {
+        Producer producer=new Producer(false);
+        producer.send("aaa","test");
     }
 
     public static void Data(int x) throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, InterruptedException, IOException {

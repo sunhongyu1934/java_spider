@@ -31,11 +31,14 @@ public class test {
         this.proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
     }
     public static void main(String args[]) throws IOException {
-        Document doc=Jsoup.connect("https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=57095150_2_oem_dg&wd=ip&rsv_pq=f1aefae100040db2&rsv_t=daed6GQC7sE%2BVugjVOxR%2FdpUQuf0RsA3TR7jwgfg1cPyeHAUfP5JG4JT0kR2DK62FW6rIlUs2KI&rqlang=cn&rsv_enter=1&rsv_sug3=8&rsv_sug1=9&rsv_sug7=100&rsv_sug2=0&inputT=4150&rsv_sug4=4151")
-                .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
-                .timeout(5000)
-                .get();
-
+        for(int a=0;a<=300;a++) {
+            Document doc = Jsoup.connect("http://172.17.107.56:8081/java_web/PatentCount")
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+                    .data("comp_id", "10000071910987229150\n")
+                    .timeout(10000)
+                    .post();
+            System.out.println(doc.outerHtml());
+        }
     }
 
 

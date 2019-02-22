@@ -1,6 +1,7 @@
 package caipanwenshu;
 
 import Utils.Dup;
+import Utils.RedisClu;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -22,31 +23,36 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class spider {
-    // 代理隧道验证信息
-     static String ProxyUser;
-     static String ProxyPass;
-
-    // 代理服务器
-    final static String ProxyHost = "proxy.abuyun.com";
-    final static Integer ProxyPort = 9020;
-    private static Proxy proxy;
-
-    public spider(String user,String pass){
-        ProxyUser=user;
-        ProxyPass=pass;
-        Authenticator.setDefault(new Authenticator() {
-            public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(ProxyUser, ProxyPass.toCharArray());
+    private static Ca c=new Ca();
+    public static void getip() throws IOException, InterruptedException {
+        RedisClu rd=new RedisClu();
+        while (true) {
+            try {
+                String ip=rd.get("ip");
+                c.fang(ip);
+                System.out.println(c.po.size()+"    ip***********************************************");
+                Thread.sleep(4000);
+            }catch (Exception e){
+                Thread.sleep(1000);
+                System.out.println("ip wait");
             }
-        });
-        proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ProxyHost, ProxyPort));
-
+        }
     }
 
+    public static void conip() throws InterruptedException {
+        while (true){
+            if(c.po.size()>=10) {
+                c.qu();
+            }
+            Thread.sleep(1000);
+        }
+    }
     public Document serach(String page,String type) throws IOException, ScriptException, NoSuchMethodException {
         Map<String,String> map=getcookie();
         Map<String,String> map1=getvlk(map.get("vjkl5"));
@@ -54,6 +60,7 @@ public class spider {
         Document doc= null;
         while (true) {
             try {
+                String ip=c.qu();
                 doc = Jsoup.connect("http://wenshu.court.gov.cn/List/ListContent")
                         .header("Accept", "*/*")
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
@@ -74,11 +81,16 @@ public class spider {
                         .data("number", map2.get("number"))
                         .header("Cookie", "vjkl5=" + map.get("vjkl5")+";")
                         .ignoreContentType(true)
-                        .proxy(proxy)
+                        .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
                         .ignoreHttpErrors(true)
                         .timeout(5000)
                         .post();
-                if(doc!=null&&!doc.outerHtml().contains("abuyun")&&doc.outerHtml().length()>46&&!doc.outerHtml().contains("remind key")){
+                if(doc!=null&&!doc.outerHtml().contains("abuyun")&&doc.outerHtml().length()>46&&!doc.outerHtml().contains("remind key")&&!doc.outerHtml().contains("too many request")){
+                    if (!c.po.contains(ip)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(ip);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -92,6 +104,7 @@ public class spider {
         Document doc;
         while (true){
             try {
+                String ip=c.qu();
                 doc = Jsoup.connect("http://wenshu.court.gov.cn/CreateContentJS/CreateContentJS.aspx?DocID="+did)
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
                         .header("Accept", "text/javascript, application/javascript, */*")
@@ -100,10 +113,15 @@ public class spider {
                         .header("Host", "wenshu.court.gov.cn")
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
-                        .proxy(proxy)
+                        .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
                         .timeout(3000)
                         .get();
-                if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")) {
+                if (doc != null && doc.outerHtml().length() > 50 && !doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("too many request")) {
+                    if (!c.po.contains(ip)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(ip);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -118,6 +136,7 @@ public class spider {
         Document doc=null;
         while (true) {
             try {
+                String ip=c.qu();
                 doc=Jsoup.connect("http://wenshu.court.gov.cn/ValiCode/GetCode")
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
                         .header("Accept", "*/*")
@@ -129,11 +148,16 @@ public class spider {
                         .header("Referer", "http://wenshu.court.gov.cn/List/List?sorttype=1&conditions=searchWord+5+AJLX++%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E6%89%A7%E8%A1%8C%E6%A1%88%E4%BB%B6")
                         .ignoreHttpErrors(true)
                         .data("guid", guid)
-                        .proxy(proxy)
+                        .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
                         .ignoreContentType(true)
                         .timeout(5000)
                         .get();
-                if(doc!=null&&!doc.outerHtml().contains("abuyun")&&doc.outerHtml().length()>46&&!doc.outerHtml().contains("null")){
+                if(doc!=null&&!doc.outerHtml().contains("abuyun")&&doc.outerHtml().length()>46&&!doc.outerHtml().contains("null")&&!doc.outerHtml().contains("too many request")){
+                    if (!c.po.contains(ip)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(ip);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -149,6 +173,7 @@ public class spider {
         Connection.Response response=null;
         while (true) {
             try {
+                String ip=c.qu();
                 response = Jsoup.connect("http://wenshu.court.gov.cn/List/List?sorttype=1&conditions=searchWord+5+AJLX++%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E6%89%A7%E8%A1%8C%E6%A1%88%E4%BB%B6")
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
                         .ignoreContentType(true)
@@ -160,9 +185,14 @@ public class spider {
                         .ignoreHttpErrors(true)
                         .method(Connection.Method.GET)
                         .timeout(5000)
-                        .proxy(proxy)
+                        .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
                         .execute();
-                if(response!=null&&!response.body().contains("abuyun")&&response.cookies()!=null&&response.cookies().size()>0&&Dup.nullor(response.cookies().get("vjkl5"))&&response.body().length()>46){
+                if(response!=null&&!response.body().contains("abuyun")&&response.cookies()!=null&&response.cookies().size()>0&&Dup.nullor(response.cookies().get("vjkl5"))&&response.body().length()>46&&!response.body().contains("too many request")){
+                    if (!c.po.contains(ip)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(ip);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -213,5 +243,15 @@ public class spider {
         }
 
         return map;
+    }
+
+    public static class Ca{
+        BlockingQueue<String> po=new LinkedBlockingQueue<>();
+        public void fang(String key) throws InterruptedException {
+            po.put(key);
+        }
+        public String qu() throws InterruptedException {
+            return po.take();
+        }
     }
 }

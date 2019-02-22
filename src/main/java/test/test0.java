@@ -106,6 +106,7 @@ public class test0 {
             }
             driver.switchTo().window(handles2);
         }
+
         /*BufferedImage inputbig = createElementImage(driver,element);
         ImageIO.write(inputbig, "png", new File("C:\\Users\\Administrator\\Desktop\\aaa\\a8.png"));*/
 

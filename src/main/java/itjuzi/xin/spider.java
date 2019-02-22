@@ -114,15 +114,16 @@ public class spider {
         });
         thread1.start();
         String day=args[0];
+        String page=args[1];
         map=login();
-        controller(day);
+        controller(day,page);
     }
 
-    public static void controller(String day) throws IOException, SQLException, ParseException {
+    public static void controller(String day,String page) throws IOException, SQLException, ParseException {
         Date dates=new Date();
         long ti=dates.getTime()-(Long.parseLong(day)*24*60*60*1000);
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        for(int a=4;a<=100;a++){
+        for(int a=Integer.parseInt(page);a<=100;a++){
             try {
                 String json = serach(String.valueOf(a));
                 JSONObject jsonObject = new JSONObject(json);
@@ -360,6 +361,11 @@ public class spider {
                         .timeout(3000)
                         .get();
                 if(doc!=null&&doc.outerHtml().length()>46){
+                    if (!c.po.contains(proxyIpAndPort)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(proxyIpAndPort);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -390,6 +396,11 @@ public class spider {
                         .proxy(proxyIpAndPort.split(":")[0], Integer.parseInt(proxyIpAndPort.split(":")[1]))
                         .get();
                 if(doc!=null&&doc.outerHtml().length()>100){
+                    if (!c.po.contains(proxyIpAndPort)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(proxyIpAndPort);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
@@ -425,11 +436,17 @@ public class spider {
                         .ignoreContentType(true)
                         .timeout(3000)
                         .execute();
+                System.out.println(doc.body());
                 if(doc!=null&&!doc.body().contains("abuyun")&&doc.cookies().size()>2){
+                    if (!c.po.contains(proxyIpAndPort)) {
+                        for (int x = 1; x <= 10; x++) {
+                            c.fang(proxyIpAndPort);
+                        }
+                    }
                     break;
                 }
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
         System.out.println(doc.cookies());

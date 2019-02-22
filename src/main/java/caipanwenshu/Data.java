@@ -37,7 +37,6 @@ public class Data {
                 }
             }
         }
-        conn=con;
 
         String driver2="org.apache.hive.jdbc.HiveDriver";
         String url2="jdbc:hive2://10.64.14.69:10000/dw_online?useSSL=false&autoReconnect=true";

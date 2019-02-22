@@ -18,7 +18,7 @@ public class send_mail {
     public static void send(String html) throws MessagingException, UnsupportedEncodingException {
         Properties prop=new Properties();
         prop.setProperty("mail.host","smtp.mxhichina.com");
-        prop.setProperty("mail.trabsport.protocol","smtp");
+        prop.setProperty("mail.transport.protocol","smtp");
         prop.setProperty("mail.smtp.auth","true");
         prop.setProperty("mail.smtp.port", "465");
         prop.setProperty("mail.smtp.socketFactory.port", "465");

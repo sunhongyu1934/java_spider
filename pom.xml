@@ -213,11 +213,19 @@
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/jai-imageio-1.1.jar</systemPath>
     </dependency>
+
+    <dependency>
+      <groupId>org.id</groupId>
+      <artifactId>create-id</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/CreateId-jar-with-dependencies.jar</systemPath>
+    </dependency>
   </dependencies>
 
 
   <build>
-    <finalName>tyc_zl</finalName>
+    <finalName>testjiyan</finalName>
     <plugins>
 
       <plugin>
@@ -229,7 +237,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>tianyancha.XinxiXin.XinxiXin</mainClass>
+              <mainClass>test.jiyan.testjiyan</mainClass>
             </manifest>
           </archive>
         </configuration>

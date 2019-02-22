@@ -10,15 +10,11 @@ public class RedisClu {
     private static JedisCluster cluster;
     static{
         Set<HostAndPort> nodes = new HashSet<>();
-        nodes.add(new HostAndPort("172.29.237.209", 7000));
-        nodes.add(new HostAndPort("172.29.237.209", 7001));
-        nodes.add(new HostAndPort("172.29.237.209", 7002));
-        nodes.add(new HostAndPort("172.29.237.214", 7003));
-        nodes.add(new HostAndPort("172.29.237.214", 7004));
-        nodes.add(new HostAndPort("172.29.237.214", 7005));
-        nodes.add(new HostAndPort("172.29.237.215", 7006));
-        nodes.add(new HostAndPort("172.29.237.215", 7007));
-        nodes.add(new HostAndPort("172.29.237.215", 7008));
+        nodes.add(new HostAndPort("10.64.5.13", 7001));
+        nodes.add(new HostAndPort("10.64.5.14", 7001));
+        nodes.add(new HostAndPort("10.64.9.3", 7001));
+        nodes.add(new HostAndPort("10.64.9.4", 7001));
+        nodes.add(new HostAndPort("10.64.9.13", 7001));
         cluster=new JedisCluster(nodes);
     }
     public String get(String key){
@@ -47,5 +43,9 @@ public class RedisClu {
 
     public void removeset(String key,String value){
         cluster.srem(key,value);
+    }
+
+    public boolean getExists(String key){
+        return cluster.exists(key);
     }
 }

@@ -256,36 +256,41 @@ public class Tyc_quan {
 
     public void jichu(Document doc, String tid, String cname, String zz, String zs) throws SQLException, ParseException, IOException, InterruptedException, DocumentException {
         Document doc2=doc;
-        String quancheng = getString(doc2, "div.company_header_width.ie9Style h1.f18.mt0.mb0.in-block.vertival-middle.sec-c2", 0);
+        String quancheng=getString(doc2,"div.content div.header h1.name",0);
         if(StringUtils.isEmpty(quancheng)){
             System.out.println(doc2);
         }
-        String ceng = getString(doc2, "div.historyName45Bottom.position-abs.new-border.pl8.pr8.pt4.pb4", 0);
-        String phone = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(电话) span", 1);
-        String email = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(邮箱) span", 1);
-        String web = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(网址) a", 0);
-        String address = getString(doc2, "div.f14.sec-c2 div.in-block.vertical-top:contains(地址) span", 1);
-        String logo = getHref(doc2, "div.b-c-white.over-hide.mr10.ie9Style img", "src", 0);
-        String zhucezibe = getString(doc2, "div.new-border-bottom:contains(注册资本) div.pb10 div.baseinfo-module-content-value", 0);
-        String zhuceshijia = getString(doc2, "div.new-border-bottom:contains(注册时间) div.pb10 div.baseinfo-module-content-value", 1);
-        String statu = getString(doc2, "div.pt10:contains(公司状态) div.baseinfo-module-content-value", 0);
-        String gongshang = getString(doc2, "div.base0910 table tbody td", 1);
-        String zuzhijigou = getString(doc2, "div.base0910 table tbody td", 3);
-        String tongyixinyong = getString(doc2, "div.base0910 table tbody td", 6);
-        String qiyeleixing = getString(doc2, "div.base0910 table tbody td", 8);
-        String nashuiren = getString(doc2, "div.base0910 table tbody td", 10);
-        String hangye = getString(doc2, "div.base0910 table tbody td", 12);
-        String yingyeqixian = getString(doc2, "div.base0910 table tbody td", 14);
-        String hezhunriq = getString(doc2, "div.base0910 table tbody td", 16);
-        String dengjijiguan = getString(doc2, "div.base0910 table tbody td", 18);
-        String zhucedizhi = getString(doc, "div.base0910 table tbody td", 22).replace("附近公司","");
-        String yingming=getString(doc, "div.base0910 table tbody td", 20);
-        String jingyingfanwei = getString(doc, "div.base0910 table tbody td span.js-full-container.hidden", 0);
-        if(!Dup.nullor(jingyingfanwei)){
-            jingyingfanwei=getString(doc, "div.base0910 table tbody td span.js-full-container", 0);
-        }
-        String faren = getString(doc2, "div.in-block.vertical-top.pl15 div.f18.overflow-width a", 0);
+        String ceng = getString(doc2, "div.history-name-box.tag.tag-history-name.mr10 span.history-content", 0);
+        String phone = getString(doc2, "div.in-block:containsOwn(电话) span", 1);
+        String email = getString(doc2, "div.in-block:containsOwn(邮箱) span", 1);
+        String web = getString(doc2, "div.in-block:containsOwn(网址) a", 0);
+        String address = getString(doc2,"div.in-block:matches(地址.+)",0)!=null
+                ?getString(doc2,"div.in-block:matches(地址.+)",0).replace("附近公司","").replace("地址：","")
+                :null;
+        String address2 =doc2.select("div.in-block:matches(地址.+) span.pl5").toString()!=null
+                ?doc2.select("div.in-block:matches(地址.+) span.pl5").toString().replace("<span class=\"pl5\"><script type=\"text/html\">\"","")
+                .replace("\"</script><span class=\"link-click\" onclick=\"openAddressPopup(this)\">详情</span></span>","")
+                :null;
+        String logo = getHref(doc2, "div.logo.-w100 img", "data-src", 0);
+        String statu = getString(doc2, "td:containsOwn(公司状态) div.num-opening", 0);
+        String gongshang = getString(doc2, "td:containsOwn(工商注册号)+td", 0);
+        String zuzhijigou = getString(doc2, "td:containsOwn(组织机构代码)+td", 0);
+        String tongyixinyong = getString(doc2, "td:containsOwn(统一社会信用代码)+td", 0);
+        String qiyeleixing = getString(doc2, "td:containsOwn(公司类型)+td", 0);
+        String nashuiren = getString(doc2, "td:containsOwn(纳税人识别号)+td", 0);
+        String hangye = getString(doc2, "td:containsOwn(行业)+td", 0);
+        String yingyeqixian = getString(doc2, "td:containsOwn(营业期限)+td", 0);
+        String hezhunriq = getString(doc2, "td:containsOwn(核准日期)+td", 0);
+        String dengjijiguan = getString(doc2, "td:containsOwn(登记机关)+td", 0);
+        String zhucedizhi = getString(doc2, "td:containsOwn(注册地址)+td", 0).replace("附近公司","");
+        String yingming=getString(doc2, "td:containsOwn(英文名称)+td", 0);
+        String jingyingfanwei = getString(doc2, "td:containsOwn(经营范围)+td", 0).replace("...详情","");
+        String faren = getString(doc2, "div.humancompany div.name a", 0);
         String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
+        String shizi=getString(doc2, "td:containsOwn(实缴资本)+td", 0);
+        String canbao=getString(doc2, "td:containsOwn(参保人数)+td", 0);
+        String nazi=getString(doc2, "td:containsOwn(纳税人资质)+td", 0);
+
 
         /*String zhuceziben=zi(zhucezibe);
         String zhuceshijian=zi(zhuceshijia);
@@ -376,8 +381,15 @@ public class Tyc_quan {
         jsonObject.put("comp_bus_range",jingyingfanwei);
         jsonObject.put("comp_taxpayer_num",nashuiren);
         jsonObject.put("comp_opreat_status",statu);
-        jsonObject.put("comp_off_addr",address);
+        if(address.contains("... 详情")) {
+            jsonObject.put("comp_off_addr", address2);
+        }else{
+            jsonObject.put("comp_off_addr", address);
+        }
         jsonObject.put("comp_industry",hangye);
+        jsonObject.put("taypayer_quality",nazi);
+        jsonObject.put("insured_num",canbao);
+        jsonObject.put("comp_sub_capital",shizi);
         jsonObject.put("rowkey","comp_full_name+comp_full_name###familyname");
         jsonObject.put("tablename","company_base_info");
         jsonObject.put("familyname","tyc");
@@ -431,7 +443,6 @@ public class Tyc_quan {
         jsonObject6.put("tablename","company_web");
         jsonObject6.put("familyname","tyc");
 
-
         producer.send("ControlTotal",jsonObject.toString());
         producer.send("ControlTotal",jsonObject1.toString());
         producer.send("ControlTotal",jsonObject2.toString());
@@ -474,7 +485,7 @@ public class Tyc_quan {
             for(Element e:zele){
                 try {
                     String zhiwu = getString(e, "td", 2);
-                    String ming = getString(e, "td", 1).split(" ")[0];
+                    String ming = getString(e, "td a", 0);
 
                 /*checkPs(ps2,sql2);
 
@@ -502,7 +513,7 @@ public class Tyc_quan {
     }
     public void duiwaitouzi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_invest div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n","").replace("\"","").replaceAll("[^0-9]","");;
+        String page=getString(doc2,"div#_container_invest div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -526,17 +537,14 @@ public class Tyc_quan {
             if (duiwai != null) {
                 for (Element e : duiwai) {
                     try {
-                        String gongsiming = getString(e, "td", 1);
-                        String gongsitid = getHref(e, "td a.query_name", "href", 0).replace("/company/", "");
-                        String beitouren = getString(e, "td", 2).split("他")[0];
-                        String beitourentid = getHref(e, "td span a.point.new-c4", "href", 0).replace("/human/", "");
-                        String zhuceziben = getString(e, "td", 3);
-                        String touzishue = getString(e, "td", 4);
-                        String touzizhanbi = getString(e, "td", 5);
-                        String zhuceshijian = getString(e, "td", 6);
-                        String zhuangtai = getString(e, "td", 7);
+                        String gongsiming = getString(e, "td", 3);
+                        String beitouren = getString(e, "td", 4).split("他")[0].split("她")[0];
+                        String zhuceziben = getString(e, "td", 5);
+                        String touzizhanbi = getString(e, "td", 6);
+                        String zhuceshijian = getString(e, "td", 7);
+                        String zhuangtai = getString(e, "td", 8);
 
-                        if (StringUtils.isNotEmpty(gongsiming)) {
+                        if (Dup.nullor(gongsiming)) {
                         /*checkPs(ps3,sql3);
 
                         ps3.setString(1, tid);
@@ -557,7 +565,6 @@ public class Tyc_quan {
                             jsonObject.put("comp_full_name", cname2);
                             jsonObject.put("invest_name", gongsiming);
                             jsonObject.put("invest_comp_id", "createid=invest_name");
-                            jsonObject.put("invest_amount", touzishue);
                             jsonObject.put("invest_rate", touzizhanbi);
                             jsonObject.put("regist_date", zhuceshijian);
                             jsonObject.put("regist_amount", zhuceziben);
@@ -578,7 +585,7 @@ public class Tyc_quan {
 
     public void biangeng(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_changeinfo div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_changeinfo div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -641,7 +648,7 @@ public class Tyc_quan {
 
     public void fenzhi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_branch div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_branch div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -684,7 +691,7 @@ public class Tyc_quan {
 
     public void gudong(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_holder div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
+        String page=getString(doc2,"div#_container_holder div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -711,7 +718,7 @@ public class Tyc_quan {
             if(gele!=null){
                 for(Element e:gele){
                     try {
-                        String guming = getString(e, "td", 1).split(" ")[0];
+                        String guming = getString(e, "div.dagudong a", 0);
                         String gtid = getHref(e, "a.in-block.vertival-middle.overflow-width", "href", 0).replace("/human/", "").replace("/company/", "");
                         String bili = getString(e, "td", 2);
                         String renjiao = getString(e, "td", 3).replace("\n", "").replace(" ", "");
@@ -787,7 +794,7 @@ public class Tyc_quan {
 
     public void hexin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_teamMember div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
+        String page=getString(doc2,"div#_container_teamMember div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -850,7 +857,7 @@ public class Tyc_quan {
 
     public void yewu(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_firmProduct div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_firmProduct div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -891,7 +898,7 @@ public class Tyc_quan {
 
     public void touzishi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_touzi div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_touzi div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -974,7 +981,7 @@ public class Tyc_quan {
 
     public void jingpin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_jingpin div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_jingpin div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1023,7 +1030,7 @@ public class Tyc_quan {
 
     public void susong(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_lawsuit div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_lawsuit div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1068,7 +1075,7 @@ public class Tyc_quan {
 
     public void fagong(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_court div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_court div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1089,13 +1096,33 @@ public class Tyc_quan {
             }
             if(gong!=null){
                 for(Element e:gong){
-                    String shijian=getString(e,"td",0);
-                    String shangsu=getString(e,"td",1);
-                    String beisu=getString(e,"td",2);
-                    String leixing=getString(e,"td",3);
-                    String fayuan=getString(e,"td",4);
+                    String json=e.select("td").get(6).toString().replace("<td><script type=\"text/html\">","").replace("</script><span class=\"link-click\" onclick=\"openPopup(this,&quot;modal/court&quot;)\">详情</span></td>","");
+                    JSONObject jsonObject=new JSONObject(json);
+                    String gongri=getValue(jsonObject,"publishdate");
+                    String shangsu=getValue(jsonObject,"party1");
+                    String beisu=getValue(jsonObject,"party2");
+                    String gonglei=getValue(jsonObject,"bltntypename");
+                    String fayuan=getValue(jsonObject,"courtcode");
+                    String neirong=getValue(jsonObject,"content");
 
-                    checkPs(ps13,sql13);
+                    String cname2 = URLDecoder.decode(cname, "utf-8");
+                    JSONObject jsonObject1=new JSONObject();
+                    jsonObject1.put("rowkey", "comp_full_name+comp_full_name###appellant_name###defendant_name###notice_date###notice_type###court_name###familyname");
+                    jsonObject1.put("tablename", "company_court_notice");
+                    jsonObject1.put("familyname", "tyc");
+                    jsonObject1.put("comp_full_name",cname2);
+                    jsonObject1.put("comp_id","createid=comp_full_name");
+                    jsonObject1.put("appellant_name",shangsu);
+                    jsonObject1.put("appellant_id","createid=appellant_name");
+                    jsonObject1.put("defendant_name",beisu);
+                    jsonObject1.put("defendant_id","createid=defendant_name");
+                    jsonObject1.put("notice_date",gongri);
+                    jsonObject1.put("notice_type",gonglei);
+                    jsonObject1.put("court_name",fayuan);
+                    jsonObject1.put("notice_content",neirong);
+                    producer.send("ControlTotal", jsonObject1.toString());
+
+                    /*checkPs(ps13,sql13);
 
                     ps13.setString(1,tid);
                     ps13.setString(2,shijian);
@@ -1103,7 +1130,7 @@ public class Tyc_quan {
                     ps13.setString(4,beisu);
                     ps13.setString(5,leixing);
                     ps13.setString(6,fayuan);
-                    ps13.executeUpdate();
+                    ps13.executeUpdate();*/
                 }
             }
         }
@@ -1111,7 +1138,7 @@ public class Tyc_quan {
 
     public void beizhixing(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_zhixing div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_zhixing div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1202,7 +1229,7 @@ public class Tyc_quan {
 
     public void xingchu(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_punish div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_punish div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1293,7 +1320,7 @@ public class Tyc_quan {
 
     public void guquan(Document doc,String tid,String cname) throws SQLException, IOException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_equity div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_equity div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1320,7 +1347,7 @@ public class Tyc_quan {
                         String dengjihao = getValue(jsonObject1, "regNumber");
                         String zhuang = getValue(jsonObject1, "state");
                         String shue = getValue(jsonObject1, "equityAmount");
-                        String churen = getValue(jsonObject1, "pledgorStr");
+                        String churen = getValue(jsonObject1, "pledgor");
                         String churenhao = getValue(jsonObject1, "certifNumberR");
                         String zhuquanren = Dup.nullor(getValue(jsonObject1, "pledgeeStr"))
                                 ? JsoupUtils.getString(Jsoup.parse(getValue(jsonObject1, "pledgeeStr")), "a", 0)
@@ -1390,7 +1417,7 @@ public class Tyc_quan {
 
     public void dongchan(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_mortgage div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_mortgage div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1479,7 +1506,7 @@ public class Tyc_quan {
 
     public void qianshui(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_towntax div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_towntax div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1524,7 +1551,7 @@ public class Tyc_quan {
 
     public void zhaotou(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_bid div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_bid div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1568,7 +1595,7 @@ public class Tyc_quan {
                         jsonObject.put("title_url", titlelian);
                         jsonObject.put("purchasing_unit", caigou);
                         jsonObject.put("Issue_date", shijian);
-                        jsonObject.put("rowkey", "comp_full_name+comp_full_name###bidd_title###familyname");
+                        jsonObject.put("rowkey", "comp_full_name+comp_full_name###title###familyname");
                         jsonObject.put("tablename", "company_bidding_news");
                         jsonObject.put("familyname", "tyc");
                         producer.send("ControlTotal", jsonObject.toString());
@@ -1582,7 +1609,7 @@ public class Tyc_quan {
 
     public void zhaiquan(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_bond div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_bond div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1625,7 +1652,7 @@ public class Tyc_quan {
 
     public void goudi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_purchaseland div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_purchaseland div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1668,7 +1695,7 @@ public class Tyc_quan {
 
     public void zhaopin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_recruit div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_recruit div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1759,7 +1786,7 @@ public class Tyc_quan {
 
     public void chanpin(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_product div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_product div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1781,8 +1808,8 @@ public class Tyc_quan {
             if(chan!=null){
                 for(Element e:chan){
                     try {
-                        String tubiao = getHref(e, "td img", "src", 0);
-                        String ming = getString(e, "td", 1);
+                        String tubiao = getHref(e, "td img", "data-src", 0);
+                        String ming = getString(e, "td", 2);
                         String jian = getString(e, "td", 2);
                         String fen = getString(e, "td", 3);
                         String lingyu = getString(e, "td", 4);
@@ -1822,7 +1849,7 @@ public class Tyc_quan {
 
     public void zizhi(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_qualification div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_qualification div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1867,7 +1894,7 @@ public class Tyc_quan {
 
     public void shang(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_tmInfo div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_tmInfo div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1889,12 +1916,12 @@ public class Tyc_quan {
             if(shang!=null){
                 for(Element e:shang){
                     try {
-                        String riqi = getString(e, "td", 0);
-                        String biao = getHref(e, "td img", "src", 0);
-                        String biaoming = getString(e, "td", 2);
-                        String zhuhao = getString(e, "td", 3);
-                        String leibie = getString(e, "td", 4);
-                        String zhuang = getString(e, "td", 5);
+                        String riqi = getString(e, "td", 1);
+                        String biao = getHref(e, "td img", "data-src", 0);
+                        String biaoming = getString(e, "td", 3);
+                        String zhuhao = getString(e, "td", 4);
+                        String leibie = getString(e, "td", 5);
+                        String zhuang = getString(e, "td", 6);
 
                         String cname2 = URLDecoder.decode(cname, "utf-8");
                         JSONObject jsonObject = new JSONObject();
@@ -1932,7 +1959,7 @@ public class Tyc_quan {
 
     public void zhuanli(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_patent div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_patent div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -1973,7 +2000,7 @@ public class Tyc_quan {
 
     public void zhuzuo(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div#_container_copyright div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2,"div#_container_copyright div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -2018,7 +2045,7 @@ public class Tyc_quan {
 
     public void beian(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2, "div#_container_icp div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "");
+        String page=getString(doc2, "div#_container_icp div.company_pager ul.pagination li:nth-last-child(2)",0);
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -2066,7 +2093,7 @@ public class Tyc_quan {
 
     public void gongzhonghao(Document doc,String tid,String cname) throws IOException, SQLException, InterruptedException {
         Document doc2=doc;
-        String page=getString(doc2,"div.wechat div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");;
+        String page=getString(doc2,"div.wechat div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -2135,8 +2162,9 @@ public class Tyc_quan {
     }
 
     public void ruanzhu(Document doc,String tid,String cname) throws SQLException, IOException, InterruptedException {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         Document doc2=doc;
-        String page=getString(doc2,"div.copyright div.total:contains(共)",0).replace("共","").replace("页","").replace(" ","").replace("\n", "").replace("\"","").replaceAll("[^0-9]","");
+        String page=getString(doc2,"div#_container_copyright div.company_pager ul.pagination li:nth-last-child(2)",0).replace("...","");
         if(StringUtils.isEmpty(page)){
             page="1";
         }
@@ -2157,24 +2185,27 @@ public class Tyc_quan {
                 }
             }
 
-            Elements ruele= JsoupUtils.getElements(doc,"div.copyright tbody tr");
+            Elements ruele= JsoupUtils.getElements(doc2,"div#_container_copyright tbody tr");
             if(x>=2){
                 ruele=getElements(doc2,"tbody tr");
             }
             if(ruele!=null){
                 for(Element e:ruele){
                     try {
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         String json = JsoupUtils.getElement(e, "td script", 0).toString().replace("<script type=\"text/html\">", "").replace("</script>", "");
                         JSONObject jsonObject1 = new JSONObject(json);
                         String ruanquan = getValue(jsonObject1, "fullname");
-                        String ruanjian = "";
+                        String ruanjian = getValue(jsonObject1,"simplename");
                         String fenhao = getValue(jsonObject1, "catnum");
                         String dengjihao = getValue(jsonObject1, "regnum");
                         String banben = getValue(jsonObject1, "version");
                         String zhuren = getValue(jsonObject1, "authorNationality");
-                        String shoufa = "";
-                        String dengri = "";
+                        String shoufa = Dup.nullor(getValue(jsonObject1,"publishtime"))
+                                ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"publishtime"))))
+                                :null;
+                        String dengri = Dup.nullor(getValue(jsonObject1,"regtime"))
+                                ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"regtime"))))
+                                :null;
                         try {
                             shoufa = simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1, "publishtime"))));
                         } catch (Exception ee) {

@@ -76,7 +76,7 @@ public class Detail {
     }
 
     public static void parse(String user,String pass) throws IOException, SQLException, DocumentException {
-        spider s=new spider(user,pass);
+        spider s=new spider();
         Producer producer=new Producer(false);
         while (true) {
             try {

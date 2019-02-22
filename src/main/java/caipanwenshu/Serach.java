@@ -63,6 +63,32 @@ public class Serach {
         });
         thread.start();
 
+        Thread thread1=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    spider.getip();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread1.start();
+
+        Thread thread2=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    spider.conip();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread2.start();
+
         pool.shutdown();
         while (true) {
             if (pool.isTerminated()) {
@@ -76,7 +102,7 @@ public class Serach {
     public static void parse(String user,String pass) throws IOException, SQLException, DocumentException {
         //String sql = "insert into adjude_document_list(case_title,case_num,judge_date,judge_organ,judge_stage,judge_reason,serach_key,document_id) values(?,?,?,?,?,?,?,?)";
         //PreparedStatement ps = Data.conn.prepareStatement(sql);
-        spider s=new spider(user,pass);
+        spider s=new spider();
         Producer producer=new Producer(false);
         while (true) {
             try {

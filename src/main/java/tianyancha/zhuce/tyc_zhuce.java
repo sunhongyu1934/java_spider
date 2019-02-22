@@ -69,6 +69,7 @@ public class tyc_zhuce {
     }
 
     public static void main(String args[]) throws IOException, InterruptedException, SQLException {
+        //getMob("4f992a349807b935bd62356e9f0ab68c");
         ExecutorService pool= Executors.newFixedThreadPool(10);
         for(int a=1;a<=10;a++) {
             pool.submit(new Runnable() {
@@ -76,10 +77,8 @@ public class tyc_zhuce {
                 public void run() {
                     String token = null;
                     try {
-                        token = getYanzheng();
+                        token = "4f992a349807b935bd62356e9f0ab68c";
                         zhuce(token);
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -94,17 +93,19 @@ public class tyc_zhuce {
         String json;
         while (true) {
             try {
-                Document doc = Jsoup.connect("http://api.eobzz.com/httpApi.do?action=loginIn&uid=fleashesee&pwd=shyinnotree123")
+                Document doc = Jsoup.connect("http://api.codedw.com/api/do.php?action=loginIn&name=fleashesee&password=shyinnotree123")
                         .ignoreContentType(true)
                         .ignoreHttpErrors(true)
-                        .timeout(3000)
-                        .get();
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+                        .timeout(5000)
+                        .post();
                 json = Dup.qujson(doc);
-                if(json.contains("fleashesee")){
+                System.out.println(json);
+                if(json.contains("1")){
                     break;
                 }
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
         return json.split("\\|")[1];
@@ -114,20 +115,72 @@ public class tyc_zhuce {
         String json;
         while (true) {
             try {
-                Document doc = Jsoup.connect("http://api.eobzz.com/httpApi.do?action=getMobilenum&pid=22859&uid=fleashesee&token=" + token + "&mobile=&size=1")
+                Document doc = Jsoup.connect("http://api.codedw.com/api/do.php?action=getPhone&token="+token+"&sid=22859")
                         .ignoreContentType(true)
                         .ignoreHttpErrors(true)
                         .timeout(20000)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
                         .get();
                 json = Dup.qujson(doc);
-                if(json.contains(token)){
+                System.out.println(json);
+                if(json.contains("1")){
                     break;
+                }else if(json.contains("因余额不足被限制取号一段时间")){
+                    Thread.sleep(60000);
                 }
             }catch (Exception e){
                 System.out.println("get phone error");
             }
         }
-        return json.split("\\|")[0];
+        return json.split("\\|")[1];
+    }
+
+    public static String getMob(String token,WebDriver driver) throws IOException {
+        String json;
+        while (true) {
+            try {
+                driver.get("http://api.codedw.com/api/do.php?action=getPhone&token="+token+"&sid=22859");
+                json = driver.getPageSource().split("<body>")[1].split("</body>")[0];;
+                System.out.println(json);
+                if(json.contains("1")){
+                    break;
+                }else if(json.contains("因余额不足被限制取号一段时间")){
+                    Thread.sleep(60000);
+                }
+            }catch (Exception e){
+                System.out.println("get phone error");
+            }
+        }
+        return json.split("\\|")[1];
+    }
+
+    public static String getMa(String token,String mob) throws IOException, InterruptedException {
+        String json;
+        int a=0;
+        while (true) {
+            try {
+                Thread.sleep(6000);
+                Document doc = Jsoup.connect("http://api.codedw.com/api/do.php?action=getMessage&token="+token+"&sid=22859&phone="+mob)
+                        .ignoreContentType(true)
+                        .ignoreHttpErrors(true)
+                        .timeout(20000)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+                        .get();
+                json = Dup.qujson(doc);
+                System.out.println(json);
+                if(json!=null&&json.contains("天眼查")){
+                    break;
+                }
+                a++;
+                if(a>=10){
+                    return "is null";
+                }
+            }catch (Exception e){
+                System.out.println("get ma error*************************************");
+                Thread.sleep(3000);
+            }
+        }
+        return json.split("\\|")[1];
     }
 
     public static String getMa(String token,String mob,WebDriver driver) throws IOException, InterruptedException {
@@ -136,12 +189,8 @@ public class tyc_zhuce {
         while (true) {
             try {
                 Thread.sleep(6000);
-                Document doc = Jsoup.connect("http://api.eobzz.com/httpApi.do?action=getVcodeAndReleaseMobile&uid=fleashesee&token=" + token + "&mobile=" + mob + "&author_uid=fleashesee")
-                        .ignoreContentType(true)
-                        .ignoreHttpErrors(true)
-                        .timeout(20000)
-                        .get();
-                json = Dup.qujson(doc);
+                driver.get("http://api.codedw.com/api/do.php?action=getMessage&token="+token+"&sid=22859&phone="+mob);
+                json = driver.getPageSource().split("<body>")[1].split("</body>")[0];
                 System.out.println(json);
                 if(json!=null&&json.contains("天眼查")){
                     break;
@@ -166,10 +215,12 @@ public class tyc_zhuce {
         ChromeOptions opiions=new ChromeOptions();
         opiions.addArguments("--start-maximized");
         Random random=new Random();
+        WebDriver driver2=new ChromeDriver();
+        WebDriver driver3=new ChromeDriver();
         WebDriver driver=new ChromeDriver(opiions);
         while (true) {
             try {
-                String mob=getMob(token);
+                String mob=getMob(token,driver2);
                 driver.manage().deleteAllCookies();
                 driver.get("https://www.tianyancha.com/login");
                 Thread.sleep(500);
@@ -179,7 +230,7 @@ public class tyc_zhuce {
                 driver.findElement(By.xpath("//div[contains(text(),'获取验证码')]")).click();
 
                 Thread.sleep(6000);
-                String yanzheng = getMa(token, mob,driver).replace("【天眼查】你好， 你的验证码是：", "").replace("，有效时间3分钟", "");
+                String yanzheng = getMa(token, mob,driver3).replace("【天眼查】你好， 你的验证码是：", "").replace("，有效时间3分钟", "");
                 if(yanzheng.equals("is null")) {
                     continue;
                 }

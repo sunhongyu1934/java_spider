@@ -5,6 +5,7 @@ import Utils.Dup;
 import Utils.JsoupUtils;
 import Utils.MD5Util;
 import Utils.RedisClu;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,21 +22,29 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import shuiwu.spider;
+import spiderKc.kcBean.Count;
 import tianyancha.yanzhengma.DownloadImgne;
 
 import javax.imageio.stream.FileImageInputStream;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.io.*;
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
+import java.net.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,6 +56,7 @@ import static Utils.JsoupUtils.getElements;
 import static Utils.JsoupUtils.getHref;
 import static Utils.JsoupUtils.getString;
 import static tianyancha.zhuce.tyc_zhuce.fileExist;
+import static tianyancha.zhuce.tyc_zhuce.zhuce;
 
 
 public class test {
@@ -84,22 +94,60 @@ public class test {
         conn=con;
 
     }
-    public static void main(String args[]) throws IOException, InterruptedException, SQLException {
-        String sql="select comp_full_name from temp_database.comp_mingdan_1000";
-        PreparedStatement ps=conn.prepareStatement(sql);
-        ResultSet rs=ps.executeQuery();
-        RedisClu rd=new RedisClu();
-        int a=0;
-        while (rs.next()){
-            String cname=rs.getString(rs.findColumn("comp_full_name"));
-            rd.set("comp_zl_test",cname);
-            a++;
-            System.out.println(a+"***************************************");
+
+
+
+    public static void main(String args[]) throws IOException, InterruptedException, SQLException, ScriptException, NoSuchMethodException {
+        Document doc2=Jsoup.parse(new File("C:\\Users\\13434\\Desktop\\a.txt"),"utf-8");
+        String ceng = getString(doc2, "div.history-name-box.tag.tag-history-name.mr10 span.history-content", 0);
+        String phone = getString(doc2, "div.in-block:containsOwn(电话) span", 1);
+        String email = getString(doc2, "div.in-block:containsOwn(邮箱) span", 1);
+        String web = getString(doc2, "div.in-block:containsOwn(网址) a", 0);
+        String address = getString(doc2,"div.in-block:matches(地址.+)",0)!=null
+                ?getString(doc2,"div.in-block:matches(地址.+)",0).replace("附近公司","").replace("地址：","")
+                :null;
+        String address2 =doc2.select("div.in-block:matches(地址.+) span.pl5").toString()!=null
+                ?doc2.select("div.in-block:matches(地址.+) span.pl5").toString().replace("<span class=\"pl5\"><script type=\"text/html\">\"","")
+                .replace("\"</script><span class=\"link-click\" onclick=\"openAddressPopup(this)\">详情</span></span>","")
+                :null;
+        String logo = getHref(doc2, "div.logo.-w100 img", "data-src", 0);
+        String statu = getString(doc2, "td:containsOwn(公司状态) div.num-opening", 0);
+        String gongshang = getString(doc2, "td:containsOwn(工商注册号)+td", 0);
+        String zuzhijigou = getString(doc2, "td:containsOwn(组织机构代码)+td", 0);
+        String tongyixinyong = getString(doc2, "td:containsOwn(统一社会信用代码)+td", 0);
+        String qiyeleixing = getString(doc2, "td:containsOwn(公司类型)+td", 0);
+        String nashuiren = getString(doc2, "td:containsOwn(纳税人识别号)+td", 0);
+        String hangye = getString(doc2, "td:containsOwn(行业)+td", 0);
+        String yingyeqixian = getString(doc2, "td:containsOwn(营业期限)+td", 0);
+        String hezhunriq = getString(doc2, "td:containsOwn(核准日期)+td", 0);
+        String dengjijiguan = getString(doc2, "td:containsOwn(登记机关)+td", 0);
+        String zhucedizhi = getString(doc2, "td:containsOwn(注册地址)+td", 0).replace("附近公司","");
+        String yingming=getString(doc2, "td:containsOwn(英文名称)+td", 0);
+        String jingyingfanwei = getString(doc2, "td:containsOwn(经营范围)+td", 0).replace("...详情","");
+        String faren = getString(doc2, "div.humancompany div.name a", 0);
+        String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
+        String shizi=getString(doc2, "td:containsOwn(实缴资本)+td", 0);
+        String canbao=getString(doc2, "td:containsOwn(参保人数)+td", 0);
+        String nazi=getString(doc2, "td:containsOwn(纳税人资质)+td", 0);
+        System.out.println(tongyixinyong);
+
+
+    }
+    public static JSONObject getValueArray(JSONArray jsonObject, int a){
+        try{
+            return jsonObject.getJSONObject(a);
+        }catch (Exception e){
+            return null;
         }
     }
 
-
-
+    public static JSONObject getValueObject(JSONObject jsonObject, String key){
+        try{
+            return jsonObject.getJSONObject(key);
+        }catch (Exception e){
+            return null;
+        }
+    }
 
 
     public static String getValue(JSONObject jsonObject,String key){

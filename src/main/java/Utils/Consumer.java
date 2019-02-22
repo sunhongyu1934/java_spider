@@ -17,7 +17,7 @@ public class Consumer {
     private final String topic;
 
     public Consumer(String topic, String group) throws FileNotFoundException, DocumentException {
-        String kafkacon="10.64.14.69:9092,10.64.14.70:9092,10.64.14.71:9092";
+        String kafkacon="172.29.238.18:9092,172.29.238.19:9092,172.29.238.20:9092,172.29.238.21:9092,172.29.238.22:9092,172.29.238.23:9092,172.29.238.24:9092,172.29.238.25:9092,172.29.238.26:9092,172.29.238.27:9092,172.29.238.28:9092,172.29.238.29:9092,172.29.238.30:9092";
         Properties props=new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,kafkacon);
         props.put(ConsumerConfig.GROUP_ID_CONFIG,group);

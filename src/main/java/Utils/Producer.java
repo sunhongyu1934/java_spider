@@ -15,7 +15,7 @@ public class Producer{
     private final Boolean isAsync;
 
     public Producer(Boolean isAsync) throws FileNotFoundException, DocumentException {
-        String kafkacon="10.64.14.69:9092,10.64.14.70:9092,10.64.14.71:9092";
+        String kafkacon="10.64.0.112:9092,10.64.0.113:9092,10.64.0.114:9092,10.64.0.115:9092,10.64.0.116:9092,10.64.0.117:9092,10.64.0.118:9092,10.64.0.119:9092,10.64.0.120:9092,10.64.0.121:9092,10.64.0.122:9092,10.64.0.123:9092,10.64.0.124:9092";
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkacon);
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "Spider");
