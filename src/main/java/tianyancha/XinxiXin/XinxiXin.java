@@ -1,34 +1,23 @@
 package tianyancha.XinxiXin;
 
 import Utils.Consumer;
-import Utils.Dup;
 import Utils.JsoupUtils;
 import Utils.RedisClu;
-import baidu.RedisAction;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.dom4j.DocumentException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import tianyancha.Guoxin.tyc_guoxin;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -504,7 +493,7 @@ public class XinxiXin {
                     }
                     if(doc.outerHtml().contains("我们只是确认一下你不是机器人")){
                         redisClu.removeset("tyc_cookie",cookie);
-                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")){
+                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")||doc.outerHtml().contains("请输入手机号")){
                         redisClu.removeset("tyc_cookie",cookie);
                     }else {
                         if(StringUtils.isEmpty(doc.outerHtml().replace("<html>", "").replace("<head></head>", "").replace("</body>", "").replace("<body>", "").replace("</html>", "").replace("\n", "").trim())||doc.outerHtml().contains("获取验证码")||doc.outerHtml().contains("访问拒绝")||doc.outerHtml().contains("abuyun")||doc.outerHtml().contains("Unauthorized")||doc.outerHtml().contains("访问禁止")||doc.outerHtml().contains("forbidden3.png")||doc.outerHtml().contains("500 Internal Server Error")){
@@ -559,7 +548,7 @@ public class XinxiXin {
                     }
                     if(doc.outerHtml().contains("我们只是确认一下你不是机器人")){
                         redisClu.removeset("tyc_cookie",cookie);
-                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")){
+                    }else if(doc.outerHtml().contains("你已在其他地点登录")||doc.outerHtml().contains("下次自动登录")||doc.outerHtml().contains("请输入手机号")){
                         redisClu.removeset("tyc_cookie",cookie);
                     }else {
                         break;
@@ -625,7 +614,7 @@ public class XinxiXin {
                     s = gson.fromJson(html, tongji.class);
                     if(html.contains("我们只是确认一下你不是机器人")){
                         redisClu.removeset("tyc_cookie",cookie);
-                    }else if(html.contains("你已在其他地点登录")||doc.body().contains("下次自动登录")){
+                    }else if(html.contains("你已在其他地点登录")||doc.body().contains("下次自动登录")||doc.body().contains("请输入手机号")){
                         redisClu.removeset("tyc_cookie",cookie);
                     }else {
                         break;
@@ -762,9 +751,13 @@ public class XinxiXin {
         RedisClu rd=new RedisClu();
         while (true) {
             try {
-                String ip=rd.get("ip");
-                c.fang(ip);
-                System.out.println(c.po.size()+"    ip***********************************************");
+                if(c.po.size()<=100) {
+                    Set<String> ip = rd.getZsetByKey("ip","0","19");
+                    for(String ss:ip){
+                        c.fang(ss);
+                    }
+                }
+                System.out.println(c.po.size() + "    ip***********************************************");
                 Thread.sleep(4000);
             }catch (Exception e){
                 Thread.sleep(1000);
@@ -775,10 +768,11 @@ public class XinxiXin {
 
     public static void conip() throws InterruptedException {
         while (true){
-            if(c.po.size()>=10) {
+            if(c.po.size()>=50) {
                 c.qu();
+            }else {
+                Thread.sleep(1000);
             }
-            Thread.sleep(1000);
         }
     }
 

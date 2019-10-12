@@ -86,11 +86,11 @@ public class bailu {
             JSONArray jsonArray=jsonObject.getJSONArray("Data");
             for(int a=0;a<jsonArray.length();a++){
                 JSONObject jsonObject1=jsonArray.getJSONObject(a);
-                String newid=Dup.getJsonValue(jsonObject1,"NewsId");
-                String title=Dup.getJsonValue(jsonObject1,"Title");
-                String tags=Dup.getJsonValue(jsonObject1,"Tags");
-                String fabu=Dup.getJsonValue(jsonObject1,"Auther");
-                String fari=Dup.getJsonValue(jsonObject1,"InsertDate");
+                String newid=Dup.getVa(jsonObject1,"NewsId");
+                String title= Dup.getVa(jsonObject1,"Title");
+                String tags=Dup.getVa(jsonObject1,"Tags");
+                String fabu=Dup.getVa(jsonObject1,"Auther");
+                String fari=Dup.getVa(jsonObject1,"InsertDate");
 
 
             }

@@ -1,12 +1,8 @@
 package baidu;
 
-import Utils.Dup;
-import Utils.JsoupUtils;
 import Utils.RedisClu;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import haosou.haosouBean;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -27,38 +23,22 @@ import org.dom4j.DocumentException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import spiderKc.kcBean.Count;
-import sun.nio.cs.ext.JIS_X_0212_Solaris;
-import tianyancha.XinxiXin.XinxiXin;
 import tianyancha.XinxiXin.tongji;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static Utils.JsoupUtils.*;
 import static tianyancha.XinxiXin.XinxiXin.suan;
-import static waiguo.crunc.de;
-import static waiguo.crunc.ren;
-import static waiguo.crunc.ss;
 
 /**
  * Created by Administrator on 2017/8/14.

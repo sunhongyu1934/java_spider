@@ -2,24 +2,15 @@ package tianyancha.yanzhengma;
 
 import Utils.Dup;
 import org.json.JSONObject;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import sun.misc.BASE64Decoder;
-import tianyancha.XinxiXin.XinxiXin;
 import tianyancha.XinxiXin.loginpool;
-import tianyancha.XinxiXin.send_mail;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
@@ -68,7 +59,7 @@ public class DownloadImgne {
                         .ignoreHttpErrors(true)
                         .ignoreContentType(true)
                         .data("username", "fleashese")
-                        .data("password", "849915")
+                        .data("password", "innotree_dama")
                         .data("softId", "61363")
                         .data("imgdata", da)
                         .post();

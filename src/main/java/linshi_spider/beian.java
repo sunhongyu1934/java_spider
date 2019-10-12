@@ -2,7 +2,6 @@ package linshi_spider;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
-import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +10,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.*;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;

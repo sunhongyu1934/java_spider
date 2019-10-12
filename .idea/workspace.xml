@@ -2,51 +2,83 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/main/java/linshi_spider/zhuanli.java" line="163" mnemonic="9" />
-    <bookmark url="file://$PROJECT_DIR$/src/test/java/java_spider/test2.java" line="29" />
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" line="236" />
+    <bookmark url="file://$PROJECT_DIR$/src/test/java/java_spider/test2.java" line="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" line="343" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5afb7449-6ebf-40fd-aa41-77ebe0c291b6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/Js/a.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Js/jiyan.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chuangxin/spider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/java_spider/Send_Redis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/java_spider/lagou.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/java_spider/redis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/java_spider/test2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jai_imageio_jai_imageio_core_1_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_lowagie_itext_2_1_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_lept4j_lept4j_1_10_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_tess4j_tess4j_4_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_pdfbox_fontbox_2_0_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_pdfbox_jbig2_imageio_3_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_pdfbox_pdfbox_2_0_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_pdfbox_pdfbox_debugger_2_0_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_pdfbox_pdfbox_tools_2_0_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlgraphics_xmlgraphics_commons_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ghost4j_ghost4j_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jboss_vfs_3_2_12_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_1_4_GA.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/chuangyebang/cyb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/java_orc/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/test/jiyan/sanjijietu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/login/Tyc_Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_2_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java_spider.iml" beforeDir="false" afterPath="$PROJECT_DIR$/java_spider.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/App/wandoujia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App/wandoujia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/App/zhaojiguang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App/zhaojiguang.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Utils/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utils/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Utils/Dup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utils/Dup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Utils/Producer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utils/Producer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Utils/RedisClu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Utils/RedisClu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/caipanwenshu/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/caipanwenshu/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/baidu/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/baidu/test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/caipanwenshu/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/caipanwenshu/Detail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/caipanwenshu/Serach.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/caipanwenshu/Serach.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/caipanwenshu/spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/caipanwenshu/spider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chuangxin/spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chuangxin/spider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsjzl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsjzl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chuangyebang/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chuangyebang/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/itjuzi/linshi/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/itjuzi/linshi/Tag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/itjuzi/xin/spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/itjuzi/xin/spider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/qiniu/linshi_qiniu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/qiniu/linshi_qiniu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/teat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/teat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/imgduibi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/imgduibi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/test0.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/test0.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/itjuzi/zl/itjz_l.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/itjuzi/zl/itjz_l.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/itjuzi/zl/list_zl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/itjuzi/zl/list_zl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/java_orc/ImagePreProcess3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/java_orc/ImagePreProcess3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/java_orc/OCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/java_orc/OCR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/java_orc/ocrtest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/java_orc/ocrtest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jinrong/cyp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jinrong/cyp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/linshi_spider/beian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/linshi_spider/beian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/linshi_spider/jiance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/linshi_spider/jiance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/linshi_spider/quanying.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/linshi_spider/quanying.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/linshi_spider/resouzhishu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/linshi_spider/resouzhishu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/qichacha/Modular.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/qichacha/Modular.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/shuiwu/spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/shuiwu/spider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simutong/xin_smt/smt_xin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simutong/xin_smt/smt_xin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/send_mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/send_mail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/send_redis.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/chuli/shuzi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/chuli/shuzi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/wecat/smallexe/bailu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/wecat/smallexe/bailu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/java_spider/lagou.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/java_spider/lagou.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/java_spider/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/java_spider/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/java_spider/test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/java_spider/test2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-java_spider.AppTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-java_spider.AppTest.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -62,34 +94,114 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="241" column="20" selection-start-line="241" selection-start-column="20" selection-end-line="241" selection-end-column="20" />
+            <state relative-caret-position="4484">
+              <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="42" column="68" selection-start-line="42" selection-start-column="68" selection-end-line="42" selection-end-column="68" />
+            <state relative-caret-position="7095">
+              <caret line="565" column="98" lean-forward="true" selection-start-line="565" selection-start-column="98" selection-end-line="565" selection-end-column="98" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5660#5670#0" expanded="true" />
-                <element signature="e#7838#7848#0" expanded="true" />
+                <marker date="1569404959225" expanded="true" signature="7950:7991" ph="select DISTI... tyc_seurl" />
+                <marker date="1569404959225" expanded="true" signature="8380:8425" ph="insert into tyc_key... " />
+                <marker date="1569404959225" expanded="true" signature="8506:8556" ph="select id fr... tyc_key" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/test/test0.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="108" selection-start-line="108" selection-end-line="108" />
+            <state relative-caret-position="240">
+              <caret line="1989" column="21" lean-forward="true" selection-start-line="1989" selection-start-column="21" selection-end-line="1989" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <marker date="1569382242010" expanded="true" signature="3544:3911" ph="insert into tyc_jichu_quan... " />
+                <marker date="1569382242010" expanded="true" signature="4041:4103" ph="insert into tyc_main... " />
+                <marker date="1569382242010" expanded="true" signature="4233:4320" ph="insert into tyc_gudongxin... " />
+                <marker date="1569382242010" expanded="true" signature="4450:4635" ph="insert into tyc_out_investment... " />
+                <marker date="1569382242010" expanded="true" signature="4765:4869" ph="insert into tyc_change_record... " />
+                <marker date="1569382242010" expanded="true" signature="4999:5111" ph="insert into tyc_branch_info... " />
+                <marker date="1569382242010" expanded="true" signature="5241:5399" ph="insert into tyc_financing_history... " />
+                <marker date="1569382242010" expanded="true" signature="5529:5618" ph="insert into tyc_core_team... " />
+                <marker date="1569382242010" expanded="true" signature="5748:5841" ph="insert into tyc_enterprise_business... " />
+                <marker date="1569382242010" expanded="true" signature="5972:6176" ph="insert into tyc_investment_event... " />
+                <marker date="1569382242010" expanded="true" signature="6309:6474" ph="insert into tyc_competing_information... " />
+                <marker date="1569382242010" expanded="true" signature="6607:6739" ph="insert into tyc_legal_proceedings... " />
+                <marker date="1569382242010" expanded="true" signature="6872:6974" ph="insert into tyc_court_notice... " />
+                <marker date="1569382242010" expanded="true" signature="7107:7199" ph="insert into tyc_person_subjected... " />
+                <marker date="1569382242010" expanded="true" signature="7331:7442" ph="insert into tyc_dishonest_person... " />
+                <marker date="1569382242010" expanded="true" signature="7575:7706" ph="insert into tyc_abnormal_operation... " />
+                <marker date="1569382242010" expanded="true" signature="7839:7978" ph="insert into tyc_administrative_sanction... " />
+                <marker date="1569382242010" expanded="true" signature="8111:8203" ph="insert into tyc_serious_violation... " />
+                <marker date="1569382242010" expanded="true" signature="8336:8446" ph="insert into tyc_stock_ownership... " />
+                <marker date="1569382242010" expanded="true" signature="8579:8714" ph="insert into tyc_chattel_mortgage... " />
+                <marker date="1569382242010" expanded="true" signature="8847:8961" ph="insert into tyc_tax_notice... " />
+                <marker date="1569382242010" expanded="true" signature="9093:9193" ph="insert into tyc_company_bidding... " />
+                <marker date="1569382242010" expanded="true" signature="9326:9432" ph="insert into tyc_bond_information... " />
+                <marker date="1569382242010" expanded="true" signature="9565:9679" ph="insert into tyc_purchase_information... " />
+                <marker date="1569382242010" expanded="true" signature="9810:9939" ph="insert into tyc_recruit_information... " />
+                <marker date="1569382242010" expanded="true" signature="10072:10174" ph="insert into tyc_tax_rating... " />
+                <marker date="1569382242010" expanded="true" signature="10307:10398" ph="insert into tyc_spot_check... " />
+                <marker date="1569382242010" expanded="true" signature="10531:10638" ph="insert into tyc_product_information... " />
+                <marker date="1569382242010" expanded="true" signature="10771:10907" ph="insert into tyc_qualification_certificate... " />
+                <marker date="1569382242010" expanded="true" signature="11040:11183" ph="insert into tyc_trademark_information... " />
+                <marker date="1569382242010" expanded="true" signature="11314:11417" ph="insert into tyc_patent_information... " />
+                <marker date="1569382242010" expanded="true" signature="11549:11686" ph="insert into tyc_copyright_information... " />
+                <marker date="1569382242010" expanded="true" signature="11819:11961" ph="insert into tyc_website_filing... " />
+                <marker date="1569382242010" expanded="true" signature="12095:12178" ph="insert into tyc_webcat... " />
+                <marker date="1569382242010" expanded="true" signature="12313:12412" ph="insert into tyc_ruanzhu... " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="121">
+              <caret line="58" column="24" lean-forward="true" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/login/Tyc_Login.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="52" column="55" lean-forward="true" selection-start-line="52" selection-start-column="55" selection-end-line="52" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/test/imgduibi.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="421">
+              <caret line="271" column="57" lean-forward="true" selection-start-line="271" selection-start-column="57" selection-end-line="271" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1000">
+              <caret line="188" column="21" lean-forward="true" selection-start-line="188" selection-start-column="21" selection-end-line="188" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -107,36 +219,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>110000450147982</find>
-      <find>地址</find>
-      <find>经营范围</find>
-      <find>黎万强</find>
-      <find>biangeng</find>
-      <find>_container_changeinfo</find>
-      <find>copyright</find>
-      <find>_container_copyright</find>
-      <find>Sys</find>
-      <find>shang</find>
-      <find>fayuan</find>
-      <find>gudong</find>
+      <find>biao</find>
+      <find>zhuanli</find>
+      <find>operator_status</find>
+      <find>statu</find>
+      <find>guquan</find>
+      <find>circle</find>
+      <find>ghostCircle</find>
+      <find>tree-container</find>
+      <find>svg</find>
+      <find>WebElements</find>
+      <find>cedb52cff53ade030241bc325c07f833</find>
+      <find>769, 382</find>
+      <find>beian</find>
+      <find>duiwaitouzi</find>
+      <find>duiwai</find>
+      <find>24064</find>
+      <find>window.UA_Opt</find>
+      <find>ua</find>
+      <find>xingchu</find>
+      <find>chanpin</find>
       <find>ruanzhu</find>
+      <find>hexin</find>
+      <find>junit</find>
+      <find>jna</find>
+      <find>tess4j</find>
+      <find>gudong</find>
       <find>dongchan</find>
-      <find>gongz</find>
-      <find>fagong</find>
-      <find>mail</find>
-      <find>172.31.215.38</find>
-      <find>System.out.println</find>
-      <find>positonlist</find>
-      <find>getList</find>
-      <find>jsoup</find>
-      <find>comp_reg_status</find>
-      <find>tyc_cookie</find>
-      <find>ajax</find>
-      <find>w</find>
-      <find>var w</find>
-      <find>validate</find>
-      <find>C:\\Users\\13434\\Desktop</find>
-      <find>\\\\</find>
+      <find>富仕通通信（深圳）有限公司</find>
+      <find>请输入手机号</find>
+      <find>serach</find>
     </findStrings>
     <replaceStrings>
       <replace>/data1/java_spider</replace>
@@ -149,57 +261,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/qichacha/Serach.java" />
-        <option value="$PROJECT_DIR$/src/main/java/qichacha/spider.java" />
-        <option value="$PROJECT_DIR$/src/main/java/qichacha/Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/qichacha/Modular.java" />
-        <option value="$PROJECT_DIR$/src/main/java/qichacha/Detail.java" />
-        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Yanzhengma.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java" />
-        <option value="$PROJECT_DIR$/src/main/java/shuiwu/yanzhengma.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/caipanwenshu/getkey.js" />
-        <option value="$PROJECT_DIR$/src/main/java/shuiwu/spider.java" />
-        <option value="$PROJECT_DIR$/src/main/java/shuiwu/spider_list.java" />
-        <option value="$PROJECT_DIR$/src/main/java/App/wansousuo.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/caipanwenshu/detail.js" />
-        <option value="$PROJECT_DIR$/src/main/java/App/wandoujia.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/itjz/itjz.js" />
-        <option value="$PROJECT_DIR$/src/main/java/itjuzi/zl/itjz_l.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/send_redis.java" />
-        <option value="$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java" />
-        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Detail.java" />
-        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Data.java" />
-        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/spider.java" />
-        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Serach.java" />
-        <option value="$PROJECT_DIR$/src/main/Js/yaopin.js" />
-        <option value="$PROJECT_DIR$/src/main/java/itjuzi/xin/spider.java" />
-        <option value="$PROJECT_DIR$/src/main/java/qiniu/linshi_qiniu.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java" />
-        <option value="$PROJECT_DIR$/src/main/java/teat.java" />
-        <option value="$PROJECT_DIR$/src/main/java/test/test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/send_mail.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsj.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsjzl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chuangyebang/test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Utils/Consumer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chuangxin/spider.java" />
-        <option value="$PROJECT_DIR$/src/test/java/java_spider/lagou.js" />
         <option value="$PROJECT_DIR$/src/main/java/Utils/Producer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java" />
-        <option value="$PROJECT_DIR$/src/test/java/java_spider/test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java" />
-        <option value="$PROJECT_DIR$/src/test/java/java_spider/redis.java" />
-        <option value="$PROJECT_DIR$/src/main/Js/jiyan.js" />
-        <option value="$PROJECT_DIR$/src/main/java/Utils/RedisClu.java" />
-        <option value="$PROJECT_DIR$/src/test/java/java_spider/test2.java" />
-        <option value="$PROJECT_DIR$/src/main/java/test/imgduibi.java" />
-        <option value="$PROJECT_DIR$/src/test/java/java_spider/Send_Redis.java" />
-        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/test/test0.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Utils/Consumer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Utils/Dup.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsjzl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/App/zhaojiguang.java" />
+        <option value="$PROJECT_DIR$/src/main/java/baidu/souweb.java" />
+        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Detail.java" />
+        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/Serach.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chelianwang/che.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chelianwang/oledw.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chelianwang/shequ.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chuangxin/spider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/guoxin/huangye.java" />
+        <option value="$PROJECT_DIR$/src/main/java/itjuzi/xin/spider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/itjuzi/zl/itjz_l.java" />
+        <option value="$PROJECT_DIR$/src/main/java/itjuzi/zl/list_zl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/jinrong/China_jr.java" />
+        <option value="$PROJECT_DIR$/src/main/java/linshi_spider/airui.java" />
+        <option value="$PROJECT_DIR$/src/main/java/linshi_spider/beian.java" />
+        <option value="$PROJECT_DIR$/src/main/java/linshi_spider/jiance.java" />
+        <option value="$PROJECT_DIR$/src/main/java/linshi_spider/quanying.java" />
+        <option value="$PROJECT_DIR$/src/main/java/linshi_spider/resouzhishu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/qichacha/Modular.java" />
+        <option value="$PROJECT_DIR$/src/main/java/qichacha/Serach.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sanshiliuke/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/shuiwu/yanzhengma.java" />
+        <option value="$PROJECT_DIR$/src/main/java/shuiwu/spider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/simutong/xin_smt/smt_xin.java" />
         <option value="$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/chuli/shuzi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/Tyc_quan_guo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java" />
+        <option value="$PROJECT_DIR$/src/main/java/wecat/smallexe/bailu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chuangyebang/cyb.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Utils/RedisClu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/login/Tyc_Login.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java" />
+        <option value="$PROJECT_DIR$/src/main/java/caipanwenshu/spider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/java_orc/ImagePreProcess3.java" />
+        <option value="$PROJECT_DIR$/src/main/java/java_orc/ImageIOHelper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/java_orc/ocrtest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/java_orc/OCR.java" />
+        <option value="$PROJECT_DIR$/src/main/java/java_orc/test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java" />
+        <option value="$PROJECT_DIR$/src/test/java/java_spider/test.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java" />
       </list>
     </option>
   </component>
@@ -227,17 +339,17 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="760" />
-    <option name="width" value="784" />
-    <option name="height" value="832" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1385" />
+    <option name="height" value="745" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -269,30 +381,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="chuangxin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="chuangyebang" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tianyancha" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -311,7 +399,8 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tianyancha" type="462c0819:PsiDirectoryNode" />
-              <item name="yanzhengma" type="462c0819:PsiDirectoryNode" />
+              <item name="XinxiXin" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
@@ -320,70 +409,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tianyancha" type="462c0819:PsiDirectoryNode" />
-              <item name="zhuce" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Utils" type="462c0819:PsiDirectoryNode" />
-              <item name="Producer.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="uv_Es" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="waiguo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="smallexe" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="yiguan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="Js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java_spider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="yanzhengma" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="java_spider" type="b2602c69:ProjectViewProjectNode" />
@@ -411,15 +437,17 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="ser&#9;PSI&#9;JAVA://tianyancha.Guoxin.Serach&#10;send&#9;FILE&#9;file://D:/工作/代码/java_spider/src/main/java/baidu/send.java&#10;mon&#9;PSI&#9;JAVA://tianyancha.quanxinxi.Tyc_Get.Monitor" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550830211462" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570843845343" />
     <property name="findjar.last.used.dir" value="$PROJECT_DIR$" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.19140625" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -427,16 +455,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="tianyancha.XinxiXin" />
       <recent name="Utils" />
+      <recent name="chuangyebang" />
+      <recent name="tianyancha.XinxiXin.login" />
+      <recent name="tianyancha.XinxiXin" />
       <recent name="test" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\工作\代码\java_spider\src\main\java\Utils" />
       <recent name="D:\工作\代码\java_spider\lib" />
       <recent name="D:\工作\代码\java_spider\src\main\Js" />
       <recent name="D:\工作\代码\java_spider\src\main\resources" />
       <recent name="D:\工作\代码\java_spider\src\main\java" />
-      <recent name="D:\工作\代码\java_spider\src\main\java\Utils" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -451,20 +481,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.maven page">
+  <component name="RunManager" selected="Application.test">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Send_Redis" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="java_spider.Send_Redis" />
+    <configuration name="ImagePreProcess3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java_orc.ImagePreProcess3" />
       <module name="java_spider" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="java_spider.*" />
+          <option name="PATTERN" value="java_orc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -478,13 +508,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ceshi" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.ceshi" />
+    <configuration name="ocrtest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java_orc.ocrtest" />
       <module name="java_spider" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="test.*" />
+          <option name="PATTERN" value="java_orc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -492,13 +522,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test0" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.test0" />
+    <configuration name="spider" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="caipanwenshu.spider" />
       <module name="java_spider" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="test.*" />
+          <option name="PATTERN" value="caipanwenshu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -506,27 +536,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="java_spider.test2" />
+    <configuration name="test (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java_orc.test" />
+      <module name="java_spider" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="java_orc.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java_spider.test" />
       <module name="java_spider" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="java_spider.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="testjiyan" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.jiyan.testjiyan" />
-      <module name="java_spider" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.jiyan.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -608,21 +638,21 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.test2" />
-      <item itemvalue="Application.ceshi" />
-      <item itemvalue="Application.Send_Redis" />
-      <item itemvalue="Application.testjiyan" />
-      <item itemvalue="Application.test0" />
+      <item itemvalue="Application.test" />
+      <item itemvalue="Application.spider" />
+      <item itemvalue="Application.ImagePreProcess3" />
+      <item itemvalue="Application.ocrtest" />
+      <item itemvalue="Application.test (2)" />
       <item itemvalue="Maven.maven page" />
       <item itemvalue="Maven.maven clean" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.testjiyan" />
-        <item itemvalue="Application.Send_Redis" />
-        <item itemvalue="Application.test0" />
-        <item itemvalue="Application.test2" />
-        <item itemvalue="Application.ceshi" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.test (2)" />
+        <item itemvalue="Application.ocrtest" />
+        <item itemvalue="Application.ImagePreProcess3" />
+        <item itemvalue="Application.spider" />
       </list>
     </recent_temporary>
   </component>
@@ -929,29 +959,117 @@
       <workItem from="1550629655383" duration="23532000" />
       <workItem from="1550710122651" duration="15459000" />
       <workItem from="1550799424419" duration="15192000" />
+      <workItem from="1551055115395" duration="18199000" />
+      <workItem from="1551151100197" duration="1191000" />
+      <workItem from="1551239205772" duration="614000" />
+      <workItem from="1551249689470" duration="310000" />
+      <workItem from="1551336069078" duration="34000" />
+      <workItem from="1551853769508" duration="615000" />
+      <workItem from="1551872036454" duration="10000" />
+      <workItem from="1551930870230" duration="58000" />
+      <workItem from="1552361784969" duration="101000" />
+      <workItem from="1552535588915" duration="4352000" />
+      <workItem from="1552610199813" duration="5125000" />
+      <workItem from="1552616918618" duration="12402000" />
+      <workItem from="1552870183980" duration="16809000" />
+      <workItem from="1553042812410" duration="4383000" />
+      <workItem from="1553081384285" duration="71000" />
+      <workItem from="1553134904747" duration="11000" />
+      <workItem from="1553138551636" duration="527000" />
+      <workItem from="1553140398991" duration="289000" />
+      <workItem from="1553141359029" duration="2628000" />
+      <workItem from="1553226872932" duration="149000" />
+      <workItem from="1553253059607" duration="1491000" />
+      <workItem from="1553475460371" duration="1219000" />
+      <workItem from="1553565837392" duration="48000" />
+      <workItem from="1553568450568" duration="735000" />
+      <workItem from="1553843325765" duration="630000" />
+      <workItem from="1554081147098" duration="2243000" />
+      <workItem from="1554165249494" duration="638000" />
+      <workItem from="1554167349933" duration="10000" />
+      <workItem from="1554271517422" duration="13870000" />
+      <workItem from="1554863980237" duration="635000" />
+      <workItem from="1556158866819" duration="5334000" />
+      <workItem from="1557401596886" duration="1625000" />
+      <workItem from="1557726430411" duration="5515000" />
+      <workItem from="1557828610392" duration="2514000" />
+      <workItem from="1558667501512" duration="1386000" />
+      <workItem from="1558918652851" duration="14671000" />
+      <workItem from="1559005335631" duration="18361000" />
+      <workItem from="1559091296317" duration="4958000" />
+      <workItem from="1559177570670" duration="3413000" />
+      <workItem from="1559263881047" duration="3676000" />
+      <workItem from="1559523780699" duration="3548000" />
+      <workItem from="1560326266562" duration="2410000" />
+      <workItem from="1560475121218" duration="5289000" />
+      <workItem from="1560927258893" duration="732000" />
+      <workItem from="1561342168665" duration="828000" />
+      <workItem from="1562579724525" duration="754000" />
+      <workItem from="1562729298475" duration="3354000" />
+      <workItem from="1562743079626" duration="736000" />
+      <workItem from="1563159545151" duration="1105000" />
+      <workItem from="1563169177869" duration="1955000" />
+      <workItem from="1563238673876" duration="673000" />
+      <workItem from="1563417148021" duration="146000" />
+      <workItem from="1563504100667" duration="23000" />
+      <workItem from="1564048218255" duration="2086000" />
+      <workItem from="1564390179692" duration="53000" />
+      <workItem from="1565755325100" duration="642000" />
+      <workItem from="1566466171086" duration="4710000" />
+      <workItem from="1566522201266" duration="13180000" />
+      <workItem from="1566784572135" duration="23000" />
+      <workItem from="1566787009081" duration="613000" />
+      <workItem from="1566894919010" duration="93000" />
+      <workItem from="1566975023224" duration="894000" />
+      <workItem from="1567039843128" duration="2973000" />
+      <workItem from="1567075273775" duration="3578000" />
+      <workItem from="1567157045347" duration="2610000" />
+      <workItem from="1567387014738" duration="3721000" />
+      <workItem from="1567392899114" duration="953000" />
+      <workItem from="1567419497872" duration="740000" />
+      <workItem from="1567421402561" duration="1159000" />
+      <workItem from="1567422632470" duration="557000" />
+      <workItem from="1567471901953" duration="4388000" />
+      <workItem from="1567557828721" duration="773000" />
+      <workItem from="1567585159928" duration="598000" />
+      <workItem from="1567591983877" duration="1053000" />
+      <workItem from="1567645143203" duration="2431000" />
+      <workItem from="1567655161146" duration="1325000" />
+      <workItem from="1567732394681" duration="8126000" />
+      <workItem from="1567989879339" duration="7313000" />
+      <workItem from="1568077208434" duration="6523000" />
+      <workItem from="1568163580971" duration="1093000" />
+      <workItem from="1568249423553" duration="1349000" />
+      <workItem from="1568271099099" duration="608000" />
+      <workItem from="1568595820084" duration="912000" />
+      <workItem from="1568692171955" duration="8144000" />
+      <workItem from="1569381355449" duration="6915000" />
+      <workItem from="1569545929509" duration="684000" />
+      <workItem from="1570843292818" duration="809000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1643308000" />
+    <option name="totallyTimeSpent" value="1907340000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Capture Tool" order="0" />
       <window_info id="Designer" order="1" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="4" visible="true" weight="0.1881663" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.20375335" />
       <window_info id="Structure" order="5" weight="0.25" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.50208336" side_tool="true" weight="0.41885966" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.4370933" />
+      <window_info anchor="bottom" id="Messages" order="1" weight="0.4362606" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.3280543" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49791667" weight="0.30802602" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49791667" weight="0.4957507" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.39819005" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -980,436 +1098,430 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/uv_Es/Uv_Spider.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/chelianwang/shequ.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding>
-            <marker date="1509528825903" expanded="true" signature="5201:5331" ph="insert into daxuesheng_pro... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chuangyebang/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/CreateId-jar-with-dependencies.jar!/com/inno/utils/other/FenciUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/CreateId-jar-with-dependencies.jar!/com/inno/utils/other/CreateId.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/AppTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utils/Dup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
+        <state relative-caret-position="152">
+          <caret line="184" column="21" lean-forward="true" selection-start-line="184" selection-start-column="21" selection-end-line="184" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chuangxin/spider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="156" column="13" selection-start-line="156" selection-start-column="13" selection-end-line="156" selection-end-column="13" />
+        <state relative-caret-position="152">
+          <caret line="84" column="23" selection-start-line="84" selection-start-column="23" selection-end-line="84" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/qiniu/shangchuan.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/gongzhonghao/spider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5460">
-          <folding>
-            <element signature="e#0#11847#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="171">
+          <caret line="162" column="23" lean-forward="true" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/sss.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31638">
-          <caret line="3687" column="58" selection-start-line="3687" selection-start-column="58" selection-end-line="3687" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/lagou.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="2487" column="19" selection-start-line="2487" selection-start-column="19" selection-end-line="2487" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="185" column="25" selection-start-line="185" selection-start-column="25" selection-end-line="185" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utils/Producer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="17" column="245" selection-start-line="17" selection-start-column="245" selection-end-line="17" selection-end-column="245" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/qiniu/linshi_qiniu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="77" column="14" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_it.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1178">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
-          <caret line="20" column="64" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5738">
-          <caret line="339" column="102" selection-start-line="339" selection-start-column="102" selection-end-line="339" selection-end-column="102" />
-          <folding>
-            <marker date="1549878102251" expanded="true" signature="8437:8478" ph="select DISTI... tyc_seurl" />
-            <marker date="1549878102251" expanded="true" signature="8867:8912" ph="insert into tyc_key... " />
-            <marker date="1549878102251" expanded="true" signature="8993:9043" ph="select id fr... tyc_key" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4522">
-          <caret line="268" column="22" selection-start-line="268" selection-start-column="22" selection-end-line="268" selection-end-column="22" />
-          <folding>
-            <marker date="1549879683127" expanded="true" signature="3658:4025" ph="insert into tyc_jichu_quan... " />
-            <marker date="1549879683127" expanded="true" signature="4155:4217" ph="insert into tyc_main... " />
-            <marker date="1549879683127" expanded="true" signature="4347:4434" ph="insert into tyc_gudongxin... " />
-            <marker date="1549879683127" expanded="true" signature="4564:4749" ph="insert into tyc_out_investment... " />
-            <marker date="1549879683127" expanded="true" signature="4879:4983" ph="insert into tyc_change_record... " />
-            <marker date="1549879683127" expanded="true" signature="5113:5225" ph="insert into tyc_branch_info... " />
-            <marker date="1549879683127" expanded="true" signature="5355:5513" ph="insert into tyc_financing_history... " />
-            <marker date="1549879683127" expanded="true" signature="5643:5732" ph="insert into tyc_core_team... " />
-            <marker date="1549879683127" expanded="true" signature="5862:5955" ph="insert into tyc_enterprise_business... " />
-            <marker date="1549879683127" expanded="true" signature="6086:6290" ph="insert into tyc_investment_event... " />
-            <marker date="1549879683127" expanded="true" signature="6423:6588" ph="insert into tyc_competing_information... " />
-            <marker date="1549879683127" expanded="true" signature="6721:6853" ph="insert into tyc_legal_proceedings... " />
-            <marker date="1549879683127" expanded="true" signature="6986:7088" ph="insert into tyc_court_notice... " />
-            <marker date="1549879683127" expanded="true" signature="7221:7313" ph="insert into tyc_person_subjected... " />
-            <marker date="1549879683127" expanded="true" signature="7445:7556" ph="insert into tyc_dishonest_person... " />
-            <marker date="1549879683127" expanded="true" signature="7689:7820" ph="insert into tyc_abnormal_operation... " />
-            <marker date="1549879683127" expanded="true" signature="7953:8092" ph="insert into tyc_administrative_sanction... " />
-            <marker date="1549879683127" expanded="true" signature="8225:8317" ph="insert into tyc_serious_violation... " />
-            <marker date="1549879683127" expanded="true" signature="8450:8560" ph="insert into tyc_stock_ownership... " />
-            <marker date="1549879683127" expanded="true" signature="8693:8828" ph="insert into tyc_chattel_mortgage... " />
-            <marker date="1549879683127" expanded="true" signature="8961:9075" ph="insert into tyc_tax_notice... " />
-            <marker date="1549879683127" expanded="true" signature="9207:9307" ph="insert into tyc_company_bidding... " />
-            <marker date="1549879683127" expanded="true" signature="9440:9546" ph="insert into tyc_bond_information... " />
-            <marker date="1549879683127" expanded="true" signature="9679:9793" ph="insert into tyc_purchase_information... " />
-            <marker date="1549879683127" expanded="true" signature="9924:10053" ph="insert into tyc_recruit_information... " />
-            <marker date="1549879683127" expanded="true" signature="10186:10288" ph="insert into tyc_tax_rating... " />
-            <marker date="1549879683127" expanded="true" signature="10421:10512" ph="insert into tyc_spot_check... " />
-            <marker date="1549879683127" expanded="true" signature="10645:10752" ph="insert into tyc_product_information... " />
-            <marker date="1549879683127" expanded="true" signature="10885:11021" ph="insert into tyc_qualification_certificate... " />
-            <marker date="1549879683127" expanded="true" signature="11154:11297" ph="insert into tyc_trademark_information... " />
-            <marker date="1549879683127" expanded="true" signature="11428:11531" ph="insert into tyc_patent_information... " />
-            <marker date="1549879683127" expanded="true" signature="11663:11800" ph="insert into tyc_copyright_information... " />
-            <marker date="1549879683127" expanded="true" signature="11933:12075" ph="insert into tyc_website_filing... " />
-            <marker date="1549879683127" expanded="true" signature="12209:12292" ph="insert into tyc_webcat... " />
-            <marker date="1549879683127" expanded="true" signature="12427:12526" ph="insert into tyc_ruanzhu... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chuangyebang/cyb_tzsjzl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4066">
-          <caret line="238" column="13" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="70" column="51" selection-start-line="70" selection-start-column="51" selection-end-line="70" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/redis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Js/jiyan.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="1029" column="53" lean-forward="true" selection-start-line="1029" selection-start-column="53" selection-end-line="1029" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Utils/RedisClu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
-          <folding>
-            <element signature="e#1008#1009#0" expanded="true" />
-            <element signature="e#1047#1048#0" expanded="true" />
-            <element signature="e#1087#1088#0" expanded="true" />
-            <element signature="e#1134#1135#0" expanded="true" />
-            <element signature="e#1331#1332#0" expanded="true" />
-            <element signature="e#1375#1376#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1394">
-          <caret line="245" column="71" lean-forward="true" selection-start-line="245" selection-start-column="71" selection-end-line="245" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/test2.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/guoxin/huangye.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.6/commons-io-2.6.jar!/org/apache/commons/io/FileUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="522" column="23" selection-start-line="522" selection-start-column="23" selection-end-line="522" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1976">
-          <caret line="172" column="66" selection-start-line="172" selection-start-column="66" selection-end-line="172" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-370">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1359">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test5.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1040">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/ceshitian.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3629">
-          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/ImagePHash.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-846">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gongshi/jichu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4779">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="117" column="71" selection-start-line="117" selection-start-column="71" selection-end-line="117" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar!/org/apache/commons/lang3/time/DateUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-api/3.4.0/selenium-api-3.4.0.jar!/org/openqa/selenium/OutputType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/Send_Redis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="45" column="56" lean-forward="true" selection-start-line="45" selection-start-column="56" selection-end-line="45" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/ceshi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2127">
-          <caret line="59" column="42" lean-forward="true" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/tianyancha.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2797">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test10.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-968">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test9.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1349">
-          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test8.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-152">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <caret line="134" column="30" lean-forward="true" selection-start-line="134" selection-start-column="30" selection-end-line="134" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/itjuzi/xin/spider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5339">
-          <caret line="54" column="13" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/spiderKc/kcBean/Count.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="64" lean-forward="true" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
+        <state relative-caret-position="115">
+          <caret line="271" column="17" selection-start-line="271" selection-start-column="17" selection-end-line="271" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/itjuzi/zl/itjz_l.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="542" column="61" lean-forward="true" selection-start-line="542" selection-start-column="61" selection-end-line="542" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="45" column="15" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/test0.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="39">
+          <caret line="859" column="19" selection-start-line="859" selection-start-column="19" selection-end-line="859" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/itjuzi/zl/list_zl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="197" column="42" lean-forward="true" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jinrong/China_jr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="177" column="32" selection-start-line="177" selection-start-column="32" selection-end-line="177" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/linshi_spider/airui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="112" column="18" selection-start-line="112" selection-start-column="18" selection-end-line="112" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/linshi_spider/beian.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="188" column="29" selection-start-line="188" selection-start-column="29" selection-end-line="188" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/linshi_spider/jiance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="176" column="21" selection-start-line="176" selection-start-column="21" selection-end-line="176" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/linshi_spider/quanying.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="79" column="27" selection-start-line="79" selection-start-column="27" selection-end-line="79" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/linshi_spider/resouzhishu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/qichacha/Modular.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="265" column="20" selection-start-line="265" selection-start-column="20" selection-end-line="265" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/qichacha/Serach.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sanshiliuke/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="280" column="29" selection-start-line="280" selection-start-column="29" selection-end-line="280" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/shuiwu/yanzhengma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/shuiwu/spider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="182" column="22" selection-start-line="182" selection-start-column="22" selection-end-line="182" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/simutong/xin_smt/smt_xin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="256" column="66" lean-forward="true" selection-start-line="256" selection-start-column="66" selection-end-line="256" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/chuli/shuzi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/Tyc_quan_guo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="279" column="12" selection-start-line="279" selection-start-column="12" selection-end-line="279" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/zhuce/tyc_zhuce.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="89" column="24" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/wecat/smallexe/bailu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="33" column="62" selection-start-line="33" selection-start-column="62" selection-end-line="33" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/javajdk/src.zip!/java/util/Random.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="76" column="6" selection-start-line="76" selection-start-column="6" selection-end-line="76" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chuangyebang/cyb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="54" column="63" lean-forward="true" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/teat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="35" column="38" lean-forward="true" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/Guoxin/getip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/caipanwenshu/Yanzhengma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/caipanwenshu/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2106">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/caipanwenshu/Detail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2177">
+          <caret line="76" column="23" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/caipanwenshu/Serach.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="113" column="70" selection-start-line="113" selection-start-column="70" selection-end-line="113" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/caipanwenshu/spider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-190">
+          <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/MyImgFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="212" column="36" lean-forward="true" selection-start-line="212" selection-start-column="36" selection-end-line="212" selection-end-column="36" />
+          <folding>
+            <element signature="e#7390#7391#0" expanded="true" />
+            <element signature="e#7418#7419#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/ImageIOHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="893">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/ImagePreProcess3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="243" column="52" lean-forward="true" selection-start-line="243" selection-start-column="52" selection-end-line="243" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/OCR.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="78" column="10" selection-start-line="78" selection-start-column="10" selection-end-line="78" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/ocrtest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="76" selection-start-line="14" selection-start-column="76" selection-end-line="14" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/java_orc/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Utils/RedisClu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="55" column="23" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="23" />
+          <folding>
+            <element signature="e#746#747#0" expanded="true" />
+            <element signature="e#785#786#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="241" column="20" selection-start-line="241" selection-start-column="20" selection-end-line="241" selection-end-column="20" />
+        <state relative-caret-position="4484">
+          <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/java_spider/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="115" column="82" selection-start-line="115" selection-start-column="82" selection-end-line="115" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/yanzhengma/DownloadImgne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="188" column="21" lean-forward="true" selection-start-line="188" selection-start-column="21" selection-end-line="188" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/loginpool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="271" column="57" lean-forward="true" selection-start-line="271" selection-start-column="57" selection-end-line="271" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/imgduibi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        <state relative-caret-position="133">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/login/Tyc_Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="52" column="55" lean-forward="true" selection-start-line="52" selection-start-column="55" selection-end-line="52" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Tyc_quan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="1989" column="21" lean-forward="true" selection-start-line="1989" selection-start-column="21" selection-end-line="1989" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1569382242010" expanded="true" signature="3544:3911" ph="insert into tyc_jichu_quan... " />
+            <marker date="1569382242010" expanded="true" signature="4041:4103" ph="insert into tyc_main... " />
+            <marker date="1569382242010" expanded="true" signature="4233:4320" ph="insert into tyc_gudongxin... " />
+            <marker date="1569382242010" expanded="true" signature="4450:4635" ph="insert into tyc_out_investment... " />
+            <marker date="1569382242010" expanded="true" signature="4765:4869" ph="insert into tyc_change_record... " />
+            <marker date="1569382242010" expanded="true" signature="4999:5111" ph="insert into tyc_branch_info... " />
+            <marker date="1569382242010" expanded="true" signature="5241:5399" ph="insert into tyc_financing_history... " />
+            <marker date="1569382242010" expanded="true" signature="5529:5618" ph="insert into tyc_core_team... " />
+            <marker date="1569382242010" expanded="true" signature="5748:5841" ph="insert into tyc_enterprise_business... " />
+            <marker date="1569382242010" expanded="true" signature="5972:6176" ph="insert into tyc_investment_event... " />
+            <marker date="1569382242010" expanded="true" signature="6309:6474" ph="insert into tyc_competing_information... " />
+            <marker date="1569382242010" expanded="true" signature="6607:6739" ph="insert into tyc_legal_proceedings... " />
+            <marker date="1569382242010" expanded="true" signature="6872:6974" ph="insert into tyc_court_notice... " />
+            <marker date="1569382242010" expanded="true" signature="7107:7199" ph="insert into tyc_person_subjected... " />
+            <marker date="1569382242010" expanded="true" signature="7331:7442" ph="insert into tyc_dishonest_person... " />
+            <marker date="1569382242010" expanded="true" signature="7575:7706" ph="insert into tyc_abnormal_operation... " />
+            <marker date="1569382242010" expanded="true" signature="7839:7978" ph="insert into tyc_administrative_sanction... " />
+            <marker date="1569382242010" expanded="true" signature="8111:8203" ph="insert into tyc_serious_violation... " />
+            <marker date="1569382242010" expanded="true" signature="8336:8446" ph="insert into tyc_stock_ownership... " />
+            <marker date="1569382242010" expanded="true" signature="8579:8714" ph="insert into tyc_chattel_mortgage... " />
+            <marker date="1569382242010" expanded="true" signature="8847:8961" ph="insert into tyc_tax_notice... " />
+            <marker date="1569382242010" expanded="true" signature="9093:9193" ph="insert into tyc_company_bidding... " />
+            <marker date="1569382242010" expanded="true" signature="9326:9432" ph="insert into tyc_bond_information... " />
+            <marker date="1569382242010" expanded="true" signature="9565:9679" ph="insert into tyc_purchase_information... " />
+            <marker date="1569382242010" expanded="true" signature="9810:9939" ph="insert into tyc_recruit_information... " />
+            <marker date="1569382242010" expanded="true" signature="10072:10174" ph="insert into tyc_tax_rating... " />
+            <marker date="1569382242010" expanded="true" signature="10307:10398" ph="insert into tyc_spot_check... " />
+            <marker date="1569382242010" expanded="true" signature="10531:10638" ph="insert into tyc_product_information... " />
+            <marker date="1569382242010" expanded="true" signature="10771:10907" ph="insert into tyc_qualification_certificate... " />
+            <marker date="1569382242010" expanded="true" signature="11040:11183" ph="insert into tyc_trademark_information... " />
+            <marker date="1569382242010" expanded="true" signature="11314:11417" ph="insert into tyc_patent_information... " />
+            <marker date="1569382242010" expanded="true" signature="11549:11686" ph="insert into tyc_copyright_information... " />
+            <marker date="1569382242010" expanded="true" signature="11819:11961" ph="insert into tyc_website_filing... " />
+            <marker date="1569382242010" expanded="true" signature="12095:12178" ph="insert into tyc_webcat... " />
+            <marker date="1569382242010" expanded="true" signature="12313:12412" ph="insert into tyc_ruanzhu... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/test/jiyan/testjiyan.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/Send_Redis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="42" column="68" selection-start-line="42" selection-start-column="68" selection-end-line="42" selection-end-column="68" />
+        <state relative-caret-position="121">
+          <caret line="58" column="24" lean-forward="true" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tianyancha/XinxiXin/XinxiXin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7095">
+          <caret line="565" column="98" lean-forward="true" selection-start-line="565" selection-start-column="98" selection-end-line="565" selection-end-column="98" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5660#5670#0" expanded="true" />
-            <element signature="e#7838#7848#0" expanded="true" />
+            <marker date="1569404959225" expanded="true" signature="7950:7991" ph="select DISTI... tyc_seurl" />
+            <marker date="1569404959225" expanded="true" signature="8380:8425" ph="insert into tyc_key... " />
+            <marker date="1569404959225" expanded="true" signature="8506:8556" ph="select id fr... tyc_key" />
           </folding>
         </state>
       </provider>

@@ -2,12 +2,7 @@ package tianyancha.chuli;
 
 import Utils.Dup;
 
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 
 public class shuzi {
     private static Connection conn;

@@ -4,8 +4,6 @@ import Utils.Dup;
 import Utils.JsoupUtils;
 import Utils.Producer;
 import Utils.RedisClu;
-import haosou.haosouBean;
-import org.apache.poi.ss.formula.functions.T;
 import org.dom4j.DocumentException;
 import org.json.JSONArray;
 import org.json.JSONObject;

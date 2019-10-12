@@ -1,3 +1,5 @@
 java_spider\AppTest.class
+java_spider\Send_Redis.class
+java_spider\redis.class
 java_spider\test2.class
 java_spider\test.class

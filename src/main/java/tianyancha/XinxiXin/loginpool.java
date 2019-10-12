@@ -1,23 +1,15 @@
 package tianyancha.XinxiXin;
 
 import Utils.Dup;
-import Utils.MD5Util;
 import Utils.RedisClu;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+import tianyancha.XinxiXin.login.Tyc_Login;
 import tianyancha.yanzhengma.DownloadImgne;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +25,7 @@ public class loginpool {
     public static Ca c=new Ca();
     private static Set<String> list=new HashSet<>();
     private static Connection conn;
+    private static Tyc_Login tyc_login=new Tyc_Login();
 
     static{
         String driver1="com.mysql.jdbc.Driver";
@@ -174,8 +167,10 @@ public class loginpool {
                     Thread.sleep(1000);
                     continue;
                 }
-                String ip=redisClu.get("ip");
-                c.fang(ip);
+                Set<String> ip = redisClu.getZsetByKey("ip","0","2");
+                for(String ss:ip){
+                    c.fang(ss);
+                }
                 System.out.println(c.po.size()+"    ip***********************************************");
             }catch (Exception e){
                 Thread.sleep(1000);
@@ -213,23 +208,23 @@ public class loginpool {
             String sql="select user_name,pass_word from tyc.tyc_auth where seal_flag=0";
             PreparedStatement ps=conn.prepareStatement(sql);
             ResultSet resultSet=ps.executeQuery();
-
-            Set<String> set = redisClu.getAll("tyc_cookie");
+            Set<String> set1 = redisClu.getAll("tyc_cookie");
+            Set<String> set=new HashSet<>();
+            for(String ss:set1){
+                set.add(ss.split("######")[0]);
+            }
             while (resultSet.next()) {
                 String user=resultSet.getString(resultSet.findColumn("user_name"));
                 String pass=resultSet.getString(resultSet.findColumn("pass_word"));
                 String et=(user+"###"+pass);
                 boolean bo = true;
-                for (String s : set) {
-                    if (et.equals(s.split("######")[0])) {
-                        bo = false;
-                    }
+                if(set.contains(et)){
+                    bo=false;
                 }
                 if (bo) {
                     list.add(et);
                 }
             }
-
             ps.close();
             resultSet.close();
         }catch (Exception e){
@@ -243,7 +238,7 @@ public class loginpool {
             try {
                 checkUser();
                 System.out.println(list);
-                ExecutorService pool= Executors.newFixedThreadPool(20);
+                ExecutorService pool= Executors.newFixedThreadPool(5);
                 for (String randomValue : list) {
                     pool.submit(new Runnable() {
                         @Override
@@ -257,57 +252,15 @@ public class loginpool {
 
                                 String username = Dup.reAllNull(randomValue.split("###")[0]);
                                 String password = Dup.reAllNull(randomValue.split("###")[1]);
-                                String pw = MD5Util.getMD5String(password);
-
-                                //HttpClientBuilder builder = HttpClients.custom();
+                                //String pw = MD5Util.getMD5String(password);
 
                                 Map<String, String> map1 = new HashMap<>();
-                                org.jsoup.nodes.Document docs = null;
-                                JSONObject jsonObject1 = new JSONObject();
-                                jsonObject1.put("autoLogin", "true");
-                                jsonObject1.put("cdpassword", pw);
-                                jsonObject1.put("loginway", "PL");
-                                jsonObject1.put("mobile", username);
-                                String data = jsonObject1.toString();
-                                while (true) {
-                                    try {
-                                        String ip = c.qu();
-                                        docs = Jsoup.connect("https://www.tianyancha.com/cd/login.json")
-                                                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-                                                .header("Accept", "*/*")
-                                                .header("Accept-Encoding", "gzip, deflate, br")
-                                                .header("Accept-Language", "zh-CN,zh;q=0.9")
-                                                .header("Connection", "keep-alive")
-                                                .header("Content-Type", "application/json; charset=UTF-8")
-                                                .header("Host", "www.tianyancha.com")
-                                                .header("Origin", "https://www.tianyancha.com")
-                                                .header("Referer", "https://www.tianyancha.com/login")
-                                                .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
-                                                .requestBody(data)
-                                                .ignoreContentType(true)
-                                                .ignoreHttpErrors(true)
-                                                .timeout(3000)
-                                                .post();
-                                        String json = Dup.qujson(docs);
-                                        System.out.println(json);
-
-                                        if (Dup.nullor(json)) {
-                                            if(json.contains("手机号或密码错误")){
-                                                System.out.println(username+"       "+pw+"  "+password);
-                                                ps2.setString(1,username);
-                                                ps2.executeUpdate();
-                                                break;
-                                            }else {
-                                                JSONObject jsonObject = new JSONObject(json);
-                                                if (Dup.nullor(jsonObject.getJSONObject("data").getString("token"))) {
-                                                    map1.put("auth_token", jsonObject.getJSONObject("data").getString("token"));
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    } catch (Exception ee) {
-                                        System.out.println("time out");
-                                    }
+                                Object object=tyc_login.login(username,password);
+                                if(object instanceof String){
+                                    ps2.setString(1,username);
+                                    ps2.executeUpdate();
+                                }else{
+                                    map1= (Map<String, String>) object;
                                 }
                                 System.out.println(map1);
                                 if(map1!=null&&map1.size()>0) {
@@ -326,6 +279,7 @@ public class loginpool {
                                 }
                                 ps.close();
                                 ps2.close();
+                                System.out.println("*******************************************************************************");
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -335,13 +289,18 @@ public class loginpool {
                 pool.shutdown();
                 while (true){
                     if (pool.isTerminated()) {
+                        String path="/data1/java_spider/implement/killchrome.sh";
+                        String strs[]=new String[2];
+                        strs[0]="sh";
+                        strs[1]=path;
+                        Process ps = Runtime.getRuntime().exec(strs);
                         System.out.println("结束了！");
                         break;
                     }
                     Thread.sleep(10000);
                 }
                 list.clear();
-                Thread.sleep(10000);
+                Thread.sleep(60000);
             }catch (Exception e){
                 e.printStackTrace();
             }

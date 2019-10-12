@@ -140,7 +140,7 @@ public class ImagePreProcess3 {
     public static Map<BufferedImage, String> loadTrainData() throws Exception {
         if (trainMap == null) {
             Map<BufferedImage, String> map = new HashMap<BufferedImage, String>();
-            File dir = new File("train3");
+            File dir = new File("C:\\Users\\13434\\Desktop\\train3");
             File[] files = dir.listFiles();
             for (File file : files) {
                 map.put(ImageIO.read(file), file.getName().charAt(0) + "");
@@ -185,9 +185,10 @@ public class ImagePreProcess3 {
         Map<BufferedImage, String> map = loadTrainData();
         String result = "";
         for (BufferedImage bi : listImg) {
+            System.out.println("aaa");
             result += getSingleCharOcr(bi, map);
         }
-        ImageIO.write(img, "JPG", new File("C:\\Users\\Administrator\\Desktop\\test\\" + result + ".jpg"));
+        ImageIO.write(img, "JPG", new File("C:\\Users\\13434\\Desktop\\test\\" + result + ".jpg"));
         return result;
     }
 
@@ -221,14 +222,14 @@ public class ImagePreProcess3 {
     }
 
     public static void trainData() throws Exception {
-        File dir = new File("temp3");
+        File dir = new File("C:\\Users\\13434\\Desktop\\train3");
         File[] files = dir.listFiles();
         for (File file : files) {
-            BufferedImage img = removeBackgroud("temp3//" + file.getName());
+            BufferedImage img = removeBackgroud("C:\\Users\\13434\\Desktop\\train3\\" + file.getName());
             List<BufferedImage> listImg = splitImage(img);
             if (listImg.size() == 5) {
                 for (int j = 0; j < listImg.size(); ++j) {
-                    ImageIO.write(listImg.get(j), "JPG", new File("train3//"
+                    ImageIO.write(listImg.get(j), "JPG", new File("C:\\Users\\13434\\Desktop\\train3\\"
                             + file.getName().charAt(j) + "-" + (index++)
                             + ".jpg"));
                 }
@@ -241,10 +242,10 @@ public class ImagePreProcess3 {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        //trainData();
-        // downloadImage();
+        trainData();
+         //downloadImage();
         for (int i = 0; i < 30; ++i) {
-            String text = getAllOcr("C:\\Users\\Administrator\\Desktop\\test\\3.tif");
+            String text = getAllOcr("C:\\Users\\13434\\Desktop\\train\\1.jpg");
             System.out.println(i + ".jpg = " + text);
         }
     }

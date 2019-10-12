@@ -4,10 +4,6 @@ import Utils.Dup;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

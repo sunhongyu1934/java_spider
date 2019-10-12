@@ -3,22 +3,21 @@ package Utils;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.dom4j.DocumentException;
 
-import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public class Producer{
+public class Producer implements Serializable{
     private final KafkaProducer<Integer, String> producer;
     //private final String topic;
     private final Boolean isAsync;
 
-    public Producer(Boolean isAsync) throws FileNotFoundException, DocumentException {
+    public Producer(Boolean isAsync) {
         String kafkacon="10.64.0.112:9092,10.64.0.113:9092,10.64.0.114:9092,10.64.0.115:9092,10.64.0.116:9092,10.64.0.117:9092,10.64.0.118:9092,10.64.0.119:9092,10.64.0.120:9092,10.64.0.121:9092,10.64.0.122:9092,10.64.0.123:9092,10.64.0.124:9092";
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkacon);
-        props.put(ProducerConfig.CLIENT_ID_CONFIG, "Spider");
+        //props.put(ProducerConfig.CLIENT_ID_CONFIG, "Transfer");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put("max.request.size","52427800");
@@ -26,6 +25,10 @@ public class Producer{
         producer = new KafkaProducer<>(props);
         //this.topic = topic;
         this.isAsync = isAsync;
+    }
+
+    public void close(){
+        producer.close();
     }
 
     public void send(String topic,String messageStr){

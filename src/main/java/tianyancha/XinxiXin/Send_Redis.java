@@ -42,6 +42,11 @@ public class Send_Redis {
     }
 
     public static void main(String args[]) throws SQLException {
+        data2();
+    }
+
+
+    public static void data1() throws SQLException {
         String sql="select comp_full_name from comp_name_bulu where mark_time is null or mark_time=''";
         PreparedStatement ps=conn.prepareStatement(sql);
         RedisClu rd=new RedisClu();
@@ -58,5 +63,27 @@ public class Send_Redis {
             b++;
             System.out.println(b+"******************************************************");
         }
+    }
+
+    public static boolean data2() throws SQLException {
+        boolean bo=true;
+        String sql="select comp_full_name from comp_name_bulu_first where mark_time is null or mark_time=''";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        RedisClu rd=new RedisClu();
+        ResultSet rs=ps.executeQuery();
+
+        String sql2="update comp_name_bulu_first set mark_time='1' where comp_full_name=?";
+        PreparedStatement ps2=conn.prepareStatement(sql2);
+        while (rs.next()){
+            bo=false;
+            String compname=rs.getString(rs.findColumn("comp_full_name"));
+            rd.set("comp_zl_first",compname);
+
+            ps2.setString(1,compname);
+            ps2.executeUpdate();
+            b++;
+            System.out.println(b+"******************************************************");
+        }
+        return bo;
     }
 }

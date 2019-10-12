@@ -5,7 +5,6 @@ import Utils.JsoupUtils;
 import Utils.Producer;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
-import org.dom4j.io.SAXReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -13,19 +12,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import static Utils.JsoupUtils.*;
@@ -260,19 +256,30 @@ public class Tyc_quan {
         if(StringUtils.isEmpty(quancheng)){
             System.out.println(doc2);
         }
-        String ceng = getString(doc2, "div.history-name-box.tag.tag-history-name.mr10 span.history-content", 0);
-        String phone = getString(doc2, "div.in-block:containsOwn(电话) span", 1);
-        String email = getString(doc2, "div.in-block:containsOwn(邮箱) span", 1);
-        String web = getString(doc2, "div.in-block:containsOwn(网址) a", 0);
+        String ceng;
+        try {
+            Elements cengs = doc2.select("div.content div.tag-list-content div.tag-list div.tag-common.-click.-notice.-historyname div.content div.inner").get(0).select(">div");
+            StringBuffer stringBuffer = new StringBuffer();
+            for (Element element : cengs) {
+                stringBuffer.append(element.text() + ";");
+            }
+            ceng = stringBuffer.substring(0, stringBuffer.length() - 1);
+        }catch (Exception e){
+            ceng=null;
+        }
+        String phone = getString(doc2, "span:containsOwn(电话)+span", 0);
+        String email = getString(doc2, "span:containsOwn(邮箱)+span", 0);
+        String web = getString(doc2, "span:containsOwn(网址：)~a", 0);
         String address = getString(doc2,"div.in-block:matches(地址.+)",0)!=null
                 ?getString(doc2,"div.in-block:matches(地址.+)",0).replace("附近公司","").replace("地址：","")
+                .replace("... 更多","").replace(" ","")
                 :null;
-        String address2 =doc2.select("div.in-block:matches(地址.+) span.pl5").toString()!=null
-                ?doc2.select("div.in-block:matches(地址.+) span.pl5").toString().replace("<span class=\"pl5\"><script type=\"text/html\">\"","")
-                .replace("\"</script><span class=\"link-click\" onclick=\"openAddressPopup(this)\">详情</span></span>","")
+        String address2 =doc2.select("div.in-block:matches(地址.+) script").toString()!=null
+                ?doc2.select("div.in-block:matches(地址.+) script").toString().replace("<script type=\"text/html\" id=\"company_base_info_address\">","")
+                .replace("</script>","").replaceAll("\\s","")
                 :null;
         String logo = getHref(doc2, "div.logo.-w100 img", "data-src", 0);
-        String statu = getString(doc2, "td:containsOwn(公司状态) div.num-opening", 0);
+        String statu = getString(doc2, "td:containsOwn(经营状态)+td", 0);
         String gongshang = getString(doc2, "td:containsOwn(工商注册号)+td", 0);
         String zuzhijigou = getString(doc2, "td:containsOwn(组织机构代码)+td", 0);
         String tongyixinyong = getString(doc2, "td:containsOwn(统一社会信用代码)+td", 0);
@@ -289,6 +296,7 @@ public class Tyc_quan {
         String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
         String shizi=getString(doc2, "td:containsOwn(实缴资本)+td", 0);
         String canbao=getString(doc2, "td:containsOwn(参保人数)+td", 0);
+        String guimo=getString(doc2, "td:containsOwn(人员规模)+td", 0);
         String nazi=getString(doc2, "td:containsOwn(纳税人资质)+td", 0);
 
 
@@ -389,18 +397,24 @@ public class Tyc_quan {
         jsonObject.put("comp_industry",hangye);
         jsonObject.put("taypayer_quality",nazi);
         jsonObject.put("insured_num",canbao);
+        jsonObject.put("comp_scale",guimo);
         jsonObject.put("comp_sub_capital",shizi);
         jsonObject.put("rowkey","comp_full_name+comp_full_name###familyname");
         jsonObject.put("tablename","company_base_info");
         jsonObject.put("familyname","tyc");
 
-        JSONObject jsonObject1=new JSONObject();
-        jsonObject1.put("comp_id","createid=comp_full_name");
-        jsonObject1.put("comp_full_name",quancheng);
-        jsonObject1.put("comp_alias",ceng);
-        jsonObject1.put("rowkey","comp_full_name+comp_full_name###comp_alias###familyname");
-        jsonObject1.put("tablename","company_alias");
-        jsonObject1.put("familyname","tyc");
+        if(Dup.nullor(ceng)) {
+            for(String sss:ceng.split(";")) {
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("comp_id", "createid=comp_full_name");
+                jsonObject1.put("comp_full_name", quancheng);
+                jsonObject1.put("comp_alias", sss);
+                jsonObject1.put("rowkey", "comp_full_name+comp_full_name###comp_alias###familyname");
+                jsonObject1.put("tablename", "company_alias");
+                jsonObject1.put("familyname", "tyc");
+                producer.send("ControlTotal",jsonObject1.toString());
+            }
+        }
 
         JSONObject jsonObject2=new JSONObject();
         jsonObject2.put("comp_id","createid=comp_full_name");
@@ -444,7 +458,7 @@ public class Tyc_quan {
         jsonObject6.put("familyname","tyc");
 
         producer.send("ControlTotal",jsonObject.toString());
-        producer.send("ControlTotal",jsonObject1.toString());
+
         producer.send("ControlTotal",jsonObject2.toString());
         producer.send("ControlTotal",jsonObject3.toString());
         producer.send("ControlTotal",jsonObject4.toString());
@@ -533,32 +547,26 @@ public class Tyc_quan {
                     }
                 }
             }
-            Elements duiwai = getElements(doc, "div#_container_invest tbody tr");
+            Elements duiwai = getElements(doc2, "div#_container_invest tbody tr");
+            if(x>=2){
+                duiwai = getElements(doc2, "tbody tr");
+            }
             if (duiwai != null) {
                 for (Element e : duiwai) {
                     try {
-                        String gongsiming = getString(e, "td", 3);
+                        String gongsiming = getString(e, "td", 3).split(" ")[0];
                         String beitouren = getString(e, "td", 4).split("他")[0].split("她")[0];
-                        String zhuceziben = getString(e, "td", 5);
-                        String touzizhanbi = getString(e, "td", 6);
+                        try{
+                            beitouren=beitouren.split(" ")[1];
+                        }catch (Exception e2){
+                            beitouren=null;
+                        }
+                        String touzizhanbi = getString(e, "td", 9);
+                        String zhuceziben = getString(e, "td", 8);
                         String zhuceshijian = getString(e, "td", 7);
-                        String zhuangtai = getString(e, "td", 8);
+                        String zhuangtai = getString(e, "td", 10);
 
                         if (Dup.nullor(gongsiming)) {
-                        /*checkPs(ps3,sql3);
-
-                        ps3.setString(1, tid);
-                        ps3.setString(2, gongsiming);
-                        ps3.setString(3, gongsitid);
-                        ps3.setString(4, beitouren);
-                        ps3.setString(5, beitourentid);
-                        ps3.setString(6, zhuceziben);
-                        ps3.setString(7, zhuceshijian);
-                        ps3.setString(8, touzishue);
-                        ps3.setString(9, touzizhanbi);
-                        ps3.setString(10, zhuangtai);
-                        ps3.executeUpdate();*/
-
                             String cname2 = URLDecoder.decode(cname, "utf-8");
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("comp_id", "createid=comp_full_name");
@@ -711,17 +719,16 @@ public class Tyc_quan {
                 }
             }
 
-            Elements gele=getElements(doc2,"div#_container_holder table.table tbody tr");
+            Elements gele=getElements(doc2,"div#_container_holder>table.table>tbody>tr");
             if(x>=2){
-                gele=getElements(doc2,"tbody tr");
+                gele=getElements(doc2,"table.table>tbody>tr");
             }
             if(gele!=null){
                 for(Element e:gele){
                     try {
-                        String guming = getString(e, "div.dagudong a", 0);
-                        String gtid = getHref(e, "a.in-block.vertival-middle.overflow-width", "href", 0).replace("/human/", "").replace("/company/", "");
-                        String bili = getString(e, "td", 2);
-                        String renjiao = getString(e, "td", 3).replace("\n", "").replace(" ", "");
+                        String guming = getString(e, "td a", 0);
+                        String bili = getString(e, ">td", 2);
+                        String renjiao = getString(e, ">td", 3).replace("\n", "").replace(" ", "");
 
                     /*checkPs(ps6,sql6);
 
@@ -814,17 +821,17 @@ public class Tyc_quan {
                 }
             }
 
-            Elements hexin=getElements(doc2,"div#_container_teamMember div.team-item");
+            Elements hexin=getElements(doc2,"div#_container_teamMember table.table>tbody>tr");
             if(x>=2){
-                hexin=getElements(doc2,"div.team-item");
+                hexin=getElements(doc2,"table.table>tbody>tr");
             }
             if(hexin!=null){
                 for(Element e:hexin){
                     try {
-                        String logo = getHref(e, "div.img-outer img", "src", 0);
-                        String ming = getString(e, "div.team-name", 0);
-                        String zhiwu = getString(e, "div.team-title", 0);
-                        String jianjie = getString(e, "ul", 0);
+                        String logo = getHref(e, "td.logo-td img", "data-src", 0);
+                        String ming = getString(e, ">td:nth-child(2)", 0).split(" ")[1];
+                        String zhiwu = getString(e, ">td:nth-child(3)", 0);
+                        String jianjie = getString(e, ">td:nth-child(4)", 0).replace("... 更多","");
 
                     /*checkPs(ps8,sql8);
 
@@ -1439,26 +1446,12 @@ public class Tyc_quan {
             if(dong!=null){
                 for(Element e:dong){
                     try {
-                        String riqi = getString(e, "td", 1);
-                        String json = JsoupUtils.getElement(e, "td script", 0).toString().replace("<script type=\"text/html\">", "").replace("</script>", "");
-                        JSONObject jsonObject1 = new JSONObject(json);
-
-                        String dengjihao = getValue(getValueObject(jsonObject1,"baseInfo"), "regNum");
-                        String dengjiji = getValue(getValueObject(jsonObject1,"baseInfo"), "regDepartment");
-                        String zhuang = getValue(getValueObject(jsonObject1,"baseInfo"), "status");
-                        String beiquanlei = getValue(getValueObject(jsonObject1,"baseInfo"), "type");
-                        String beiquanshu = getValue(getValueObject(jsonObject1,"baseInfo"), "overviewAmount");
-                        String qixian = getValue(getValueObject(jsonObject1,"baseInfo"), "term");
-                        String fanwei = getValue(getValueObject(jsonObject1,"baseInfo"), "scope");
-                        String beizhu = "所报材料真实合法，一切责任由当事人自负。";
-                        String diyaren = getValue(getValueArray(jsonObject1.getJSONArray("peopleInfo"),0), "peopleName");
-                        String diyalei = getValue(getValueArray(jsonObject1.getJSONArray("peopleInfo"),0), "liceseType");
-                        String diyahao = getValue(getValueArray(jsonObject1.getJSONArray("peopleInfo"),0), "licenseNum");
-                        String mingcheng = getValue(getValueArray(jsonObject1.getJSONArray("pawnInfoList"),0), "pawnName");
-                        String suiquangui = getValue(getValueArray(jsonObject1.getJSONArray("pawnInfoList"),0), "ownership");
-                        String shuzhiz = getValue(getValueArray(jsonObject1.getJSONArray("pawnInfoList"),0), "detail");
-                        String beizhu2 = getValue(getValueArray(jsonObject1.getJSONArray("pawnInfoList"),0), "remark");
-                        String zhuxiao = getValue(getValueObject(jsonObject1,"baseInfo"),"cancelReason");
+                        String riqi = JsoupUtils.getString(e,"td:nth-child(2)",0);
+                        String dengjihao = JsoupUtils.getString(e,"td:nth-child(3)",0);
+                        String dengjiji = JsoupUtils.getString(e,"td:nth-child(6)",0);
+                        String zhuang = JsoupUtils.getString(e,"td:nth-child(7)",0);
+                        String beiquanlei = JsoupUtils.getString(e,"td:nth-child(4)",0);
+                        String beiquanshu = JsoupUtils.getString(e,"td:nth-child(5)",0);
 
 
                         String cname2 = URLDecoder.decode(cname, "utf-8");
@@ -1474,17 +1467,6 @@ public class Tyc_quan {
                         jsonObject.put("mortgage_amount", beiquanshu);
                         jsonObject.put("registe_org", dengjiji);
                         jsonObject.put("mortgage_status", zhuang);
-                        jsonObject.put("debt_maturity", qixian);
-                        jsonObject.put("scope_security", fanwei);
-                        jsonObject.put("remark1", beizhu);
-                        jsonObject.put("mortgage_name", diyaren);
-                        jsonObject.put("card_type", diyalei);
-                        jsonObject.put("card_number", diyahao);
-                        jsonObject.put("mortgage_content", mingcheng);
-                        jsonObject.put("ownership", suiquangui);
-                        jsonObject.put("mortgage_desc", shuzhiz);
-                        jsonObject.put("remark2", beizhu2);
-                        jsonObject.put("cancel", zhuxiao);
                         producer.send("ControlTotal", jsonObject.toString());
                     /*checkPs(ps20,sql20);
 
@@ -1809,10 +1791,13 @@ public class Tyc_quan {
                 for(Element e:chan){
                     try {
                         String tubiao = getHref(e, "td img", "data-src", 0);
-                        String ming = getString(e, "td", 2);
-                        String jian = getString(e, "td", 2);
-                        String fen = getString(e, "td", 3);
-                        String lingyu = getString(e, "td", 4);
+                        String ming = getString(e, "td", 3);
+                        String jian = getString(e, "td", 4);
+                        String fen = getString(e, "td", 5);
+                        String lingyu = getString(e, "td", 6);
+                        if(!Dup.nullor(ming)){
+                            continue;
+                        }
 
                         String cname2 = URLDecoder.decode(cname, "utf-8");
                         JSONObject jsonObject = new JSONObject();
@@ -1898,11 +1883,11 @@ public class Tyc_quan {
         if(StringUtils.isEmpty(page)){
             page="1";
         }
-        for(int x=1;x<=Integer.parseInt(page);x++){
+        for(int x=1;x<=Integer.parseInt(page.replace("...",""));x++){
             if(x>=2){
                 while (true) {
                     Map<String, Object> map = jisuan(tid);
-                    doc2 = detailget("http://www.tianyancha.com/pagination/tmInfo.xhtml?ps=5&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
+                    doc2 = detailget("http://www.tianyancha.com/pagination/tmInfo.xhtml?ps=10&pn=" + x + "&id=" + tid + "&_=" + map.get("time"), (Map<String, String>) map.get("cookie"));
                     if(doc2!=null&&!doc2.outerHtml().contains("Unauthorized")){
                         break;
                     }
@@ -2066,25 +2051,29 @@ public class Tyc_quan {
             }
             if(bei!=null){
                 for(Element e:bei){
-                    String shijian=getString(e,"td",0);
-                    String ming=getString(e,"td",1);
-                    String shou=getString(e,"td",2);
-                    String yuming=getString(e,"td",3);
-                    String beihao=getString(e,"td",4);
-                    String zhuang=getString(e,"td",5);
-                    String danxing=getString(e,"td",6);
+                    String shijian=getString(e,"td",1);
+                    String ming=getString(e,"td",2);
+                    String shou=getString(e,"td",3);
+                    String yuming=getString(e,"td",4);
+                    String beihao=getString(e,"td",5);
+                    String zhuang=getString(e,"td",6);
+                    String danxing=getString(e,"td",7);
 
-                    checkPs(ps33,sql33);
-
-                    ps33.setString(1,tid);
-                    ps33.setString(2,shijian);
-                    ps33.setString(3,ming);
-                    ps33.setString(4,shou);
-                    ps33.setString(5,yuming);
-                    ps33.setString(6,beihao);
-                    ps33.setString(7,zhuang);
-                    ps33.setString(8,danxing);
-                    ps33.executeUpdate();
+                    String cname2 = URLDecoder.decode(cname, "utf-8");
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("comp_id", "createid=comp_full_name");
+                    jsonObject.put("comp_full_name", cname2);
+                    jsonObject.put("audit_time", shijian);
+                    jsonObject.put("website_nm", ming);
+                    jsonObject.put("website_url", shou);
+                    jsonObject.put("domain_name", yuming);
+                    jsonObject.put("filing_num", beihao);
+                    jsonObject.put("web_status", zhuang);
+                    jsonObject.put("comp_property", danxing);
+                    jsonObject.put("rowkey", "comp_full_name+comp_full_name###domain_name###filing_num###familyname");
+                    jsonObject.put("tablename", "company_website_filing");
+                    jsonObject.put("familyname", "tyc");
+                    producer.send("ControlTotal", jsonObject.toString());
                 }
             }
         }
@@ -2200,18 +2189,20 @@ public class Tyc_quan {
                         String dengjihao = getValue(jsonObject1, "regnum");
                         String banben = getValue(jsonObject1, "version");
                         String zhuren = getValue(jsonObject1, "authorNationality");
-                        String shoufa = Dup.nullor(getValue(jsonObject1,"publishtime"))
-                                ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"publishtime"))))
-                                :null;
-                        String dengri = Dup.nullor(getValue(jsonObject1,"regtime"))
-                                ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"regtime"))))
-                                :null;
+                        String shoufa = null;
+                        String dengri =null;
                         try {
+                            shoufa= Dup.nullor(getValue(jsonObject1,"publishtime"))
+                                    ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"publishtime"))))
+                                    :null;
                             shoufa = simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1, "publishtime"))));
                         } catch (Exception ee) {
 
                         }
                         try {
+                            dengri= Dup.nullor(getValue(jsonObject1,"regtime"))
+                                    ?simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1,"regtime"))))
+                                    :null;
                             dengri = simpleDateFormat.format(new Date(Long.parseLong(getValue(jsonObject1, "regtime"))));
                         } catch (Exception ee) {
 

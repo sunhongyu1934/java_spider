@@ -2,7 +2,6 @@ package chuangxin;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
-import com.sun.org.apache.xml.internal.utils.URI;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -11,8 +10,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class spider {

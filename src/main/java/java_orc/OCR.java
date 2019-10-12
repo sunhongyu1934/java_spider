@@ -1,4 +1,3 @@
-/*
 package java_orc;
 
 import org.jdesktop.swingx.util.OS;
@@ -10,15 +9,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-*/
-/**
- * Created by Administrator on 2017/5/10.
- *//*
+
 
 public class OCR {
     private final String LANG_OPTION = "-l";  //英文字母小写l，并非数字1
     private final String EOL = System.getProperty("line.separator");
-    private String tessPath = "C:\\Program Files (x86)\\Tesseract-OCR";
+    private String tessPath = "C:\\Users\\13434\\Desktop\\Tesseract-OCR";
     //private String tessPath = new File("tesseract").getAbsolutePath();
 
     public String recognizeText(File imageFile,String imageFormat)throws Exception{
@@ -35,9 +31,10 @@ public class OCR {
         }
         cmd.add("");
         cmd.add(outputFile.getName());
+        System.out.println(outputFile.getPath());
         cmd.add(LANG_OPTION);
         //cmd.add("chi_sim");
-        cmd.add("chi_sim");
+        cmd.add("eng");
 
         ProcessBuilder pb = new ProcessBuilder();
         pb.directory(imageFile.getParentFile());
@@ -79,7 +76,7 @@ public class OCR {
             tempImage.delete();
             throw new RuntimeException(msg);
         }
-        new File(outputFile.getAbsolutePath()+".txt").delete();
+        //new File(outputFile.getAbsolutePath()+".txt").delete();
         return strB.toString();
     }
-}*/
+}

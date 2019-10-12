@@ -2,9 +2,7 @@ package shuiwu;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
-import Utils.MD5Util;
 import Utils.RedisClu;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

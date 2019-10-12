@@ -1,9 +1,7 @@
 package jinrong;
 
-import Utils.Dup;
 import Utils.JsoupUtils;
 import Utils.RedisClu;
-import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

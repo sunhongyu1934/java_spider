@@ -3,7 +3,6 @@ package itjuzi.zl;
 import Utils.Dup;
 import Utils.JsoupUtils;
 import com.google.common.collect.Lists;
-import itjuzi.itjuzi;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;

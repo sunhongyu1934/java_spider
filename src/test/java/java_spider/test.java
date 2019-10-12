@@ -3,14 +3,11 @@ package java_spider;
 
 import Utils.Dup;
 import Utils.JsoupUtils;
-import Utils.MD5Util;
 import Utils.RedisClu;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -18,45 +15,28 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import shuiwu.spider;
-import spiderKc.kcBean.Count;
-import tianyancha.yanzhengma.DownloadImgne;
 
-import javax.imageio.stream.FileImageInputStream;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
-import java.net.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static Utils.JsoupUtils.getElements;
 import static Utils.JsoupUtils.getHref;
 import static Utils.JsoupUtils.getString;
-import static tianyancha.zhuce.tyc_zhuce.fileExist;
-import static tianyancha.zhuce.tyc_zhuce.zhuce;
+import static tianyancha.XinxiXin.XinxiXin.detailget;
+import static tianyancha.XinxiXin.XinxiXin.jisuan;
 
 
 public class test {
@@ -95,41 +75,63 @@ public class test {
 
     }
 
+    public static org.jsoup.nodes.Document get(String cookie) throws InterruptedException {
+        org.jsoup.nodes.Document doc=null;
+        while (true) {
+            try {
+                /*Map<String,Object> map1=new JSONObject(cookie).toMap();
+                Map<String,String> map=new HashMap<>();
+                for(Map.Entry<String,Object> entry:map1.entrySet()){
+                    map.put(entry.getKey(),entry.getValue().toString());
+                }*/
 
+                doc = Jsoup.connect("https://www.tianyancha.com/search?key=%E5%B0%8F%E7%B1%B3")
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                        .timeout(5000)
+                        .header("Host", "www.tianyancha.com")
+                        .header("X-Requested-With", "XMLHttpRequest")
+                        //.proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
+                        .ignoreHttpErrors(true)
+                        .ignoreContentType(true)
+                        .header("Cookie",cookie)
+                        .get();
+                if (doc!=null&&doc.outerHtml().length()>50&&!doc.outerHtml().contains("访问拒绝")&&!doc.outerHtml().contains("abuyun")&&!doc.outerHtml().contains("Unauthorized")&&!doc.outerHtml().contains("访问禁止")&&!doc.outerHtml().contains("503 Service Temporarily Unavailable")&&!doc.outerHtml().contains("too many request")) {
+                    break;
+                }
+            }catch (Exception e){
+                Thread.sleep(500);
+                e.printStackTrace();
+                System.out.println("time out detail");
+            }
+        }
+        return doc;
+    }
 
     public static void main(String args[]) throws IOException, InterruptedException, SQLException, ScriptException, NoSuchMethodException {
-        Document doc2=Jsoup.parse(new File("C:\\Users\\13434\\Desktop\\a.txt"),"utf-8");
-        String ceng = getString(doc2, "div.history-name-box.tag.tag-history-name.mr10 span.history-content", 0);
-        String phone = getString(doc2, "div.in-block:containsOwn(电话) span", 1);
-        String email = getString(doc2, "div.in-block:containsOwn(邮箱) span", 1);
-        String web = getString(doc2, "div.in-block:containsOwn(网址) a", 0);
-        String address = getString(doc2,"div.in-block:matches(地址.+)",0)!=null
-                ?getString(doc2,"div.in-block:matches(地址.+)",0).replace("附近公司","").replace("地址：","")
-                :null;
-        String address2 =doc2.select("div.in-block:matches(地址.+) span.pl5").toString()!=null
-                ?doc2.select("div.in-block:matches(地址.+) span.pl5").toString().replace("<span class=\"pl5\"><script type=\"text/html\">\"","")
-                .replace("\"</script><span class=\"link-click\" onclick=\"openAddressPopup(this)\">详情</span></span>","")
-                :null;
-        String logo = getHref(doc2, "div.logo.-w100 img", "data-src", 0);
-        String statu = getString(doc2, "td:containsOwn(公司状态) div.num-opening", 0);
-        String gongshang = getString(doc2, "td:containsOwn(工商注册号)+td", 0);
-        String zuzhijigou = getString(doc2, "td:containsOwn(组织机构代码)+td", 0);
-        String tongyixinyong = getString(doc2, "td:containsOwn(统一社会信用代码)+td", 0);
-        String qiyeleixing = getString(doc2, "td:containsOwn(公司类型)+td", 0);
-        String nashuiren = getString(doc2, "td:containsOwn(纳税人识别号)+td", 0);
-        String hangye = getString(doc2, "td:containsOwn(行业)+td", 0);
-        String yingyeqixian = getString(doc2, "td:containsOwn(营业期限)+td", 0);
-        String hezhunriq = getString(doc2, "td:containsOwn(核准日期)+td", 0);
-        String dengjijiguan = getString(doc2, "td:containsOwn(登记机关)+td", 0);
-        String zhucedizhi = getString(doc2, "td:containsOwn(注册地址)+td", 0).replace("附近公司","");
-        String yingming=getString(doc2, "td:containsOwn(英文名称)+td", 0);
-        String jingyingfanwei = getString(doc2, "td:containsOwn(经营范围)+td", 0).replace("...详情","");
-        String faren = getString(doc2, "div.humancompany div.name a", 0);
-        String desc = doc2.select("script#company_base_info_detail").toString().replace("<script type=\"text/html\" id=\"company_base_info_detail\">","").replace("</script>","").replace(" ","").replace("\n","");
-        String shizi=getString(doc2, "td:containsOwn(实缴资本)+td", 0);
-        String canbao=getString(doc2, "td:containsOwn(参保人数)+td", 0);
-        String nazi=getString(doc2, "td:containsOwn(纳税人资质)+td", 0);
-        System.out.println(tongyixinyong);
+        //Document doc2=Jsoup.parse(new File("C:\\Users\\13434\\Desktop\\c.txt"),"utf-8");
+        RedisClu rd=new RedisClu();
+        String ip=rd.getZsetByKey("ip","0","0").iterator().next();
+        String cookie=rd.getrand("tyc_cookie");
+        System.out.println(cookie);
+        Map<String,Object> map1=new JSONObject(cookie.split("######")[1]).toMap();
+        Map<String,String> map=new HashMap<>();
+        for(Map.Entry<String,Object> entry:map1.entrySet()){
+            map.put(entry.getKey(),entry.getValue().toString());
+        }
+        Document doc = Jsoup.connect("https://www.tianyancha.com/search?key="+ URLEncoder.encode("富仕通通信（深圳）有限公司","utf-8") +"&checkFrom=searchBox")
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                .timeout(5000)
+                .header("Host", "www.tianyancha.com")
+                .header("X-Requested-With", "XMLHttpRequest")
+                .proxy(ip.split(":", 2)[0], Integer.parseInt(ip.split(":", 2)[1]))
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .cookies(map)
+                .get();
+        System.out.println(doc.outerHtml());
+
+
+
 
 
     }

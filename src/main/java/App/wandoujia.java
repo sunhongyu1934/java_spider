@@ -1,6 +1,5 @@
 package App;
 
-import Utils.Dup;
 import Utils.Producer;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
@@ -17,7 +16,6 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.*;
 

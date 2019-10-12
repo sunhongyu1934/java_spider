@@ -48,4 +48,26 @@ public class RedisClu {
     public boolean getExists(String key){
         return cluster.exists(key);
     }
+
+    public void zset(String key,String value,String score){
+        cluster.zadd(key,Double.parseDouble(score),value);
+    }
+
+    public Set<String> getZsetByKey(String key,String start,String end){
+        return cluster.zrevrange(key,Long.parseLong(start),Long.parseLong(end));
+    }
+
+    public Set<String> getZsetGetByScore(String key,String start,String end){
+        return cluster.zrangeByScore(key,Double.parseDouble(start),Double.parseDouble(end));
+    }
+
+    public void renmoveZsetBySMen(String key,String value){
+        cluster.zrem(key,value);
+    }
+
+    public void removeZsetByScore(String key,String start,String end){
+        cluster.zremrangeByScore(key,Double.parseDouble(start),Double.parseDouble(end));
+    }
+
+
 }

@@ -2,9 +2,7 @@ package linshi_spider;
 
 import Utils.Dup;
 import com.google.gson.Gson;
-import haosou.Project;
 import haosou.haosouBean;
-import jdk.nashorn.internal.ir.Block;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
